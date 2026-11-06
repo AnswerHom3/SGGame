@@ -51,7 +51,7 @@ Game004 横版可玩骨架：移动、跳跃、轻击三连。命中窗口仍是
 - Idle 仍是 12 帧、**10 fps**。绘制偏移只属于 Idle：水平 `IDLE_DRAW_OFFSET_X_PX = -17`（128 − 145），竖直 `IDLE_DRAW_OFFSET_Y_PX = -1`。不要改 PNG
 - 轻击 v1：`assets/characters/hero_zhaoyun/atk_light/` 共 86 张。mainline 按目标时长对帧（0.40 / 0.55 / 0.62 秒），不要按 10 fps。建议等间隔约 27.5 / 36.36 / 25.81 fps，实现是时间映射到帧号
 - 正常连段：light1 → light2 → light3 → light3_recover → Idle。light1_recover（13 帧）、light2_recover（11 帧）只在这段没有接下一次时播。收招按源均值帧率（约 12.48 / 12.57 / 12.41 fps），不套攻击目标速度
-- 轻击 root 是 `(128, 248)`，片段绘制偏移 `(0, 0)`。成图相对 Idle 约 79.66%（相对 Run 约 82.7%）。绘制用 `renderScale ≈ 1/0.7965875218419161`（约 1.255×）绕 root 补回，让屏幕上的体型和 Idle 对齐。不改 PNG。`foot_registration.json` / `scripts/AtkLightFoot.lua` 只在 `slide==true` 时把 `ox, oy` 加到绘制偏移上（含取消窗口里停住的末帧和收招末帧）。不把每帧鞋底硬贴到 `(128, 248)`，换步和抬脚保留
+- 轻击 root 是 `(128, 248)`，片段绘制偏移 `(0, 0)`。成图相对 Idle 约 79.66%（相对 Run 约 82.7%）。绘制用 `renderScale ≈ 1/0.7965875218419161`（约 1.255×）绕 root 补回，让屏幕上的体型和 Idle 对齐。不改 PNG。`foot_registration.json` / `scripts/AtkLightFoot.lua` 只在 `slide==true` 时把 `ox, oy` 加到绘制偏移上（含取消窗口里停住的末帧和收招末帧）。不把每帧鞋底硬贴到 `(128, 248)`，换步和抬脚保留。切换攻击片段时把上一段 plant ox 按朝向乘 actorScale 烘焙进角色 X，回到 Idle 时烘焙并清空。86 张路径是 `scripts/AtkLightConfig.lua` 里的字面量，开局用 `cache:DownloadResources` 预加载
 - light3 是通过的下劈，不是旧横扫。下劈冲击帧上的紫白冲击图是源片内容
 - light2 冲击帧 016 枪尖被裁，坐标是空，不能当成 `(0, 0)`。调试时可以用 017 的可见尖端代替，只用于调试标记
 - 源 Run / 轻击帧面朝右、没有嘴、枪在右手

@@ -7,6 +7,7 @@
 -- local +X is "in front of the chest", which is the right-hand spear side.
 
 local AtkLightFoot = require("AtkLightFoot")
+local AtkLightConfig = require("AtkLightConfig")
 
 local Tuning = {}
 
@@ -268,13 +269,11 @@ function Tuning.runFrameResource(index)
 end
 
 function Tuning.lightFrameResource(clip, index)
-    local spec = Tuning.ATK_LIGHT_CLIPS[clip]
-    return string.format(
-        "characters/hero_zhaoyun/atk_light/%s/hero_zhaoyun_atk_%s_%03d.png",
-        spec.group,
-        clip,
-        index
-    )
+    return AtkLightConfig.frame(clip, index)
+end
+
+function Tuning.atkLightPaths()
+    return AtkLightConfig.allPaths()
 end
 
 function Tuning.allHeroSheetResources()
@@ -425,6 +424,37 @@ function Tuning.sheetPointToWorld(footX, footY, facing, px, py, rootX, rootY, of
     local worldX = footX + ((px + offX) - rootX) * metersPerPx * facing
     local worldY = footY - ((py + offY) - rootY) * metersPerPx
     return worldX, worldY
+end
+
+-- Canvas px → world meters, including the idle-matching render scale.
+-- Maker writes playerX += facing * plantOx * actorScale. Same product here.
+function Tuning.attackActorScale()
+    return (Tuning.HERO_DRAW_H / Tuning.CANVAS) * Tuning.ATK_LIGHT_RENDER_SCALE
+end
+
+function Tuning.bakedPlantX(x, facing, ox)
+    local actorScale = Tuning.attackActorScale()
+    local face = facing or 1
+    if face == 0 then
+        face = 1
+    end
+    return x + face * (ox or 0) * actorScale
+end
+
+-- On a clip change, bake the previous plant ox into X before the new offset.
+-- clip nil is the return to Idle: bake, then clear the latch.
+-- Same-clip frame steps only refresh ox. They do not move X.
+function Tuning.advancePlant(x, facing, prevClip, prevOx, clip, ox)
+    if prevClip ~= clip then
+        if prevClip ~= nil then
+            x = Tuning.bakedPlantX(x, facing, prevOx or 0)
+        end
+        if clip == nil then
+            return x, nil, 0
+        end
+        return x, clip, ox or 0
+    end
+    return x, prevClip, ox or 0
 end
 
 -- Hit-window lunge. Zero means the foot stays where it is.
@@ -781,7 +811,50 @@ function Tuning.validate()
     local metersPerPx = (Tuning.HERO_DRAW_H / Tuning.CANVAS) * Tuning.ATK_LIGHT_RENDER_SCALE
     assert(math.abs(movedX - (3 + slideX * metersPerPx)) < 1e-9, "slide offset shifts the sheet in x")
     assert(math.abs(movedY - (1 - slideY * metersPerPx)) < 1e-9, "slide offset shifts the sheet in y")
-    assert(math.abs(scaledRootX - 3) < 1e-9, "body root is unchanged by the sheet offset")
+    assert(math.abs(scaledRootX - 3) < 1e-9, "per-frame sheet offset does not move the body by itself")
+    local paths = Tuning.atkLightPaths()
+    assert(#paths == 86, "literal attack path list")
+    local seen = {}
+    for _, path in ipairs(paths) do
+        assert(type(path) == "string" and string.find(path, "%", 1, true) == nil, "path is a literal")
+        assert(seen[path] == nil, "duplicate path " .. path)
+        seen[path] = true
+    end
+    assert(
+        Tuning.lightFrameResource("light1", 0)
+            == "characters/hero_zhaoyun/atk_light/mainline/hero_zhaoyun_atk_light1_000.png",
+        "light1 frame 0 literal"
+    )
+    assert(
+        Tuning.lightFrameResource("light1", 10)
+            == "characters/hero_zhaoyun/atk_light/mainline/hero_zhaoyun_atk_light1_010.png",
+        "light1 last literal"
+    )
+    assert(
+        Tuning.lightFrameResource("light3_recover", 14)
+            == "characters/hero_zhaoyun/atk_light/branches/hero_zhaoyun_atk_light3_recover_014.png",
+        "light3 recover last literal"
+    )
+    assert(Tuning.lightFrameResource("light2", 19) == paths[11 + 20], "light2 last sits in the flat list")
+    local actorScale = Tuning.attackActorScale()
+    assert(math.abs(actorScale - ((Tuning.HERO_DRAW_H / Tuning.CANVAS) * Tuning.ATK_LIGHT_RENDER_SCALE)) < 1e-12, "actor scale")
+    local bx, bClip, bOx = Tuning.advancePlant(2, 1, nil, 0, "light1", 47.18)
+    assert(bx == 2 and bClip == "light1" and bOx == 47.18, "entering light1 does not bake")
+    bx, bClip, bOx = Tuning.advancePlant(bx, 1, bClip, bOx, "light1", 47.18)
+    assert(bx == 2, "same clip does not bake a new ox")
+    local visualBefore = bx + 1 * 47.18 * actorScale
+    bx, bClip, bOx = Tuning.advancePlant(bx, 1, bClip, 47.18, "light2", 0)
+    assert(bClip == "light2" and bOx == 0, "light2 latch starts clean")
+    assert(math.abs(bx - (2 + 47.18 * actorScale)) < 1e-9, "light1 ox is baked into X")
+    assert(math.abs((bx + 0) - visualBefore) < 1e-9, "light1 to light2 does not jump")
+    local leftX = Tuning.advancePlant(0, -1, "light1", 47.18, "light2", 0)
+    assert(math.abs(leftX - (-47.18 * actorScale)) < 1e-9, "bake is facing-aware")
+    local idleX, idleClip, idleOx = Tuning.advancePlant(bx, 1, "light2", 0, nil, 0)
+    assert(idleClip == nil and idleOx == 0, "idle clears the plant latch")
+    assert(math.abs(idleX - bx) < 1e-9, "zero ox bake leaves X")
+    local clearedX, clearedClip, clearedOx = Tuning.advancePlant(1, 1, "light1_recover", -47.268, nil, 99)
+    assert(clearedClip == nil and clearedOx == 0, "idle clears even if a new ox was passed")
+    assert(math.abs(clearedX - (1 + -47.268 * actorScale)) < 1e-9, "return to idle bakes the last ox")
 
     for i, hit in ipairs(Tuning.LIGHT) do
         local spec = Tuning.ATK_LIGHT_CLIPS[hit.name]

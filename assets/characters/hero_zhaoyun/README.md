@@ -30,5 +30,6 @@ Recover at source-mean fps: light1_recover 13 @ 12.48, light2_recover 11 @ ~12.5
 Chain: light1 → light2 → light3 → light3_recover → Idle. The 1/2 recover clips play only when that swing is not cancelled into the next hit.
 Root (128, 248), clip draw offset (0, 0). Do not reuse Idle's (−17, −1). Shared fit is about 79.7% of Idle and 82.7% of Run. Draw scale is `1/0.7965875218419161` (~1.255×) around that root so the on-screen size matches Idle. Do not edit the PNGs.
 `foot_registration.json` plus `scripts/AtkLightFoot.lua` add ox/oy only on frames with `slide==true`. Other frames are not snapped to (128, 248).
+A clip change bakes the previous plant ox into actor X (facing × actor scale) before the new clip's offset, so light1→light2 does not jump. Returning to Idle bakes and clears that latch.
 light2 impact frame 016 has no tip (cropped). Do not treat that as (0, 0). Frame 017 is a debug-only backup.
 Timings live in `atk_light/manifest.json` and `atk_light/README.md`.

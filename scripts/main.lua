@@ -3,7 +3,8 @@
 -- Grounded move plays Run at 8 fps. A stop plays Idle at 10 fps with Idle's offset.
 -- Light mainline maps swing time onto the target duration. Recover branches play
 -- at source-mean fps. Attack sheets use root (128, 248), not Idle's draw offset.
--- Lunge is 0, so the attack foot stays planted. Sheet scale does not move the body.
+-- Lunge is 0. Per-frame foot offsets do not move the body. A clip change
+-- bakes the previous plant ox into X before the new clip's offset.
 
 local UI = require("urhox-libs/UI")
 local Tuning = require("combat.tuning")
@@ -11,6 +12,7 @@ local Hero = require("combat.hero")
 local MoveInput = require("combat.move_input")
 local HitStop = require("combat.hit_stop")
 local HeroSheet = require("combat.hero_sheet")
+local AtkLightConfig = require("AtkLightConfig")
 
 local CONFIG = {
     Title = "代号SG 战斗原型",
@@ -101,6 +103,11 @@ function Start()
         return
     end
     nvgCreateFont(nvg_, "sans", "Fonts/MiSans-Regular.ttf")
+    -- Maker keeps these on resources preload_groups=default.
+    -- Here the cache fetches every literal atk_light path before the first swing.
+    if cache ~= nil then
+        cache:DownloadResources(AtkLightConfig.allPaths())
+    end
     HeroSheet.preload(nvg_, Tuning.allHeroSheetResources())
 
     UI.Init({
@@ -407,11 +414,15 @@ function refreshHud()
         if atk.hitbox then
             live = "生效"
         end
+        local frameShown = 1
+        if pres.frame ~= nil then
+            frameShown = pres.frame + 1
+        end
         text = string.format(
-            "%s %s f%03d  朝向%s  t=%.2f  取消%s  判定%s  木桩%d  | 右手持枪  脚锁定",
+            "%s %s 帧%d  朝向%s  t=%.2f  取消%s  判定%s  木桩%d  | 右手持枪  脚锁定",
             state,
             pres.clip or atk.name or "",
-            pres.frame or 0,
+            frameShown,
             facing,
             atk.t,
             cancel,
@@ -419,11 +430,15 @@ function refreshHud()
             dummy_.hits
         )
     elseif pres.kind == "light_recover" then
+        local frameShown = 1
+        if pres.frame ~= nil then
+            frameShown = pres.frame + 1
+        end
         text = string.format(
-            "%s %s f%03d  朝向%s  木桩%d  | 右手持枪",
+            "%s %s 帧%d  朝向%s  木桩%d  | 右手持枪",
             state,
             pres.clip or "",
-            pres.frame or 0,
+            frameShown,
             facing,
             dummy_.hits
         )
