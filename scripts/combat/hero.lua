@@ -68,7 +68,7 @@ function Hero:position()
     return self.node.position2D
 end
 
--- Grounded move uses MOVE_CLIP, which is Idle until Run frames are swapped in.
+-- Grounded move uses MOVE_CLIP (Run). A stop plays Idle.
 function Hero:locomotionClip()
     if math.abs(self.commandAxis or 0) > 0 then
         return Tuning.MOVE_CLIP

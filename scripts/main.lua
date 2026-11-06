@@ -1,7 +1,8 @@
 -- 代号SG / Game004 combat prototype skeleton.
 -- Side view. Move, jump, and a 3-hit light attack with provisional windows.
--- Visuals are colored blocks. Grounded move keeps the Idle clip (MOVE_CLIP).
--- Run art is not in this prototype. Root motion is the physics velocity.
+-- Visuals are colored blocks. Grounded move plays Run (MOVE_CLIP) at 8 fps.
+-- A stop plays Idle at 10 fps with Idle's own draw offset. Run does not use it.
+-- Root motion is the physics velocity.
 
 local UI = require("urhox-libs/UI")
 local Tuning = require("combat.tuning")
@@ -36,12 +37,14 @@ local jumpEdge_ = false
 
 local STATE_LABEL = {
     idle = "待机",
+    run = "奔跑",
     jump = "空中",
     light = "轻击",
 }
 
 local BLOCK_COLOR = {
     idle = { 212, 168, 72, 255 },
+    run = { 92, 148, 196, 255 },
     jump = { 232, 206, 120, 255 },
     light = {
         { 214, 104, 48, 255 },
@@ -201,15 +204,19 @@ function Start()
     print("=== " .. CONFIG.Title .. " ===")
     print("Stick bottom-left, or A/D. Jump Space, light attack J. Numbers are provisional.")
     print(string.format(
-        "Visual %s, move clip %s (no Run art), spear %s, idle contract %s @ %.2f fps, foot (%d,%d), drawOffsetX %.1f px",
+        "Visual %s, grounded move %s %d @ %d fps root (%d,%d) drawOffset (%.0f,%.0f), stopped idle @ %d fps drawOffset (%.0f,%.0f), spear %s",
         visual.mode,
         visual.moveClip,
-        visual.spearHand,
-        visual.idleFrame0,
+        visual.runFrameCount,
+        visual.runFps,
+        visual.runRoot[1],
+        visual.runRoot[2],
+        visual.runDrawOffsetPx[1],
+        visual.runDrawOffsetPx[2],
         visual.idleFps,
-        visual.footPivot[1],
-        visual.footPivot[2],
-        visual.drawOffsetPx[1]
+        visual.drawOffsetPx[1],
+        visual.drawOffsetPx[2],
+        visual.spearHand
     ))
 end
 
@@ -366,7 +373,7 @@ function refreshHud()
     local clip = hero_:visualState()
     local state = STATE_LABEL[clip] or clip
     if not atk.active and hero_.onGround and math.abs(hero_.commandAxis) > 0 then
-        state = string.format("移动 %d%% · Idle占位", math.floor(math.abs(hero_.commandAxis) * 100 + 0.5))
+        state = string.format("移动 %d%% · Run", math.floor(math.abs(hero_.commandAxis) * 100 + 0.5))
     end
     local facing = "右"
     if hero_.facing < 0 then
@@ -511,7 +518,6 @@ function drawHero(vg)
         color = BLOCK_COLOR.light[index] or BLOCK_COLOR.light[1]
     end
     if color == nil then
-        -- MOVE_CLIP can later name "run" before that clip has art. Keep drawing Idle.
         color = BLOCK_COLOR.idle
     end
 
