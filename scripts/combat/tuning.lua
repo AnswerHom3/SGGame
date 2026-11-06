@@ -20,7 +20,7 @@ Tuning.JUMP_SPEED = 10.0
 Tuning.GRAVITY = 20.0
 
 -- A press in the air is remembered this long and starts the combo on landing.
--- A press during a swing is held until that swing's cancel window (not cut by this).
+-- A press during a swing uses LIGHT_INPUT_BUFFER and is not cut by this air timer.
 Tuning.INPUT_BUFFER_SEC = 0.12
 
 Tuning.HERO_BODY_W = 0.55
@@ -52,6 +52,20 @@ Tuning.LUNGE_SPEED = { 1.2, 1.6, 2.4 }
 -- cancelWindow: jump, or the next light, can take over (half-open).
 -- cancelInto "next" chains immediately. "end" waits out the swing, then
 -- a press inside the cancel window starts light1 again. Jump still cancels now.
+--
+-- Light-string reset delay in seconds, counted from the end of recovery (收招结束).
+-- After a swing finishes, the next press continues the string until this elapses.
+Tuning.LIGHT_COMBO_RESET = 0.5
+
+-- Light presses that land before the cancel window opens are kept, then consumed
+-- when that window opens. The hold is at least this long (seconds), and always
+-- long enough to reach the window so the press is not dropped.
+Tuning.LIGHT_INPUT_BUFFER = 0.10
+
+-- Presentation freeze on a successful hit. Time scale goes to 0 for this long.
+-- Damage and the one-hit latch do not read this.
+Tuning.HIT_STOP = 0.10
+
 Tuning.LIGHT = {
     {
         name = "light1",
@@ -312,6 +326,9 @@ function Tuning.validate()
         "run frame 7"
     )
     assert(#Tuning.LIGHT == 3 and #Tuning.HITBOX == 3 and #Tuning.LUNGE_SPEED == 3, "3-hit")
+    assert(Tuning.LIGHT_COMBO_RESET == 0.5, "light combo reset")
+    assert(Tuning.LIGHT_INPUT_BUFFER == 0.10, "light input buffer")
+    assert(Tuning.HIT_STOP == 0.10, "hit stop")
     assert(Tuning.LIGHT[1].cancelInto == "next", "light1 chains")
     assert(Tuning.LIGHT[2].cancelInto == "next", "light2 chains")
     assert(Tuning.LIGHT[3].cancelInto == "end", "light3 ends the string")
