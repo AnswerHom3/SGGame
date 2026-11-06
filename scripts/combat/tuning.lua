@@ -75,17 +75,18 @@ Tuning.LIGHT = {
 -- Idle sheet contract. Frames are not on this branch; the prototype draws blocks.
 -- When the sheet lands, do not rewrite the PNGs.
 -- Canvas 256x256, authored facing right.
--- Playback is the original extract pacing, not 12 fps.
--- Documented foot pivot is (128, 248). Idle QC foot_x is about 132.5,
--- so the blit shifts by IDLE_DRAW_OFFSET_X_PX to put that foot on the pivot.
+-- Playback is 10 fps (策划). The earlier 2.38 extract pacing is retired.
+-- Documented foot pivot is (128, 248). Tester measured the idle foot near x=145,
+-- so the blit shifts by about -17 px (128 - 145) to put that foot on the pivot.
+-- Vertical compensate used in the local preview is -1 px. Do not rewrite the PNGs.
 Tuning.CANVAS = 256
 Tuning.IDLE_FRAME_COUNT = 12
-Tuning.IDLE_FPS = 2.38
+Tuning.IDLE_FPS = 10
 Tuning.FOOT_PIVOT_X = 128
 Tuning.FOOT_PIVOT_Y = 248
-Tuning.IDLE_QC_FOOT_X = 132.5
+Tuning.IDLE_QC_FOOT_X = 145
 Tuning.IDLE_DRAW_OFFSET_X_PX = Tuning.FOOT_PIVOT_X - Tuning.IDLE_QC_FOOT_X
-Tuning.IDLE_DRAW_OFFSET_Y_PX = 0
+Tuning.IDLE_DRAW_OFFSET_Y_PX = -1
 Tuning.HERO_DRAW_H = 1.90
 
 -- Run has no art in this prototype. Draw a tinted block (or, later, reuse Idle).
@@ -139,10 +140,12 @@ function Tuning.validate()
     assert(Tuning.SPEAR_TIP_LOCAL_X > Tuning.SPEAR_GRIP_LOCAL_X, "tip stays in front of the grip")
     assert(Tuning.RUN_VISUAL == "tinted_block", "run visual is a placeholder")
     assert(Tuning.CANVAS == 256, "idle canvas")
-    assert(math.abs(Tuning.IDLE_FPS - 2.38) < 1e-6, "idle playback")
+    assert(Tuning.IDLE_FPS == 10, "idle playback")
     assert(Tuning.IDLE_FRAME_COUNT == 12, "idle frame count")
     assert(Tuning.FOOT_PIVOT_X == 128 and Tuning.FOOT_PIVOT_Y == 248, "documented foot pivot")
-    assert(math.abs(Tuning.IDLE_QC_FOOT_X - 132.5) < 1e-6, "idle QC foot x")
+    assert(Tuning.IDLE_QC_FOOT_X == 145, "idle QC foot x")
+    assert(Tuning.IDLE_DRAW_OFFSET_X_PX == -17, "idle horizontal compensate")
+    assert(Tuning.IDLE_DRAW_OFFSET_Y_PX == -1, "idle vertical compensate")
     assert(
         math.abs(Tuning.IDLE_DRAW_OFFSET_X_PX - (Tuning.FOOT_PIVOT_X - Tuning.IDLE_QC_FOOT_X)) < 1e-6,
         "draw offset"
