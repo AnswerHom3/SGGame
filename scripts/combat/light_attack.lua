@@ -29,6 +29,10 @@ function LightAttack:cancel()
     self.restartQueued = false
     self.hitLatched = false
     self.phase = "none"
+    -- Natural end is the only signal the sheet player uses to start a recover.
+    -- Jump cancel and a chained next hit both leave this false.
+    self.endedNaturally = false
+    self.finishedIndex = 0
     if self.comboIndex == nil or interrupt then
         self.comboIndex = 0
         self.comboReset = 0
@@ -89,6 +93,8 @@ function LightAttack:_begin(index)
     self.phase = "startup"
     self.comboIndex = index
     self.comboReset = 0
+    self.endedNaturally = false
+    self.finishedIndex = 0
 end
 
 function LightAttack:_continuedIndex()
@@ -157,8 +163,12 @@ function LightAttack:_finishSwing()
     self.restartQueued = false
     self.hitLatched = false
     self.phase = "none"
+    self.finishedIndex = finished
+    self.endedNaturally = true
 
     if restart then
+        -- A queued extra press starts light1 now, so the sheet player must
+        -- not treat this as a natural end (that would play light3_recover).
         self:_begin(1)
         return
     end
