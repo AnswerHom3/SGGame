@@ -76,13 +76,14 @@ Tuning.LIGHT = {
     },
 }
 
--- Idle sheet contract. Frames are not on this branch; the prototype draws blocks.
--- When the sheet lands, do not rewrite the PNGs.
+-- Idle sheet contract. The prototype still draws colored blocks.
+-- Do not rewrite the PNGs.
 -- Canvas 256x256, authored facing right.
 -- Playback is 10 fps (策划). The earlier 2.38 extract pacing is retired.
 -- Documented foot pivot is (128, 248). Tester measured the idle foot near x=145,
 -- so the blit shifts by about -17 px (128 - 145) to put that foot on the pivot.
 -- Vertical compensate used in the local preview is -1 px. Do not rewrite the PNGs.
+-- These draw offsets are Idle only. Run does not use them.
 Tuning.CANVAS = 256
 Tuning.IDLE_FRAME_COUNT = 12
 Tuning.IDLE_FPS = 10
@@ -93,10 +94,18 @@ Tuning.IDLE_DRAW_OFFSET_X_PX = Tuning.FOOT_PIVOT_X - Tuning.IDLE_QC_FOOT_X
 Tuning.IDLE_DRAW_OFFSET_Y_PX = -1
 Tuning.HERO_DRAW_H = 1.90
 
--- Grounded move plays this clip. It is Idle on purpose.
--- When formal Run frames exist, set MOVE_CLIP to "run" and register that clip.
--- Do not add Run art in this prototype.
-Tuning.MOVE_CLIP = "idle"
+-- Approved Run v5. Grounded move plays this clip. A stop plays Idle.
+-- 8 frames at 8 fps is 125 ms/frame and a 1.0 s loop, matching the source cycle.
+-- Do not play Run at 10 fps: that preview is 25% faster (1.25x) than the cycle.
+-- Canvas register / root is (128, 248). Draw offset stays (0, 0).
+-- Do not reuse Idle's (-17, -1).
+Tuning.RUN_FRAME_COUNT = 8
+Tuning.RUN_FPS = 8
+Tuning.RUN_ROOT_X = 128
+Tuning.RUN_ROOT_Y = 248
+Tuning.RUN_DRAW_OFFSET_X_PX = 0
+Tuning.RUN_DRAW_OFFSET_Y_PX = 0
+Tuning.MOVE_CLIP = "run"
 
 function Tuning.idleFrameResource(index)
     return string.format(
@@ -105,7 +114,43 @@ function Tuning.idleFrameResource(index)
     )
 end
 
--- Sprite-only. Colored blocks ignore this and stand on the collider feet.
+function Tuning.runFrameResource(index)
+    return string.format(
+        "characters/hero_zhaoyun/run/hero_zhaoyun_run_%03d.png",
+        index
+    )
+end
+
+function Tuning.clipFps(clip)
+    if clip == "run" then
+        return Tuning.RUN_FPS
+    end
+    return Tuning.IDLE_FPS
+end
+
+function Tuning.clipFrameCount(clip)
+    if clip == "run" then
+        return Tuning.RUN_FRAME_COUNT
+    end
+    return Tuning.IDLE_FRAME_COUNT
+end
+
+-- Sprite-only. Idle's measured-foot compensate must not be applied to Run.
+function Tuning.clipDrawOffsetPx(clip)
+    if clip == "run" then
+        return Tuning.RUN_DRAW_OFFSET_X_PX, Tuning.RUN_DRAW_OFFSET_Y_PX
+    end
+    return Tuning.IDLE_DRAW_OFFSET_X_PX, Tuning.IDLE_DRAW_OFFSET_Y_PX
+end
+
+function Tuning.clipDrawOffsetMeters(clip)
+    local metersPerPx = Tuning.HERO_DRAW_H / Tuning.CANVAS
+    local ox, oy = Tuning.clipDrawOffsetPx(clip)
+    return ox * metersPerPx, oy * metersPerPx
+end
+
+-- Idle only. Colored blocks ignore this and stand on the collider feet.
+-- Run uses clipDrawOffsetPx("run"), which stays (0, 0).
 function Tuning.idleDrawOffsetMeters()
     local metersPerPx = Tuning.HERO_DRAW_H / Tuning.CANVAS
     return Tuning.IDLE_DRAW_OFFSET_X_PX * metersPerPx,
@@ -206,6 +251,12 @@ function Tuning.visualContract()
         drawOffsetPx = { Tuning.IDLE_DRAW_OFFSET_X_PX, Tuning.IDLE_DRAW_OFFSET_Y_PX },
         idleFrame0 = Tuning.idleFrameResource(0),
         idleFrameLast = Tuning.idleFrameResource(Tuning.IDLE_FRAME_COUNT - 1),
+        runFps = Tuning.RUN_FPS,
+        runFrameCount = Tuning.RUN_FRAME_COUNT,
+        runRoot = { Tuning.RUN_ROOT_X, Tuning.RUN_ROOT_Y },
+        runDrawOffsetPx = { Tuning.RUN_DRAW_OFFSET_X_PX, Tuning.RUN_DRAW_OFFSET_Y_PX },
+        runFrame0 = Tuning.runFrameResource(0),
+        runFrameLast = Tuning.runFrameResource(Tuning.RUN_FRAME_COUNT - 1),
         spearHand = Tuning.SPEAR_HAND,
     }
 end
@@ -215,7 +266,7 @@ function Tuning.validate()
     assert(Tuning.SPEAR_TIP_LOCAL_X > Tuning.SPEAR_GRIP_LOCAL_X, "tip stays in front of the grip")
     assert(Tuning.MOVE_DEADZONE == 0.15, "move deadzone")
     assert(Tuning.MOVE_SPEED == 5, "move speed")
-    assert(Tuning.MOVE_CLIP == "idle", "move keeps playing idle; Run art is not integrated")
+    assert(Tuning.MOVE_CLIP == "run", "grounded move plays run")
     assert(Tuning.moveAxis(0) == 0, "stick release is a stop")
     assert(Tuning.moveAxis(0.15) == 0 and Tuning.moveAxis(-0.15) == 0, "deadzone")
     assert(math.abs(Tuning.moveAxis(1) - 1) < 1e-9, "full stick right")
@@ -237,6 +288,28 @@ function Tuning.validate()
     assert(
         math.abs(Tuning.IDLE_DRAW_OFFSET_X_PX - (Tuning.FOOT_PIVOT_X - Tuning.IDLE_QC_FOOT_X)) < 1e-6,
         "draw offset"
+    )
+    assert(Tuning.RUN_FPS == 8, "run playback is 8 fps")
+    assert(Tuning.RUN_FRAME_COUNT == 8, "run frame count")
+    assert(math.abs((Tuning.RUN_FRAME_COUNT / Tuning.RUN_FPS) - 1.0) < 1e-9, "run loop is 1 second")
+    assert(Tuning.RUN_ROOT_X == 128 and Tuning.RUN_ROOT_Y == 248, "run canvas root")
+    assert(
+        Tuning.RUN_DRAW_OFFSET_X_PX == 0 and Tuning.RUN_DRAW_OFFSET_Y_PX == 0,
+        "run does not reuse the idle draw offset"
+    )
+    local runOx, runOy = Tuning.clipDrawOffsetPx("run")
+    assert(runOx == 0 and runOy == 0, "run clip offset")
+    local idleOx, idleOy = Tuning.clipDrawOffsetPx("idle")
+    assert(idleOx == -17 and idleOy == -1, "idle clip keeps its own offset")
+    assert(Tuning.clipFps("run") == 8 and Tuning.clipFps("idle") == 10, "clip fps")
+    assert(Tuning.clipFrameCount("run") == 8 and Tuning.clipFrameCount("idle") == 12, "clip frame counts")
+    assert(
+        Tuning.runFrameResource(0) == "characters/hero_zhaoyun/run/hero_zhaoyun_run_000.png",
+        "run frame 0"
+    )
+    assert(
+        Tuning.runFrameResource(7) == "characters/hero_zhaoyun/run/hero_zhaoyun_run_007.png",
+        "run frame 7"
     )
     assert(#Tuning.LIGHT == 3 and #Tuning.HITBOX == 3 and #Tuning.LUNGE_SPEED == 3, "3-hit")
     assert(Tuning.LIGHT[1].cancelInto == "next", "light1 chains")

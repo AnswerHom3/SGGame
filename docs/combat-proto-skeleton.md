@@ -1,6 +1,6 @@
 # 代号SG 战斗原型骨架
 
-Game004 横版可玩骨架：移动、跳跃、轻击三连。窗口和位移都是占位，等策划一页纸替换。本分支没有 Idle 序列帧，也没有正式 Run。
+Game004 横版可玩骨架：移动、跳跃、轻击三连。窗口和位移都是占位，等策划一页纸替换。画面仍是色块。着地移动播 Run，停下播 Idle。
 
 ## 操作
 
@@ -38,12 +38,12 @@ Game004 横版可玩骨架：移动、跳跃、轻击三连。窗口和位移都
 
 ## 美术
 
-- 角色、地面、木桩都是色块
-- **移动时继续播 Idle**（现在是同一块 Idle 色）。`scripts/combat/tuning.lua` 的 `MOVE_CLIP` 目前是 `"idle"`。正式 Run 帧到了只改这个常量，不要在这个骨架里加 Run 图
-- Idle 试用序列（`assets/characters/hero_zhaoyun/idle/hero_zhaoyun_idle_000.png` … `_011.png`）不在这个分支上，所以没有播帧
-- 序列一旦入仓：256×256、面朝右、**10 fps**（策划改定；原先抽帧的 2.38 fps 作废）
-- 文档足点 `(128, 248)`。测试量到 Idle 足点大约在 `x = 145`，绘制时水平补偿 `IDLE_DRAW_OFFSET_X_PX = -17`（128 − 145）。竖直方向本地预览用 `IDLE_DRAW_OFFSET_Y_PX = -1`。不要改 PNG
-- 色块的脚对齐碰撞体底，不用这个像素偏移
+- 角色、地面、木桩都是色块。色块的脚对齐碰撞体底，不用像素偏移
+- **着地移动播 Run**。`scripts/combat/tuning.lua` 的 `MOVE_CLIP` 是 `"run"`。停下播 Idle
+- Run：`assets/characters/hero_zhaoyun/run/hero_zhaoyun_run_000.png` … `_007.png`，8 帧，**8 fps**（每帧 125 ms，循环 1.0 秒）。不要按 10 fps 播；10 fps 预览比源周期快 25%
+- Run 画布注册 / root ≈ `(128, 248)`。绘制偏移是 `(0, 0)`。不要套用 Idle 的 `(−17, −1)`
+- Idle 仍是 12 帧、**10 fps**。绘制偏移只属于 Idle：水平 `IDLE_DRAW_OFFSET_X_PX = -17`（128 − 145），竖直 `IDLE_DRAW_OFFSET_Y_PX = -1`。不要改 PNG
+- 源 Run 帧面朝右、没有嘴、枪在右手
 
 ## 右手枪
 
@@ -52,13 +52,12 @@ Game004 横版可玩骨架：移动、跳跃、轻击三连。窗口和位移都
 ## 还在等
 
 - 策划战斗一页纸：替换 `scripts/combat/tuning.lua` 里的时长、窗口、判定和位移
-- Idle 试用帧入仓后的接入（足点偏移常量已经留好）
-- Run 正式帧。在那之前 `MOVE_CLIP` 保持 `"idle"`，不要在这个骨架里画 Run
+- 把 Idle / Run 的 PNG 画到角色上（骨架仍是色块）。Run 的片段、8 fps 和注册常量已经接上；Idle 的足点偏移只用于 Idle
 
 ## 代码
 
 - `scripts/main.lua`：场景、地面、输入、NanoVG 色块、木桩、画面边缘夹紧
 - `scripts/combat/move_input.lua`：左下水平虚拟摇杆
-- `scripts/combat/tuning.lua`：占位常量、摇杆死区、枪尖、Idle 绘制约定、`MOVE_CLIP`
+- `scripts/combat/tuning.lua`：占位常量、摇杆死区、枪尖、Idle / Run 绘制约定、`MOVE_CLIP`
 - `scripts/combat/light_attack.lua`：三连窗口
 - `scripts/combat/hero.lua`：移动、跳、朝向锁定
