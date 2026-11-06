@@ -10,8 +10,12 @@ local Tuning = {}
 
 Tuning.SOURCE = "provisional-placeholder"
 
--- Program root motion.
+-- Program root motion. Horizontal stick only.
+-- |deflection| <= MOVE_DEADZONE is a full stop the same frame (no inertia).
+-- Outside the deadzone, deflection remaps to 0..1 so a full stick is MOVE_SPEED
+-- and everything between is proportional. Keyboard debug passes ±1 and skips this.
 Tuning.MOVE_SPEED = 5.0
+Tuning.MOVE_DEADZONE = 0.15
 Tuning.JUMP_SPEED = 10.0
 Tuning.GRAVITY = 20.0
 
@@ -89,8 +93,10 @@ Tuning.IDLE_DRAW_OFFSET_X_PX = Tuning.FOOT_PIVOT_X - Tuning.IDLE_QC_FOOT_X
 Tuning.IDLE_DRAW_OFFSET_Y_PX = -1
 Tuning.HERO_DRAW_H = 1.90
 
--- Run has no art in this prototype. Draw a tinted block (or, later, reuse Idle).
-Tuning.RUN_VISUAL = "tinted_block"
+-- Grounded move plays this clip. It is Idle on purpose.
+-- When formal Run frames exist, set MOVE_CLIP to "run" and register that clip.
+-- Do not add Run art in this prototype.
+Tuning.MOVE_CLIP = "idle"
 
 function Tuning.idleFrameResource(index)
     return string.format(
@@ -120,10 +126,79 @@ function Tuning.attackBox(x, y, facing, hitIndex)
     return tipX + facing * spec.tipBiasX, tipY, spec.w, spec.h
 end
 
+function Tuning.moveAxis(raw)
+    if raw == nil then
+        return 0
+    end
+    local ax = math.abs(raw)
+    if ax <= Tuning.MOVE_DEADZONE then
+        return 0
+    end
+    if ax > 1 then
+        ax = 1
+    end
+    local scaled = (ax - Tuning.MOVE_DEADZONE) / (1 - Tuning.MOVE_DEADZONE)
+    if raw < 0 then
+        return -scaled
+    end
+    return scaled
+end
+
+function Tuning.moveSpeed(raw)
+    return Tuning.moveAxis(raw) * Tuning.MOVE_SPEED
+end
+
+-- A live stick hides the keyboard. A released stick (axis 0) leaves desktop keys in charge.
+function Tuning.combineMoveAxis(stickAxis, keyAxis)
+    if stickAxis ~= nil and stickAxis ~= 0 then
+        return stickAxis
+    end
+    if keyAxis == nil then
+        return 0
+    end
+    return keyAxis
+end
+
+-- Outward speed becomes 0 on a viewport edge. Release already passes vx 0.
+function Tuning.clampVelocity(x, y, vx, vy, bounds)
+    if bounds == nil then
+        return vx, vy
+    end
+    if x <= bounds.minX and vx < 0 then
+        vx = 0
+    end
+    if x >= bounds.maxX and vx > 0 then
+        vx = 0
+    end
+    if y <= bounds.minY and vy < 0 then
+        vy = 0
+    end
+    if y >= bounds.maxY and vy > 0 then
+        vy = 0
+    end
+    return vx, vy
+end
+
+function Tuning.clampPosition(x, y, bounds)
+    if x < bounds.minX then
+        x = bounds.minX
+    end
+    if x > bounds.maxX then
+        x = bounds.maxX
+    end
+    if y < bounds.minY then
+        y = bounds.minY
+    end
+    if y > bounds.maxY then
+        y = bounds.maxY
+    end
+    return x, y
+end
+
 function Tuning.visualContract()
     return {
         mode = "colored_blocks",
-        run = Tuning.RUN_VISUAL,
+        moveClip = Tuning.MOVE_CLIP,
         idleFps = Tuning.IDLE_FPS,
         canvas = Tuning.CANVAS,
         footPivot = { Tuning.FOOT_PIVOT_X, Tuning.FOOT_PIVOT_Y },
@@ -138,7 +213,20 @@ end
 function Tuning.validate()
     assert(Tuning.SPEAR_HAND == "right", "spear hand lock")
     assert(Tuning.SPEAR_TIP_LOCAL_X > Tuning.SPEAR_GRIP_LOCAL_X, "tip stays in front of the grip")
-    assert(Tuning.RUN_VISUAL == "tinted_block", "run visual is a placeholder")
+    assert(Tuning.MOVE_DEADZONE == 0.15, "move deadzone")
+    assert(Tuning.MOVE_SPEED == 5, "move speed")
+    assert(Tuning.MOVE_CLIP == "idle", "move keeps playing idle; Run art is not integrated")
+    assert(Tuning.moveAxis(0) == 0, "stick release is a stop")
+    assert(Tuning.moveAxis(0.15) == 0 and Tuning.moveAxis(-0.15) == 0, "deadzone")
+    assert(math.abs(Tuning.moveAxis(1) - 1) < 1e-9, "full stick right")
+    assert(math.abs(Tuning.moveAxis(-1) + 1) < 1e-9, "full stick left")
+    assert(math.abs(Tuning.moveSpeed(1) - 5) < 1e-9, "full stick speed")
+    assert(Tuning.combineMoveAxis(0, -1) == -1, "keyboard when the stick is up")
+    assert(Tuning.combineMoveAxis(0.4, 1) == 0.4, "stick overrides keyboard")
+    local edgeVx = Tuning.clampVelocity(0, 1, -5, 0, {
+        minX = 0, maxX = 10, minY = 0, maxY = 10,
+    })
+    assert(edgeVx == 0, "cannot walk out of the viewport")
     assert(Tuning.CANVAS == 256, "idle canvas")
     assert(Tuning.IDLE_FPS == 10, "idle playback")
     assert(Tuning.IDLE_FRAME_COUNT == 12, "idle frame count")

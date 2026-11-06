@@ -20,6 +20,7 @@ function Hero.create(scene, x, y)
     self.groundContacts = 0
     self.airBuffer = 0
     self.pendingJump = false
+    self.commandAxis = 0
 
     self.node = scene:CreateChild("HeroZhaoYun")
     self.node:SetPosition2D(x, y)
@@ -67,6 +68,14 @@ function Hero:position()
     return self.node.position2D
 end
 
+-- Grounded move uses MOVE_CLIP, which is Idle until Run frames are swapped in.
+function Hero:locomotionClip()
+    if math.abs(self.commandAxis or 0) > 0 then
+        return Tuning.MOVE_CLIP
+    end
+    return "idle"
+end
+
 function Hero:visualState()
     if self.attack:isAttacking() then
         return "light"
@@ -74,10 +83,7 @@ function Hero:visualState()
     if not self.onGround then
         return "jump"
     end
-    if math.abs(self.body.linearVelocity.x) > 0.15 then
-        return "run"
-    end
-    return "idle"
+    return self:locomotionClip()
 end
 
 function Hero:gripWorld()
@@ -108,9 +114,13 @@ function Hero:attackDebug()
     return self.attack:debug()
 end
 
--- input = { x = -1|0|1, jump = bool, light = bool }
+-- input.x is a horizontal axis in -1..1 (0 on release). Speed is axis * MOVE_SPEED,
+-- written every frame, so letting go stops immediately.
+-- input.bounds, when set, is the viewport in meters. Outward speed is cancelled there.
 -- Same-frame jump and light: jump wins when the cancel window is open.
 function Hero:update(dt, input)
+    self.commandAxis = input.x or 0
+
     if self.airBuffer > 0 then
         self.airBuffer = self.airBuffer - dt
         if self.airBuffer < 0 then
@@ -119,8 +129,8 @@ function Hero:update(dt, input)
     end
 
     local attacking = self.attack:isAttacking()
-    if input.x ~= 0 and not attacking then
-        if input.x > 0 then
+    if self.commandAxis ~= 0 and not attacking then
+        if self.commandAxis > 0 then
             self.facing = 1
         else
             self.facing = -1
@@ -153,7 +163,7 @@ function Hero:update(dt, input)
             vx = self.facing * Tuning.LUNGE_SPEED[self.attack:hitIndex()]
         end
     else
-        vx = input.x * Tuning.MOVE_SPEED
+        vx = self.commandAxis * Tuning.MOVE_SPEED
     end
 
     local vy = self.body.linearVelocity.y
@@ -163,6 +173,35 @@ function Hero:update(dt, input)
         self.body.awake = true
     end
 
+    if input.bounds ~= nil then
+        local p = self:position()
+        vx, vy = Tuning.clampVelocity(p.x, p.y, vx, vy, input.bounds)
+    end
+
+    self.body.linearVelocity = Vector2(vx, vy)
+    self.body.awake = true
+end
+
+function Hero:clampInside(bounds)
+    if bounds == nil then
+        return
+    end
+    local p = self:position()
+    local oldX, oldY = p.x, p.y
+    local x, y = Tuning.clampPosition(oldX, oldY, bounds)
+    if x == oldX and y == oldY then
+        return
+    end
+    self.node:SetPosition2D(x, y)
+    local vel = self.body.linearVelocity
+    local vx = vel.x
+    local vy = vel.y
+    if x ~= oldX then
+        vx = 0
+    end
+    if y ~= oldY then
+        vy = 0
+    end
     self.body.linearVelocity = Vector2(vx, vy)
     self.body.awake = true
 end

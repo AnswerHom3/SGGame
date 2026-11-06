@@ -1,15 +1,17 @@
 -- 代号SG / Game004 combat prototype skeleton.
 -- Side view. Move, jump, and a 3-hit light attack with provisional windows.
--- Visuals are colored blocks: the idle sheet is not on this branch, and Run
--- art is a tinted block on purpose. Root motion is the physics velocity.
+-- Visuals are colored blocks. Grounded move keeps the Idle clip (MOVE_CLIP).
+-- Run art is not in this prototype. Root motion is the physics velocity.
 
 local UI = require("urhox-libs/UI")
 local Tuning = require("combat.tuning")
 local Hero = require("combat.hero")
+local MoveInput = require("combat.move_input")
 
 local CONFIG = {
     Title = "代号SG 战斗原型",
     CameraOrtho = 4.2,
+    CameraLookX = 0,
     CameraLookY = 1.7,
 }
 
@@ -25,6 +27,7 @@ local nvg_ = nil
 local uiRoot_ = nil
 
 local hero_
+local moveInput_
 local solids_ = {}
 local dummy_ = { x = 2.55, y = 0.90, w = 0.70, h = 1.80, flash = 0, hits = 0 }
 local debugDraw_ = false
@@ -33,14 +36,12 @@ local jumpEdge_ = false
 
 local STATE_LABEL = {
     idle = "待机",
-    run = "跑（占位色块）",
     jump = "空中",
     light = "轻击",
 }
 
 local BLOCK_COLOR = {
     idle = { 212, 168, 72, 255 },
-    run = { 64, 168, 176, 255 },
     jump = { 232, 206, 120, 255 },
     light = {
         { 214, 104, 48, 255 },
@@ -113,7 +114,8 @@ function Start()
     camera_ = cameraNode_:CreateComponent("Camera")
     camera_.orthographic = true
     camera_.orthoSize = CONFIG.CameraOrtho
-    cameraNode_.position = Vector3(0, CONFIG.CameraLookY, -10)
+    cameraNode_.position = Vector3(CONFIG.CameraLookX, CONFIG.CameraLookY, -10)
+    moveInput_ = MoveInput.new()
     renderer:SetViewport(0, Viewport:new(scene_, camera_))
 
     solids_ = {
@@ -138,7 +140,7 @@ function Start()
                 left = 16,
             },
             UI.Label {
-                text = "A/D 或 ←/→ 移动    Space / W / ↑ 跳跃    J 轻击三连    Z 物理调试",
+                text = "左下摇杆左右移动    A/D 或 ←/→    Space / W / ↑ 跳跃    J 轻击    Z 调试",
                 fontSize = 13,
                 fontColor = { 220, 220, 220, 210 },
                 position = "absolute",
@@ -157,7 +159,7 @@ function Start()
             UI.Panel {
                 position = "absolute",
                 bottom = 20,
-                left = 20,
+                right = 124,
                 width = 96,
                 pointerEvents = "auto",
                 children = {
@@ -197,11 +199,11 @@ function Start()
 
     local visual = Tuning.visualContract()
     print("=== " .. CONFIG.Title .. " ===")
-    print("Move A/D, jump Space, light attack J. Numbers are provisional.")
+    print("Stick bottom-left, or A/D. Jump Space, light attack J. Numbers are provisional.")
     print(string.format(
-        "Visual %s, run %s, spear %s, idle contract %s @ %.2f fps, foot (%d,%d), drawOffsetX %.1f px",
+        "Visual %s, move clip %s (no Run art), spear %s, idle contract %s @ %.2f fps, foot (%d,%d), drawOffsetX %.1f px",
         visual.mode,
-        visual.run,
+        visual.moveClip,
         visual.spearHand,
         visual.idleFrame0,
         visual.idleFps,
@@ -274,7 +276,7 @@ function HandlePhysicsEndContact(eventType, eventData)
     end
 end
 
-local function moveAxis()
+local function keyboardAxis()
     local x = 0
     if input:GetKeyDown(KEY_A) or input:GetKeyDown(KEY_LEFT) then
         x = x - 1
@@ -283,6 +285,25 @@ local function moveAxis()
         x = x + 1
     end
     return x
+end
+
+local function viewportBounds()
+    local width = graphics:GetWidth()
+    local height = graphics:GetHeight()
+    if width < 1 or height < 1 or camera_ == nil or cameraNode_ == nil then
+        return nil
+    end
+    local halfH = camera_.orthoSize
+    local halfW = halfH * (width / height)
+    local cam = cameraNode_.position
+    local padX = Tuning.HERO_BODY_W * 0.5
+    local padY = Tuning.HERO_BODY_H * 0.5
+    return {
+        minX = cam.x - halfW + padX,
+        maxX = cam.x + halfW - padX,
+        minY = cam.y - halfH + padY,
+        maxY = cam.y + halfH - padY,
+    }
 end
 
 local function consumePresses()
@@ -309,7 +330,20 @@ function HandleUpdate(eventType, eventData)
     end
 
     local light, jump = consumePresses()
-    hero_:update(dt, { x = moveAxis(), jump = jump, light = light })
+    if moveInput_ ~= nil then
+        moveInput_:update(graphics:GetWidth(), graphics:GetHeight())
+    end
+    local stickAxis = 0
+    if moveInput_ ~= nil then
+        stickAxis = moveInput_.axis
+    end
+    local axis = Tuning.combineMoveAxis(stickAxis, keyboardAxis())
+    hero_:update(dt, {
+        x = axis,
+        jump = jump,
+        light = light,
+        bounds = viewportBounds(),
+    })
 
     if dummy_.flash > 0 then
         dummy_.flash = dummy_.flash - dt
@@ -329,7 +363,11 @@ function refreshHud()
     end
 
     local atk = hero_:attackDebug()
-    local state = STATE_LABEL[hero_:visualState()] or hero_:visualState()
+    local clip = hero_:visualState()
+    local state = STATE_LABEL[clip] or clip
+    if not atk.active and hero_.onGround and math.abs(hero_.commandAxis) > 0 then
+        state = string.format("移动 %d%% · Idle占位", math.floor(math.abs(hero_.commandAxis) * 100 + 0.5))
+    end
     local facing = "右"
     if hero_.facing < 0 then
         facing = "左"
@@ -372,8 +410,8 @@ function HandlePostUpdate(eventType, eventData)
     if hero_ == nil or cameraNode_ == nil then
         return
     end
-    local pos = hero_:position()
-    cameraNode_.position = Vector3(pos.x, CONFIG.CameraLookY, -10)
+    cameraNode_.position = Vector3(CONFIG.CameraLookX, CONFIG.CameraLookY, -10)
+    hero_:clampInside(viewportBounds())
 
     -- Physics has stepped, so the spear box includes this frame's lunge.
     local cx, cy, w, h = hero_:attackBoxWorld()
@@ -449,6 +487,10 @@ function HandleRender(eventType, eventData)
 
     drawHero(nvg_)
 
+    if moveInput_ ~= nil then
+        moveInput_:draw(nvg_, width, height)
+    end
+
     if debugDraw_ then
         drawDebugText(nvg_)
     end
@@ -467,6 +509,10 @@ function drawHero(vg)
     if state == "light" then
         local index = hero_:attackDebug().index
         color = BLOCK_COLOR.light[index] or BLOCK_COLOR.light[1]
+    end
+    if color == nil then
+        -- MOVE_CLIP can later name "run" before that clip has art. Keep drawing Idle.
+        color = BLOCK_COLOR.idle
     end
 
     local footY = pos.y - Tuning.HERO_BODY_H * 0.5
