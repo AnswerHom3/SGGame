@@ -211,7 +211,7 @@ function Start()
     print("=== " .. CONFIG.Title .. " ===")
     print("Stick bottom-left, or A/D. Jump Space, light attack J. Numbers are provisional.")
     print(string.format(
-        "Visual %s, grounded move %s %d @ %d fps root (%d,%d) drawOffset (%.0f,%.0f), stopped idle @ %d fps drawOffset (%.0f,%.0f), light root (%d,%d) scale %.2f (~%.0f%% idle) lunge 0, spear %s",
+        "Visual %s, grounded move %s %d @ %d fps root (%d,%d) drawOffset (%.0f,%.0f), stopped idle @ %d fps drawOffset (%.0f,%.0f), light root (%d,%d) renderScale %.3f (sheet fit %.1f%% of idle) lunge 0, spear %s",
         visual.mode,
         visual.moveClip,
         visual.runFrameCount,
@@ -225,7 +225,7 @@ function Start()
         visual.drawOffsetPx[2],
         visual.atkLightRoot[1],
         visual.atkLightRoot[2],
-        visual.atkLightCanvasScale,
+        visual.atkLightRenderScale,
         visual.atkLightRelativeToIdle * 100,
         visual.spearHand
     ))

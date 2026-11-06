@@ -92,6 +92,11 @@ function LightAnim:presentation()
     if self.mode == "recover" then
         kind = "light_recover"
     end
+    local spec = Tuning.ATK_LIGHT_CLIPS[self.clip]
+    local scale = Tuning.ATK_LIGHT_RENDER_SCALE
+    if spec ~= nil and spec.renderScale ~= nil then
+        scale = spec.renderScale
+    end
     return {
         kind = kind,
         clip = self.clip,
@@ -101,7 +106,7 @@ function LightAnim:presentation()
         rootY = Tuning.ATK_LIGHT_ROOT_Y,
         offsetX = Tuning.ATK_LIGHT_DRAW_OFFSET_X_PX,
         offsetY = Tuning.ATK_LIGHT_DRAW_OFFSET_Y_PX,
-        scale = Tuning.ATK_LIGHT_CANVAS_SCALE,
+        scale = scale,
     }
 end
 
@@ -118,6 +123,11 @@ function LightAnim.check()
     attack:request()
     step(attack, anim, 0)
     assert(anim.mode == "mainline" and anim.clip == "light1" and anim.frame == 0, "light1 opens on frame 0")
+    local pres = anim:presentation()
+    assert(
+        pres ~= nil and math.abs(pres.scale - Tuning.ATK_LIGHT_RENDER_SCALE) < 1e-9,
+        "light sheet draws at the idle-matching render scale"
+    )
 
     step(attack, anim, 0.40)
     assert(anim.mode == "recover" and anim.clip == "light1_recover" and anim.frame == 0, "no press plays light1 recover")
@@ -135,12 +145,14 @@ function LightAnim.check()
     attack:request()
     step(attack, anim, 0.20)
     attack:request()
+    attack:request()
     step(attack, anim, 0)
-    assert(anim.mode == "mainline" and anim.clip == "light1", "mash before the late cancel does not skip light1")
-    step(attack, anim, 0.15)
-    assert(anim.mode == "mainline" and anim.clip == "light2", "buffered press chains at the late window without light1 recover")
+    assert(anim.mode == "mainline" and anim.clip == "light1", "mash before the chain hold does not skip light1")
+    assert(attack.buffered == true, "the mash keeps one buffer")
+    step(attack, anim, 0.17)
+    assert(anim.mode == "mainline" and anim.clip == "light2", "buffered press chains after impact plus chain hold")
 
-    step(attack, anim, 0.40)
+    step(attack, anim, 0.545)
     attack:request()
     step(attack, anim, 0)
     assert(anim.clip == "light3" and anim.mode == "mainline", "light2 chains into the downward slash")
@@ -157,11 +169,11 @@ function LightAnim.check()
     attack = LightAttack.new()
     anim = LightAnim.new()
     attack:request()
-    step(attack, anim, 0.34)
+    step(attack, anim, 0.36)
     attack:request()
-    step(attack, anim, 0.40)
+    step(attack, anim, 0.545)
     attack:request()
-    step(attack, anim, 0.52)
+    step(attack, anim, 0.53)
     attack:request()
     step(attack, anim, 0.10)
     assert(attack:hitIndex() == 1 and anim.mode == "mainline" and anim.clip == "light1", "queued light3 restart skips recover")
