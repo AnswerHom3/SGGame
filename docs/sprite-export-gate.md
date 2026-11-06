@@ -11,7 +11,9 @@
 
 ### 美术
 
-- 导出先钉脚：同支撑脚段内 `|Δplanted_x/y| < 2px` 才交。
+叠帧自检与出图硬约定以 [序列帧自检标准](sequence_self_check_standard.md) 为准（脚点抖动 ≤1px）。
+
+- 导出先钉脚：同支撑脚段内 `|Δplanted_x/y| < 2px` 保留为接入/切段验收口径。美术导出前自检按老板标准，脚点抖动 ≤1px。
 - 切段首帧 planted 对齐上一段末帧（或 Idle）；差 ≥ 2px 视为美术未过。
 - 交付必带：`png256` + 脚底表（每帧支撑脚、`recommended_root_offset`、slide）+ QC 叠图 + README（名义 root 与实测 planted 都要写）。
 - 缺一程序可不接。运行时 offset 只兜底，不作主交付。
@@ -41,3 +43,4 @@
 
 - [序列帧导出门禁 · 美术 checklist](sequence_export_checklist_art.md)
 - [轻击脚底复验 checklist · 测试](sequence_export_checklist_qa.md)
+- [序列帧自检标准](sequence_self_check_standard.md)
