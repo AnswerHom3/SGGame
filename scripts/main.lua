@@ -1,12 +1,18 @@
 -- 代号SG / Game004 combat prototype skeleton.
--- Side view. Move, jump, and a 3-hit light attack with provisional windows.
--- Visuals are colored blocks. Grounded move keeps the Idle clip (MOVE_CLIP).
--- Run art is not in this prototype. Root motion is the physics velocity.
+-- Side view. Move, jump, and a 3-hit light attack.
+-- Grounded move plays Run at 8 fps. A stop plays Idle at 10 fps with Idle's offset.
+-- Light mainline maps swing time onto the target duration. Recover branches play
+-- at source-mean fps. Attack sheets use root (128, 248), not Idle's draw offset.
+-- Lunge is 0. Per-frame foot offsets do not move the body. A clip change
+-- bakes the previous plant ox into X before the new clip's offset.
 
 local UI = require("urhox-libs/UI")
 local Tuning = require("combat.tuning")
 local Hero = require("combat.hero")
 local MoveInput = require("combat.move_input")
+local HitStop = require("combat.hit_stop")
+local HeroSheet = require("combat.hero_sheet")
+local AtkLightConfig = require("AtkLightConfig")
 
 local CONFIG = {
     Title = "代号SG 战斗原型",
@@ -36,12 +42,15 @@ local jumpEdge_ = false
 
 local STATE_LABEL = {
     idle = "待机",
+    run = "奔跑",
     jump = "空中",
     light = "轻击",
+    light_recover = "收招",
 }
 
 local BLOCK_COLOR = {
     idle = { 212, 168, 72, 255 },
+    run = { 92, 148, 196, 255 },
     jump = { 232, 206, 120, 255 },
     light = {
         { 214, 104, 48, 255 },
@@ -94,6 +103,12 @@ function Start()
         return
     end
     nvgCreateFont(nvg_, "sans", "Fonts/MiSans-Regular.ttf")
+    -- Maker keeps these on resources preload_groups=default.
+    -- Here the cache fetches every literal atk_light path before the first swing.
+    if cache ~= nil then
+        cache:DownloadResources(AtkLightConfig.allPaths())
+    end
+    HeroSheet.preload(nvg_, Tuning.allHeroSheetResources())
 
     UI.Init({
         fonts = {
@@ -103,6 +118,8 @@ function Start()
     })
 
     scene_ = Scene()
+    HitStop.bind(scene_)
+    HitStop.reset()
     scene_:CreateComponent("Octree")
     scene_:CreateComponent("DebugRenderer")
 
@@ -201,19 +218,29 @@ function Start()
     print("=== " .. CONFIG.Title .. " ===")
     print("Stick bottom-left, or A/D. Jump Space, light attack J. Numbers are provisional.")
     print(string.format(
-        "Visual %s, move clip %s (no Run art), spear %s, idle contract %s @ %.2f fps, foot (%d,%d), drawOffsetX %.1f px",
+        "Visual %s, grounded move %s %d @ %d fps root (%d,%d) drawOffset (%.0f,%.0f), stopped idle @ %d fps drawOffset (%.0f,%.0f), light root (%d,%d) renderScale %.3f (sheet fit %.1f%% of idle) lunge 0, spear %s",
         visual.mode,
         visual.moveClip,
-        visual.spearHand,
-        visual.idleFrame0,
+        visual.runFrameCount,
+        visual.runFps,
+        visual.runRoot[1],
+        visual.runRoot[2],
+        visual.runDrawOffsetPx[1],
+        visual.runDrawOffsetPx[2],
         visual.idleFps,
-        visual.footPivot[1],
-        visual.footPivot[2],
-        visual.drawOffsetPx[1]
+        visual.drawOffsetPx[1],
+        visual.drawOffsetPx[2],
+        visual.atkLightRoot[1],
+        visual.atkLightRoot[2],
+        visual.atkLightRenderScale,
+        visual.atkLightRelativeToIdle * 100,
+        visual.spearHand
     ))
 end
 
 function Stop()
+    HitStop.reset()
+    HeroSheet.release(nvg_)
     UI.Shutdown()
     if nvg_ ~= nil then
         nvgDelete(nvg_)
@@ -325,6 +352,9 @@ function HandleUpdate(eventType, eventData)
     end
 
     local dt = eventData["TimeStep"]:GetFloat()
+    if HitStop.beginFrame(dt) == 0 then
+        dt = 0
+    end
     if input:GetKeyPress(KEY_Z) then
         debugDraw_ = not debugDraw_
     end
@@ -365,8 +395,9 @@ function refreshHud()
     local atk = hero_:attackDebug()
     local clip = hero_:visualState()
     local state = STATE_LABEL[clip] or clip
-    if not atk.active and hero_.onGround and math.abs(hero_.commandAxis) > 0 then
-        state = string.format("移动 %d%% · Idle占位", math.floor(math.abs(hero_.commandAxis) * 100 + 0.5))
+    local pres = hero_:presentation()
+    if clip ~= "light" and clip ~= "light_recover" and not atk.active and hero_.onGround and math.abs(hero_.commandAxis) > 0 then
+        state = string.format("移动 %d%% · Run", math.floor(math.abs(hero_.commandAxis) * 100 + 0.5))
     end
     local facing = "右"
     if hero_.facing < 0 then
@@ -383,16 +414,37 @@ function refreshHud()
         if atk.hitbox then
             live = "生效"
         end
+        local frameShown = 1
+        if pres.frame ~= nil then
+            frameShown = pres.frame + 1
+        end
         text = string.format(
-            "%s %s  朝向%s  t=%.2f  取消%s  判定%s  木桩%d  | 右手持枪  数值占位",
+            "%s %s 帧%d  朝向%s  t=%.2f  取消%s  判定%s  木桩%d  | 右手持枪  脚锁定",
             state,
-            atk.name or "",
+            pres.clip or atk.name or "",
+            frameShown,
             facing,
             atk.t,
             cancel,
             live,
             dummy_.hits
         )
+    elseif pres.kind == "light_recover" then
+        local frameShown = 1
+        if pres.frame ~= nil then
+            frameShown = pres.frame + 1
+        end
+        text = string.format(
+            "%s %s 帧%d  朝向%s  木桩%d  | 右手持枪",
+            state,
+            pres.clip or "",
+            frameShown,
+            facing,
+            dummy_.hits
+        )
+        if atk.comboReset > 0 then
+            text = string.format("%s  连段%.2f", text, atk.comboReset)
+        end
     else
         text = string.format(
             "%s  朝向%s  木桩%d  | 右手持枪  数值占位",
@@ -400,6 +452,12 @@ function refreshHud()
             facing,
             dummy_.hits
         )
+        if atk.comboReset > 0 then
+            text = string.format("%s  连段%.2f", text, atk.comboReset)
+        end
+    end
+    if HitStop.active() then
+        text = text .. "  顿帧"
     end
     label:SetText(text)
 end
@@ -413,15 +471,17 @@ function HandlePostUpdate(eventType, eventData)
     cameraNode_.position = Vector3(CONFIG.CameraLookX, CONFIG.CameraLookY, -10)
     hero_:clampInside(viewportBounds())
 
-    -- Physics has stepped, so the spear box includes this frame's lunge.
+    -- Physics has stepped. Lunge is 0, so a live box does not drag the foot.
     local cx, cy, w, h = hero_:attackBoxWorld()
     local overlapping = false
     if cx ~= nil then
         overlapping = aabbOverlap(cx, cy, w, h, dummy_.x, dummy_.y, dummy_.w, dummy_.h)
     end
+    -- Damage stays on the hit counter. Hit-stop only freezes presentation time.
     if hero_:commitHit(overlapping) then
         dummy_.hits = dummy_.hits + 1
         dummy_.flash = 0.12
+        HitStop.trigger(Tuning.HIT_STOP)
         print(string.format("light hit %d -> dummy (%d)", hero_:attackDebug().index, dummy_.hits))
     end
 
@@ -504,45 +564,93 @@ end
 
 function drawHero(vg)
     local pos = hero_:position()
-    local state = hero_:visualState()
-    local color = BLOCK_COLOR[state]
-    if state == "light" then
-        local index = hero_:attackDebug().index
-        color = BLOCK_COLOR.light[index] or BLOCK_COLOR.light[1]
-    end
-    if color == nil then
-        -- MOVE_CLIP can later name "run" before that clip has art. Keep drawing Idle.
-        color = BLOCK_COLOR.idle
-    end
-
+    local pres = hero_:presentation()
+    local footX = pos.x
     local footY = pos.y - Tuning.HERO_BODY_H * 0.5
-    fillWorldRect(vg, pos.x, footY, Tuning.HERO_BODY_W * 1.15, 0.08, 0, 0, 0, 70)
-    fillWorldRect(vg, pos.x, pos.y, Tuning.HERO_BODY_W, Tuning.HERO_BODY_H, color[1], color[2], color[3], color[4])
-    strokeWorldRect(vg, pos.x, pos.y, Tuning.HERO_BODY_W, Tuning.HERO_BODY_H, 30, 24, 18, 255, 2)
+    fillWorldRect(vg, footX, footY, Tuning.HERO_BODY_W * 1.15, 0.08, 0, 0, 0, 70)
 
-    -- Face notch on the forward side so facing reads without a sprite.
-    local faceX = pos.x + hero_.facing * (Tuning.HERO_BODY_W * 0.5 + 0.04)
-    local faceY = pos.y + Tuning.HERO_BODY_H * 0.28
-    fillWorldRect(vg, faceX, faceY, 0.10, 0.16, 40, 32, 24, 255)
-
-    local gx, gy = hero_:gripWorld()
-    local tx, ty = hero_:tipWorld()
-    -- Shaft is a row of blocks from the right-hand grip to the tip.
-    -- nvgRect / nvgCircle are the sprite-free primitives this skeleton draws with.
-    local steps = 5
-    for i = 0, steps do
-        local t = i / steps
-        local x = gx + (tx - gx) * t
-        local y = gy + (ty - gy) * t
-        fillWorldRect(vg, x, y, 0.07, 0.07, 196, 176, 140, 255)
+    -- Visual only. render scale and frame bounds must not write body X.
+    -- Attack and recover blit the slide-only foot offset on top of the clip
+    -- offset, including the last frame held through the chain window.
+    local drew = false
+    if pres.resource ~= nil then
+        local image = HeroSheet.get(vg, pres.resource)
+        if image ~= nil then
+            local scale = pres.scale or 1
+            local offX = pres.offsetX or 0
+            local offY = pres.offsetY or 0
+            if pres.kind == "light" or pres.kind == "light_recover" then
+                offX, offY = Tuning.lightDrawOffsetPx(pres.clip, pres.frame or 0)
+                scale = pres.scale or Tuning.ATK_LIGHT_RENDER_SCALE
+            end
+            local metersPerPx = (Tuning.HERO_DRAW_H / Tuning.CANVAS) * scale
+            local ppm = metersToPixels(metersPerPx)
+            local rootSx, rootSy = worldToScreen(footX, footY)
+            drew = HeroSheet.blit(
+                vg, image, rootSx, rootSy, ppm, hero_.facing,
+                pres.rootX or Tuning.ATK_LIGHT_ROOT_X,
+                pres.rootY or Tuning.ATK_LIGHT_ROOT_Y,
+                offX, offY,
+                Tuning.CANVAS
+            )
+        end
     end
 
-    fillWorldRect(vg, gx, gy, 0.14, 0.14, 232, 196, 156, 255)
-    local tsx, tsy = worldToScreen(tx, ty)
-    nvgBeginPath(vg)
-    nvgCircle(vg, tsx, tsy, metersToPixels(0.07))
-    nvgFillColor(vg, nvgRGBA(210, 214, 220, 255))
-    nvgFill(vg)
+    if not drew then
+        local state = hero_:visualState()
+        local color = BLOCK_COLOR[state]
+        if state == "light" or state == "light_recover" then
+            local index = hero_:attackDebug().index
+            if index == 0 then
+                index = 1
+            end
+            color = BLOCK_COLOR.light[index] or BLOCK_COLOR.light[1]
+        end
+        if color == nil then
+            color = BLOCK_COLOR.idle
+        end
+        fillWorldRect(vg, pos.x, pos.y, Tuning.HERO_BODY_W, Tuning.HERO_BODY_H, color[1], color[2], color[3], color[4])
+        strokeWorldRect(vg, pos.x, pos.y, Tuning.HERO_BODY_W, Tuning.HERO_BODY_H, 30, 24, 18, 255, 2)
+        local faceX = pos.x + hero_.facing * (Tuning.HERO_BODY_W * 0.5 + 0.04)
+        local faceY = pos.y + Tuning.HERO_BODY_H * 0.28
+        fillWorldRect(vg, faceX, faceY, 0.10, 0.16, 40, 32, 24, 255)
+        local gx, gy = hero_:gripWorld()
+        local tx, ty = hero_:tipWorld()
+        local steps = 5
+        for i = 0, steps do
+            local t = i / steps
+            local x = gx + (tx - gx) * t
+            local y = gy + (ty - gy) * t
+            fillWorldRect(vg, x, y, 0.07, 0.07, 196, 176, 140, 255)
+        end
+        fillWorldRect(vg, gx, gy, 0.14, 0.14, 232, 196, 156, 255)
+        local tsx, tsy = worldToScreen(tx, ty)
+        nvgBeginPath(vg)
+        nvgCircle(vg, tsx, tsy, metersToPixels(0.07))
+        nvgFillColor(vg, nvgRGBA(210, 214, 220, 255))
+        nvgFill(vg)
+    end
+
+    if debugDraw_ and (pres.kind == "light" or pres.kind == "light_recover") then
+        local tipX, tipY, backup = Tuning.lightArtTipForDebug(pres.clip, pres.frame)
+        if tipX ~= nil then
+            local tipOffX, tipOffY = Tuning.lightDrawOffsetPx(pres.clip, pres.frame or 0)
+            local wx, wy = Tuning.sheetPointToWorld(
+                footX, footY, hero_.facing, tipX, tipY,
+                pres.rootX, pres.rootY, tipOffX, tipOffY,
+                pres.scale or Tuning.ATK_LIGHT_RENDER_SCALE
+            )
+            local sx, sy = worldToScreen(wx, wy)
+            nvgBeginPath(vg)
+            nvgCircle(vg, sx, sy, 4)
+            if backup then
+                nvgFillColor(vg, nvgRGBA(255, 196, 64, 230))
+            else
+                nvgFillColor(vg, nvgRGBA(230, 240, 255, 230))
+            end
+            nvgFill(vg)
+        end
+    end
 
     local cx, cy, w, h, live = hero_:attackBoxWorld()
     if cx ~= nil then
@@ -559,16 +667,28 @@ function drawDebugText(vg)
     local pos = hero_:position()
     local vel = hero_.body.linearVelocity
     local atk = hero_:attackDebug()
+    local pres = hero_:presentation()
+    local tip = ""
+    if pres.clip ~= nil then
+        local _, _, backup = Tuning.lightArtTipForDebug(pres.clip, pres.frame or 0)
+        if backup then
+            tip = "  tip=f017-backup"
+        end
+    end
     nvgFontSize(vg, 16)
     nvgFontFace(vg, "sans")
     nvgFillColor(vg, nvgRGBA(255, 255, 255, 255))
     nvgTextAlign(vg, NVG_ALIGN_LEFT + NVG_ALIGN_TOP)
     nvgText(vg, 16, 88, string.format(
-        "pos (%.2f, %.2f)  vel (%.2f, %.2f)\nground %s  facing %d  phase %s  held %s",
+        "pos (%.2f, %.2f)  vel (%.2f, %.2f)\nground %s  facing %d  phase %s  held %s  combo %.2f  %s f%03d%s",
         pos.x, pos.y, vel.x, vel.y,
         tostring(hero_.onGround),
         hero_.facing,
         atk.phase,
-        tostring(atk.held)
+        tostring(atk.held),
+        atk.comboReset or 0,
+        pres.clip or pres.kind or "",
+        pres.frame or 0,
+        tip
     ), nil)
 end

@@ -1,8 +1,10 @@
 -- Side-view hero: program root motion, jump, and the 3-hit light attack.
--- Position comes from the physics body, never from a sprite.
+-- Position comes from the physics body. A light-clip change also bakes the
+-- previous planted-foot ox into X so the sprite does not pop.
 
 local Tuning = require("combat.tuning")
 local LightAttack = require("combat.light_attack")
+local LightAnim = require("combat.light_anim")
 
 local Hero = {}
 Hero.__index = Hero
@@ -15,12 +17,17 @@ function Hero.create(scene, x, y)
     local self = setmetatable({}, Hero)
 
     self.attack = LightAttack.new()
+    self.anim = LightAnim.new()
     self.facing = 1
     self.onGround = false
     self.groundContacts = 0
     self.airBuffer = 0
     self.pendingJump = false
     self.commandAxis = 0
+    self.locomT = 0
+    self.locomClip = "idle"
+    self.plantClip = nil
+    self.plantOx = 0
 
     self.node = scene:CreateChild("HeroZhaoYun")
     self.node:SetPosition2D(x, y)
@@ -68,7 +75,7 @@ function Hero:position()
     return self.node.position2D
 end
 
--- Grounded move uses MOVE_CLIP, which is Idle until Run frames are swapped in.
+-- Grounded move uses MOVE_CLIP (Run). A stop plays Idle.
 function Hero:locomotionClip()
     if math.abs(self.commandAxis or 0) > 0 then
         return Tuning.MOVE_CLIP
@@ -80,10 +87,53 @@ function Hero:visualState()
     if self.attack:isAttacking() then
         return "light"
     end
+    if self.anim:isRecovering() and self.onGround then
+        return "light_recover"
+    end
     if not self.onGround then
         return "jump"
     end
     return self:locomotionClip()
+end
+
+-- Sheet to draw. Attack and recover use the nominal root, not Idle's offset.
+-- Scale is visual only and must not be written back onto the body.
+function Hero:presentation()
+    if self.attack:isAttacking() or (self.anim:isRecovering() and self.onGround) then
+        local pres = self.anim:presentation()
+        if pres ~= nil then
+            return pres
+        end
+    end
+    if not self.onGround then
+        return { kind = "jump", clip = "jump", frame = 0 }
+    end
+    local clip = self:locomotionClip()
+    local frame = Tuning.loopFrameIndex(
+        Tuning.clipFrameCount(clip),
+        Tuning.clipFps(clip),
+        self.locomT or 0
+    )
+    local ox, oy = Tuning.clipDrawOffsetPx(clip)
+    local rootX = Tuning.FOOT_PIVOT_X
+    local rootY = Tuning.FOOT_PIVOT_Y
+    local resource = Tuning.idleFrameResource(frame)
+    if clip == "run" then
+        rootX = Tuning.RUN_ROOT_X
+        rootY = Tuning.RUN_ROOT_Y
+        resource = Tuning.runFrameResource(frame)
+    end
+    return {
+        kind = clip,
+        clip = clip,
+        frame = frame,
+        resource = resource,
+        rootX = rootX,
+        rootY = rootY,
+        offsetX = ox,
+        offsetY = oy,
+        scale = 1,
+    }
 end
 
 function Hero:gripWorld()
@@ -140,6 +190,7 @@ function Hero:update(dt, input)
     local canLeaveSwing = (not attacking) or self.attack:canCancel()
     if input.jump and self.onGround and canLeaveSwing then
         self.attack:cancel()
+        self.anim:interrupt()
         self.pendingJump = true
         self.airBuffer = 0
     elseif input.light then
@@ -156,11 +207,27 @@ function Hero:update(dt, input)
     end
 
     self.attack:update(dt)
+    local groundedPose = self.onGround and not self.pendingJump
+    self.anim:update(dt, self.attack, groundedPose)
+    if not self.attack:isAttacking() and not self.anim:isRecovering() and groundedPose then
+        local clip = self:locomotionClip()
+        if clip ~= self.locomClip then
+            self.locomClip = clip
+            self.locomT = 0
+        else
+            self.locomT = self.locomT + dt
+        end
+    end
 
     local vx = 0
     if self.attack:isAttacking() then
+        -- Hit-window lunge, same idea as a layout step. Speed 0 leaves vx at 0
+        -- so the foot stays planted for the whole swing.
         if self.attack:hitboxActive() then
-            vx = self.facing * Tuning.LUNGE_SPEED[self.attack:hitIndex()]
+            local lunge = Tuning.attackLungeSpeed(self.attack:hitIndex())
+            if lunge ~= 0 then
+                vx = self.facing * lunge
+            end
         end
     else
         vx = self.commandAxis * Tuning.MOVE_SPEED
@@ -180,6 +247,31 @@ function Hero:update(dt, input)
 
     self.body.linearVelocity = Vector2(vx, vy)
     self.body.awake = true
+    self:_syncPlantedFoot()
+end
+
+-- Clip change: bake the previous plant ox into X (facing * actorScale),
+-- then the new clip's draw offset applies. Idle clears the latch after the bake.
+-- Frames inside one clip update ox only and do not move X.
+function Hero:_syncPlantedFoot()
+    local clip = nil
+    local ox = 0
+    if self.anim.mode == "mainline" or self.anim.mode == "recover" then
+        local pres = self.anim:presentation()
+        if pres ~= nil then
+            clip = pres.clip
+            ox = Tuning.lightFootSlideOffsetPx(clip, pres.frame or 0)
+        end
+    end
+    local p = self:position()
+    local x, nextClip, nextOx = Tuning.advancePlant(
+        p.x, self.facing, self.plantClip, self.plantOx, clip, ox
+    )
+    self.plantClip = nextClip
+    self.plantOx = nextOx
+    if x ~= p.x then
+        self.node:SetPosition2D(x, p.y)
+    end
 end
 
 function Hero:clampInside(bounds)
@@ -189,11 +281,13 @@ function Hero:clampInside(bounds)
     local p = self:position()
     local oldX, oldY = p.x, p.y
     local x, y = Tuning.clampPosition(oldX, oldY, bounds)
+    local vel = self.body.linearVelocity
+    -- Sheet scale and viewport bounds must not slide a planted attack foot.
+    x = Tuning.keepLockedFootX(self.attack:isAttacking(), vel.x, oldX, x)
     if x == oldX and y == oldY then
         return
     end
     self.node:SetPosition2D(x, y)
-    local vel = self.body.linearVelocity
     local vx = vel.x
     local vy = vel.y
     if x ~= oldX then

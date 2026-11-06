@@ -6,6 +6,9 @@
 -- Spear stays in the right hand. Facing +1 is the authored facing-right pose;
 -- local +X is "in front of the chest", which is the right-hand spear side.
 
+local AtkLightFoot = require("AtkLightFoot")
+local AtkLightConfig = require("AtkLightConfig")
+
 local Tuning = {}
 
 Tuning.SOURCE = "provisional-placeholder"
@@ -20,7 +23,7 @@ Tuning.JUMP_SPEED = 10.0
 Tuning.GRAVITY = 20.0
 
 -- A press in the air is remembered this long and starts the combo on landing.
--- A press during a swing is held until that swing's cancel window (not cut by this).
+-- A press during a swing uses LIGHT_INPUT_BUFFER and is not cut by this air timer.
 Tuning.INPUT_BUFFER_SEC = 0.12
 
 Tuning.HERO_BODY_W = 0.55
@@ -45,50 +48,81 @@ Tuning.HITBOX = {
 }
 
 -- Meters per second, forward, only while that hit's hit window is live.
-Tuning.LUNGE_SPEED = { 1.2, 1.6, 2.4 }
+-- Zero locks the foot. The hit-window branch stays so a later non-zero value
+-- can lunge again. Do not bake this into sprites, and do not slide X from a
+-- render-scale or viewport-bound change while the speed is 0.
+Tuning.LUNGE_SPEED = { 0, 0, 0 }
 
 -- Times are seconds from the start of that hit.
 -- hitWindow: spear box can connect (half-open).
 -- cancelWindow: jump, or the next light, can take over (half-open).
--- cancelInto "next" chains immediately. "end" waits out the swing, then
--- a press inside the cancel window starts light1 again. Jump still cancels now.
+-- The window opens at impactTime + LIGHT_CHAIN_HOLD. Hit-stop freezes attack
+-- t, so that freeze already delays real time. Do not also add HIT_STOP.
+-- A mash during startup waits. cancelInto "next" chains immediately.
+-- "end" waits out the swing, then a press inside the cancel window starts
+-- light1 again. Jump still cancels now.
 --
 -- Light-string reset delay in seconds, counted from the end of recovery (收招结束).
--- Idle longer than this and the next press starts at light1 again.
--- Tunable. No combo-reset timer reads this yet.
+-- After a swing finishes, the next press continues the string until this elapses.
 Tuning.LIGHT_COMBO_RESET = 0.5
+
+-- Light presses that land before the cancel window opens are kept, then consumed
+-- when that window opens. The hold is at least this long (seconds), and always
+-- long enough to reach the window so the press is not dropped.
+Tuning.LIGHT_INPUT_BUFFER = 0.10
+
+-- Presentation freeze on a successful hit. Time scale goes to 0 for this long.
+-- Damage and the one-hit latch do not read this. Attack t does not advance
+-- during the freeze, so cancel timing must not add this on top of the chain hold.
+Tuning.HIT_STOP = 0.10
+
+-- Seconds of attack time after the impact frame before a chain can start.
+-- Not added to HIT_STOP: the freeze already holds the swing clock.
+Tuning.LIGHT_CHAIN_HOLD = 0.10
+
+local LIGHT1_DURATION = 0.40
+local LIGHT2_DURATION = 0.55
+local LIGHT3_DURATION = 0.62
+-- Impact frame mapped across the clip. light1 frame 7/11 ≈ 0.254545,
+-- light2 frame 16/20 = 0.44, light3 frame 11/16 = 0.42625.
+local LIGHT1_IMPACT = (7 / 11) * LIGHT1_DURATION
+local LIGHT2_IMPACT = (16 / 20) * LIGHT2_DURATION
+local LIGHT3_IMPACT = (11 / 16) * LIGHT3_DURATION
 
 Tuning.LIGHT = {
     {
         name = "light1",
-        duration = 0.40,
+        duration = LIGHT1_DURATION,
+        impactTime = LIGHT1_IMPACT,
         hitWindow = { 0.10, 0.20 },
-        cancelWindow = { 0.18, 0.40 },
+        cancelWindow = { LIGHT1_IMPACT + Tuning.LIGHT_CHAIN_HOLD, LIGHT1_DURATION },
         cancelInto = "next",
     },
     {
         name = "light2",
-        duration = 0.46,
-        hitWindow = { 0.12, 0.24 },
-        cancelWindow = { 0.22, 0.46 },
+        duration = LIGHT2_DURATION,
+        impactTime = LIGHT2_IMPACT,
+        hitWindow = { 0.14, 0.28 },
+        cancelWindow = { LIGHT2_IMPACT + Tuning.LIGHT_CHAIN_HOLD, LIGHT2_DURATION },
         cancelInto = "next",
     },
     {
         name = "light3",
-        duration = 0.62,
+        duration = LIGHT3_DURATION,
+        impactTime = LIGHT3_IMPACT,
         hitWindow = { 0.16, 0.30 },
-        cancelWindow = { 0.36, 0.62 },
+        cancelWindow = { LIGHT3_IMPACT + Tuning.LIGHT_CHAIN_HOLD, LIGHT3_DURATION },
         cancelInto = "end",
     },
 }
 
--- Idle sheet contract. Frames are not on this branch; the prototype draws blocks.
--- When the sheet lands, do not rewrite the PNGs.
+-- Idle sheet contract. Do not rewrite the PNGs.
 -- Canvas 256x256, authored facing right.
 -- Playback is 10 fps (策划). The earlier 2.38 extract pacing is retired.
 -- Documented foot pivot is (128, 248). Tester measured the idle foot near x=145,
 -- so the blit shifts by about -17 px (128 - 145) to put that foot on the pivot.
 -- Vertical compensate used in the local preview is -1 px. Do not rewrite the PNGs.
+-- These draw offsets are Idle only. Run does not use them.
 Tuning.CANVAS = 256
 Tuning.IDLE_FRAME_COUNT = 12
 Tuning.IDLE_FPS = 10
@@ -99,10 +133,126 @@ Tuning.IDLE_DRAW_OFFSET_X_PX = Tuning.FOOT_PIVOT_X - Tuning.IDLE_QC_FOOT_X
 Tuning.IDLE_DRAW_OFFSET_Y_PX = -1
 Tuning.HERO_DRAW_H = 1.90
 
--- Grounded move plays this clip. It is Idle on purpose.
--- When formal Run frames exist, set MOVE_CLIP to "run" and register that clip.
--- Do not add Run art in this prototype.
-Tuning.MOVE_CLIP = "idle"
+-- Approved Run v5. Grounded move plays this clip. A stop plays Idle.
+-- 8 frames at 8 fps is 125 ms/frame and a 1.0 s loop, matching the source cycle.
+-- Do not play Run at 10 fps: that preview is 25% faster (1.25x) than the cycle.
+-- Canvas register / root is (128, 248). Draw offset stays (0, 0).
+-- Do not reuse Idle's (-17, -1).
+Tuning.RUN_FRAME_COUNT = 8
+Tuning.RUN_FPS = 8
+Tuning.RUN_ROOT_X = 128
+Tuning.RUN_ROOT_Y = 248
+Tuning.RUN_DRAW_OFFSET_X_PX = 0
+Tuning.RUN_DRAW_OFFSET_Y_PX = 0
+Tuning.MOVE_CLIP = "run"
+
+-- Zhao Yun light-attack v1. Mainline is duration-driven (time → frame).
+-- Do not play these at 10 fps. Recover branches use source-mean fps, not the
+-- attack target speeds. Nominal root is (128, 248). Do not reuse Idle's (-17, -1).
+--
+-- The six clips share one fit that is about 79.7% of Idle (0.796587…) and
+-- 82.7% of Run. Draw them back up by the inverse of the idle fit (~1/0.7966)
+-- so the on-screen body matches Idle. This is render scale only. Do not edit
+-- the PNGs. The root pixel stays on the collider foot, and a locked foot
+-- (vx == 0) still ignores X corrections from that scale.
+Tuning.ATK_LIGHT_ROOT_X = 128
+Tuning.ATK_LIGHT_ROOT_Y = 248
+Tuning.ATK_LIGHT_DRAW_OFFSET_X_PX = 0
+Tuning.ATK_LIGHT_DRAW_OFFSET_Y_PX = 0
+Tuning.ATK_LIGHT_RELATIVE_TO_IDLE = 0.7965875218419161
+Tuning.ATK_LIGHT_RELATIVE_TO_RUN = 0.8266666666666667
+Tuning.ATK_LIGHT_RENDER_SCALE = 1 / Tuning.ATK_LIGHT_RELATIVE_TO_IDLE
+Tuning.ATK_LIGHT_CANVAS_SCALE = Tuning.ATK_LIGHT_RENDER_SCALE
+
+Tuning.ATK_LIGHT_ORDER = {
+    "light1",
+    "light2",
+    "light3",
+    "light1_recover",
+    "light2_recover",
+    "light3_recover",
+}
+
+-- Duration-driven clip table (AtkLightConfig). Playback reads these durations.
+-- light2 is slowed to 0.55s. renderScale is the same compensation on every clip.
+Tuning.ATK_LIGHT_CLIPS = {
+    light1 = {
+        group = "mainline",
+        frames = 11,
+        duration = LIGHT1_DURATION,
+        playback = "duration",
+        suggestedFps = 11 / LIGHT1_DURATION,
+        impactFrame = 7,
+        cancelFrame = 10,
+        recover = "light1_recover",
+        renderScale = Tuning.ATK_LIGHT_RENDER_SCALE,
+    },
+    light2 = {
+        group = "mainline",
+        frames = 20,
+        duration = LIGHT2_DURATION,
+        playback = "duration",
+        suggestedFps = 20 / LIGHT2_DURATION,
+        impactFrame = 16,
+        cancelFrame = 19,
+        recover = "light2_recover",
+        renderScale = Tuning.ATK_LIGHT_RENDER_SCALE,
+        -- Impact tip is cropped. Frame 17 is a debug-only backup, never (0, 0).
+        debugBackupFrame = 17,
+    },
+    light3 = {
+        group = "mainline",
+        frames = 16,
+        duration = LIGHT3_DURATION,
+        playback = "duration",
+        suggestedFps = 16 / LIGHT3_DURATION,
+        impactFrame = 11,
+        cancelFrame = 15,
+        recover = "light3_recover",
+        renderScale = Tuning.ATK_LIGHT_RENDER_SCALE,
+    },
+    light1_recover = {
+        group = "branches",
+        frames = 13,
+        fps = 12.48,
+        duration = 13 / 12.48,
+        playback = "fps",
+        renderScale = Tuning.ATK_LIGHT_RENDER_SCALE,
+    },
+    light2_recover = {
+        group = "branches",
+        frames = 11,
+        fps = 11 / 0.875,
+        duration = 0.875,
+        playback = "fps",
+        renderScale = Tuning.ATK_LIGHT_RENDER_SCALE,
+    },
+    light3_recover = {
+        group = "branches",
+        frames = 15,
+        fps = 12.413793103448276,
+        duration = 15 / 12.413793103448276,
+        playback = "fps",
+        renderScale = Tuning.ATK_LIGHT_RENDER_SCALE,
+    },
+}
+
+-- Same table. Kept so a caller looking for AtkLightConfig finds the durations.
+Tuning.AtkLightConfig = Tuning.ATK_LIGHT_CLIPS
+
+-- Spear tips in 256-canvas pixels. Missing entries are unknown.
+-- light2 frame 16 is intentionally absent (cropped). Do not store (0, 0).
+Tuning.ATK_LIGHT_TIPS = {
+    light1 = {
+        [7] = { 243.1778, 132.3222 },
+    },
+    light2 = {
+        [17] = { 213.2111, 28.6444 },
+    },
+    light3 = {
+        [11] = { 236.6333, 238.0667 },
+    },
+}
 
 function Tuning.idleFrameResource(index)
     return string.format(
@@ -111,7 +261,250 @@ function Tuning.idleFrameResource(index)
     )
 end
 
--- Sprite-only. Colored blocks ignore this and stand on the collider feet.
+function Tuning.runFrameResource(index)
+    return string.format(
+        "characters/hero_zhaoyun/run/hero_zhaoyun_run_%03d.png",
+        index
+    )
+end
+
+function Tuning.lightFrameResource(clip, index)
+    return AtkLightConfig.frame(clip, index)
+end
+
+function Tuning.atkLightPaths()
+    return AtkLightConfig.allPaths()
+end
+
+function Tuning.allHeroSheetResources()
+    local list = {}
+    for i = 0, Tuning.IDLE_FRAME_COUNT - 1 do
+        list[#list + 1] = Tuning.idleFrameResource(i)
+    end
+    for i = 0, Tuning.RUN_FRAME_COUNT - 1 do
+        list[#list + 1] = Tuning.runFrameResource(i)
+    end
+    for _, name in ipairs(Tuning.ATK_LIGHT_ORDER) do
+        local spec = Tuning.ATK_LIGHT_CLIPS[name]
+        for i = 0, spec.frames - 1 do
+            list[#list + 1] = Tuning.lightFrameResource(name, i)
+        end
+    end
+    return list
+end
+
+-- Uniform time → frame across a target duration. Last index holds until duration.
+function Tuning.durationFrameIndex(frameCount, duration, t)
+    if frameCount <= 1 or duration == nil or duration <= 0 then
+        return 0
+    end
+    if t == nil or t <= 0 then
+        return 0
+    end
+    if t >= duration then
+        return frameCount - 1
+    end
+    local idx = math.floor((t / duration) * frameCount)
+    if idx < 0 then
+        return 0
+    end
+    if idx >= frameCount then
+        return frameCount - 1
+    end
+    return idx
+end
+
+-- Source-mean playback. Clamps on the last frame; does not loop.
+function Tuning.fpsFrameIndex(frameCount, fps, t)
+    if frameCount <= 1 or fps == nil or fps <= 0 then
+        return 0
+    end
+    if t == nil or t <= 0 then
+        return 0
+    end
+    local idx = math.floor(t * fps)
+    if idx < 0 then
+        return 0
+    end
+    if idx >= frameCount then
+        return frameCount - 1
+    end
+    return idx
+end
+
+function Tuning.loopFrameIndex(frameCount, fps, t)
+    if frameCount <= 0 or fps == nil or fps <= 0 then
+        return 0
+    end
+    if t == nil or t <= 0 then
+        return 0
+    end
+    local idx = math.floor(t * fps) % frameCount
+    if idx < 0 then
+        return 0
+    end
+    return idx
+end
+
+function Tuning.playFrameIndex(clip, t)
+    local spec = Tuning.ATK_LIGHT_CLIPS[clip]
+    if spec.playback == "duration" then
+        return Tuning.durationFrameIndex(spec.frames, spec.duration, t)
+    end
+    return Tuning.fpsFrameIndex(spec.frames, spec.fps, t)
+end
+
+-- Art foot registration (scripts/AtkLightFoot.lua).
+-- ox/oy are added on top of the clip draw offset only when that frame's
+-- planted foot slid in the source. A stable plant, a lift, or a weight shift
+-- keeps (0, 0) even if the sample stores a sub-pixel ox/oy.
+-- This does not snap the sole to (128, 248).
+function Tuning.lightFootSlideOffsetPx(clip, frame)
+    if type(clip) ~= "string" or type(frame) ~= "number" then
+        return 0, 0
+    end
+    local row = AtkLightFoot[clip]
+    if row == nil then
+        return 0, 0
+    end
+    local sample = row[frame]
+    if sample == nil or sample.slide ~= true then
+        return 0, 0
+    end
+    return sample.ox or 0, sample.oy or 0
+end
+
+function Tuning.lightFootRegistered(clip, frame)
+    local row = AtkLightFoot[clip]
+    return row ~= nil and row[frame] ~= nil
+end
+
+-- Clip draw offset plus the slide-only foot shift for this frame.
+-- The last held frame (chain window, or a recover clamp) uses that index.
+function Tuning.lightDrawOffsetPx(clip, frame)
+    local fox, foy = Tuning.lightFootSlideOffsetPx(clip, frame)
+    return Tuning.ATK_LIGHT_DRAW_OFFSET_X_PX + fox,
+           Tuning.ATK_LIGHT_DRAW_OFFSET_Y_PX + foy
+end
+
+function Tuning.lightArtTip(clip, frame)
+    local row = Tuning.ATK_LIGHT_TIPS[clip]
+    if row == nil then
+        return nil
+    end
+    local tip = row[frame]
+    if tip == nil then
+        return nil
+    end
+    return tip[1], tip[2]
+end
+
+-- Debug only. A cropped light2 impact never becomes (0, 0).
+-- Frame 17's visible tip may stand in while debugging that impact frame.
+function Tuning.lightArtTipForDebug(clip, frame)
+    local x, y = Tuning.lightArtTip(clip, frame)
+    if x ~= nil and y ~= nil then
+        return x, y, false
+    end
+    local spec = Tuning.ATK_LIGHT_CLIPS[clip]
+    if spec ~= nil and frame == spec.impactFrame and spec.debugBackupFrame ~= nil then
+        local bx, by = Tuning.lightArtTip(clip, spec.debugBackupFrame)
+        if bx ~= nil and by ~= nil then
+            return bx, by, true
+        end
+    end
+    return nil
+end
+
+-- Canvas pixel → world meters. Root pixel lands on the foot point.
+-- offX/offY shift the sheet (Idle only). Facing +1 is authored right.
+function Tuning.sheetPointToWorld(footX, footY, facing, px, py, rootX, rootY, offX, offY, scale)
+    local canvasScale = scale or 1
+    local metersPerPx = (Tuning.HERO_DRAW_H / Tuning.CANVAS) * canvasScale
+    local worldX = footX + ((px + offX) - rootX) * metersPerPx * facing
+    local worldY = footY - ((py + offY) - rootY) * metersPerPx
+    return worldX, worldY
+end
+
+-- Canvas px → world meters, including the idle-matching render scale.
+-- Maker writes playerX += facing * plantOx * actorScale. Same product here.
+function Tuning.attackActorScale()
+    return (Tuning.HERO_DRAW_H / Tuning.CANVAS) * Tuning.ATK_LIGHT_RENDER_SCALE
+end
+
+function Tuning.bakedPlantX(x, facing, ox)
+    local actorScale = Tuning.attackActorScale()
+    local face = facing or 1
+    if face == 0 then
+        face = 1
+    end
+    return x + face * (ox or 0) * actorScale
+end
+
+-- On a clip change, bake the previous plant ox into X before the new offset.
+-- clip nil is the return to Idle: bake, then clear the latch.
+-- Same-clip frame steps only refresh ox. They do not move X.
+function Tuning.advancePlant(x, facing, prevClip, prevOx, clip, ox)
+    if prevClip ~= clip then
+        if prevClip ~= nil then
+            x = Tuning.bakedPlantX(x, facing, prevOx or 0)
+        end
+        if clip == nil then
+            return x, nil, 0
+        end
+        return x, clip, ox or 0
+    end
+    return x, prevClip, ox or 0
+end
+
+-- Hit-window lunge. Zero means the foot stays where it is.
+function Tuning.attackLungeSpeed(hitIndex)
+    local speed = Tuning.LUNGE_SPEED[hitIndex]
+    if speed == nil or speed == 0 then
+        return 0
+    end
+    return speed
+end
+
+-- A locked foot (attacking, vx == 0) ignores X corrections that only exist
+-- because a viewport bound or a sheet scale changed. Y is left to the caller.
+function Tuning.keepLockedFootX(attacking, vx, oldX, clampedX)
+    if attacking and vx == 0 then
+        return oldX
+    end
+    return clampedX
+end
+
+function Tuning.clipFps(clip)
+    if clip == "run" then
+        return Tuning.RUN_FPS
+    end
+    return Tuning.IDLE_FPS
+end
+
+function Tuning.clipFrameCount(clip)
+    if clip == "run" then
+        return Tuning.RUN_FRAME_COUNT
+    end
+    return Tuning.IDLE_FRAME_COUNT
+end
+
+-- Sprite-only. Idle's measured-foot compensate must not be applied to Run.
+function Tuning.clipDrawOffsetPx(clip)
+    if clip == "run" then
+        return Tuning.RUN_DRAW_OFFSET_X_PX, Tuning.RUN_DRAW_OFFSET_Y_PX
+    end
+    return Tuning.IDLE_DRAW_OFFSET_X_PX, Tuning.IDLE_DRAW_OFFSET_Y_PX
+end
+
+function Tuning.clipDrawOffsetMeters(clip)
+    local metersPerPx = Tuning.HERO_DRAW_H / Tuning.CANVAS
+    local ox, oy = Tuning.clipDrawOffsetPx(clip)
+    return ox * metersPerPx, oy * metersPerPx
+end
+
+-- Idle only. Colored blocks ignore this and stand on the collider feet.
+-- Run uses clipDrawOffsetPx("run"), which stays (0, 0).
 function Tuning.idleDrawOffsetMeters()
     local metersPerPx = Tuning.HERO_DRAW_H / Tuning.CANVAS
     return Tuning.IDLE_DRAW_OFFSET_X_PX * metersPerPx,
@@ -203,7 +596,7 @@ end
 
 function Tuning.visualContract()
     return {
-        mode = "colored_blocks",
+        mode = "hero_sheet",
         moveClip = Tuning.MOVE_CLIP,
         idleFps = Tuning.IDLE_FPS,
         canvas = Tuning.CANVAS,
@@ -212,6 +605,23 @@ function Tuning.visualContract()
         drawOffsetPx = { Tuning.IDLE_DRAW_OFFSET_X_PX, Tuning.IDLE_DRAW_OFFSET_Y_PX },
         idleFrame0 = Tuning.idleFrameResource(0),
         idleFrameLast = Tuning.idleFrameResource(Tuning.IDLE_FRAME_COUNT - 1),
+        runFps = Tuning.RUN_FPS,
+        runFrameCount = Tuning.RUN_FRAME_COUNT,
+        runRoot = { Tuning.RUN_ROOT_X, Tuning.RUN_ROOT_Y },
+        runDrawOffsetPx = { Tuning.RUN_DRAW_OFFSET_X_PX, Tuning.RUN_DRAW_OFFSET_Y_PX },
+        runFrame0 = Tuning.runFrameResource(0),
+        runFrameLast = Tuning.runFrameResource(Tuning.RUN_FRAME_COUNT - 1),
+        atkLightRoot = { Tuning.ATK_LIGHT_ROOT_X, Tuning.ATK_LIGHT_ROOT_Y },
+        atkLightDrawOffsetPx = {
+            Tuning.ATK_LIGHT_DRAW_OFFSET_X_PX,
+            Tuning.ATK_LIGHT_DRAW_OFFSET_Y_PX,
+        },
+        atkLightCanvasScale = Tuning.ATK_LIGHT_CANVAS_SCALE,
+        atkLightRenderScale = Tuning.ATK_LIGHT_RENDER_SCALE,
+        atkLightRelativeToIdle = Tuning.ATK_LIGHT_RELATIVE_TO_IDLE,
+        atkLightRelativeToRun = Tuning.ATK_LIGHT_RELATIVE_TO_RUN,
+        atkLightFrame0 = Tuning.lightFrameResource("light1", 0),
+        atkLightFrameLast = Tuning.lightFrameResource("light3_recover", 14),
         spearHand = Tuning.SPEAR_HAND,
     }
 end
@@ -221,7 +631,7 @@ function Tuning.validate()
     assert(Tuning.SPEAR_TIP_LOCAL_X > Tuning.SPEAR_GRIP_LOCAL_X, "tip stays in front of the grip")
     assert(Tuning.MOVE_DEADZONE == 0.15, "move deadzone")
     assert(Tuning.MOVE_SPEED == 5, "move speed")
-    assert(Tuning.MOVE_CLIP == "idle", "move keeps playing idle; Run art is not integrated")
+    assert(Tuning.MOVE_CLIP == "run", "grounded move plays run")
     assert(Tuning.moveAxis(0) == 0, "stick release is a stop")
     assert(Tuning.moveAxis(0.15) == 0 and Tuning.moveAxis(-0.15) == 0, "deadzone")
     assert(math.abs(Tuning.moveAxis(1) - 1) < 1e-9, "full stick right")
@@ -244,12 +654,222 @@ function Tuning.validate()
         math.abs(Tuning.IDLE_DRAW_OFFSET_X_PX - (Tuning.FOOT_PIVOT_X - Tuning.IDLE_QC_FOOT_X)) < 1e-6,
         "draw offset"
     )
+    assert(Tuning.RUN_FPS == 8, "run playback is 8 fps")
+    assert(Tuning.RUN_FRAME_COUNT == 8, "run frame count")
+    assert(math.abs((Tuning.RUN_FRAME_COUNT / Tuning.RUN_FPS) - 1.0) < 1e-9, "run loop is 1 second")
+    assert(Tuning.RUN_ROOT_X == 128 and Tuning.RUN_ROOT_Y == 248, "run canvas root")
+    assert(
+        Tuning.RUN_DRAW_OFFSET_X_PX == 0 and Tuning.RUN_DRAW_OFFSET_Y_PX == 0,
+        "run does not reuse the idle draw offset"
+    )
+    local runOx, runOy = Tuning.clipDrawOffsetPx("run")
+    assert(runOx == 0 and runOy == 0, "run clip offset")
+    local idleOx, idleOy = Tuning.clipDrawOffsetPx("idle")
+    assert(idleOx == -17 and idleOy == -1, "idle clip keeps its own offset")
+    assert(Tuning.clipFps("run") == 8 and Tuning.clipFps("idle") == 10, "clip fps")
+    assert(Tuning.clipFrameCount("run") == 8 and Tuning.clipFrameCount("idle") == 12, "clip frame counts")
+    assert(
+        Tuning.runFrameResource(0) == "characters/hero_zhaoyun/run/hero_zhaoyun_run_000.png",
+        "run frame 0"
+    )
+    assert(
+        Tuning.runFrameResource(7) == "characters/hero_zhaoyun/run/hero_zhaoyun_run_007.png",
+        "run frame 7"
+    )
     assert(#Tuning.LIGHT == 3 and #Tuning.HITBOX == 3 and #Tuning.LUNGE_SPEED == 3, "3-hit")
+    assert(Tuning.LUNGE_SPEED[1] == 0 and Tuning.LUNGE_SPEED[2] == 0 and Tuning.LUNGE_SPEED[3] == 0, "lunge locked")
+    assert(Tuning.attackLungeSpeed(1) == 0 and Tuning.attackLungeSpeed(2) == 0 and Tuning.attackLungeSpeed(3) == 0, "zero lunge is a locked foot")
+    assert(Tuning.keepLockedFootX(true, 0, 1.25, 1.40) == 1.25, "locked foot ignores bound nudge")
+    assert(Tuning.keepLockedFootX(true, 1, 1.25, 1.40) == 1.40, "moving attack can still clamp")
+    assert(Tuning.keepLockedFootX(false, 0, 1.25, 1.40) == 1.40, "idle clamp still applies")
+    assert(Tuning.LIGHT_CHAIN_HOLD == 0.10, "light chain hold")
+    assert(Tuning.LIGHT[1].duration == 0.40 and Tuning.LIGHT[2].duration == 0.55 and Tuning.LIGHT[3].duration == 0.62, "light durations")
+    assert(math.abs(Tuning.LIGHT[1].impactTime - 0.254545) < 1e-5, "light1 impact ~ frame 7/11")
+    assert(math.abs(Tuning.LIGHT[2].impactTime - 0.44) < 1e-9, "light2 impact frame 16/20")
+    assert(math.abs(Tuning.LIGHT[3].impactTime - 0.42625) < 1e-12, "light3 impact frame 11/16")
+    assert(Tuning.LIGHT[1].hitWindow[1] == 0.10 and Tuning.LIGHT[1].hitWindow[2] == 0.20, "light1 hit window")
+    assert(Tuning.LIGHT[2].hitWindow[1] == 0.14 and Tuning.LIGHT[2].hitWindow[2] == 0.28, "light2 hit window")
+    assert(Tuning.LIGHT[3].hitWindow[1] == 0.16 and Tuning.LIGHT[3].hitWindow[2] == 0.30, "light3 hit window")
+    assert(math.abs(Tuning.LIGHT[1].cancelWindow[1] - 0.354545) < 1e-5 and Tuning.LIGHT[1].cancelWindow[2] == 0.40, "light1 cancel")
+    assert(math.abs(Tuning.LIGHT[2].cancelWindow[1] - 0.54) < 1e-9 and Tuning.LIGHT[2].cancelWindow[2] == 0.55, "light2 cancel")
+    assert(math.abs(Tuning.LIGHT[3].cancelWindow[1] - 0.52625) < 1e-12 and Tuning.LIGHT[3].cancelWindow[2] == 0.62, "light3 cancel")
+    assert(Tuning.LIGHT_COMBO_RESET == 0.5, "light combo reset")
+    assert(Tuning.LIGHT_INPUT_BUFFER == 0.10, "light input buffer")
+    assert(Tuning.HIT_STOP == 0.10, "hit stop")
     assert(Tuning.LIGHT[1].cancelInto == "next", "light1 chains")
     assert(Tuning.LIGHT[2].cancelInto == "next", "light2 chains")
     assert(Tuning.LIGHT[3].cancelInto == "end", "light3 ends the string")
+    assert(Tuning.ATK_LIGHT_ROOT_X == 128 and Tuning.ATK_LIGHT_ROOT_Y == 248, "light root")
+    assert(
+        Tuning.ATK_LIGHT_DRAW_OFFSET_X_PX == 0 and Tuning.ATK_LIGHT_DRAW_OFFSET_Y_PX == 0,
+        "light attack does not reuse the idle draw offset"
+    )
+    assert(Tuning.AtkLightConfig == Tuning.ATK_LIGHT_CLIPS, "AtkLightConfig is the clip table")
+    assert(math.abs(Tuning.ATK_LIGHT_RELATIVE_TO_IDLE - 0.7965875218419161) < 1e-12, "idle size ratio")
+    assert(math.abs(Tuning.ATK_LIGHT_RELATIVE_TO_RUN - 0.8266666666666667) < 1e-12, "run size ratio")
+    assert(
+        math.abs(Tuning.ATK_LIGHT_RENDER_SCALE * Tuning.ATK_LIGHT_RELATIVE_TO_IDLE - 1) < 1e-9,
+        "render scale restores idle size"
+    )
+    assert(math.abs(Tuning.ATK_LIGHT_RENDER_SCALE - (1 / 0.7966)) < 1e-4, "render scale is about 1/0.7966")
+    assert(Tuning.ATK_LIGHT_CANVAS_SCALE == Tuning.ATK_LIGHT_RENDER_SCALE, "draw uses the render scale")
+    assert(math.abs(Tuning.ATK_LIGHT_CLIPS.light1.suggestedFps - 27.5) < 1e-9, "light1 fps")
+    assert(math.abs(Tuning.ATK_LIGHT_CLIPS.light2.duration - 0.55) < 1e-12, "light2 clip duration")
+    assert(math.abs(Tuning.ATK_LIGHT_CLIPS.light2.suggestedFps - (20 / 0.55)) < 1e-9, "light2 fps")
+    assert(math.abs(Tuning.ATK_LIGHT_CLIPS.light3.suggestedFps - (16 / 0.62)) < 1e-9, "light3 fps")
+    assert(Tuning.ATK_LIGHT_CLIPS.light1.suggestedFps ~= 10, "light1 is not 10 fps")
+    assert(math.abs(Tuning.ATK_LIGHT_CLIPS.light1_recover.fps - 12.48) < 1e-9, "light1 recover fps")
+    assert(math.abs(Tuning.ATK_LIGHT_CLIPS.light2_recover.fps - (11 / 0.875)) < 1e-9, "light2 recover fps")
+    assert(math.abs(Tuning.ATK_LIGHT_CLIPS.light3_recover.fps - 12.413793103448276) < 1e-9, "light3 recover fps")
+    assert(Tuning.ATK_LIGHT_CLIPS.light1_recover.duration > 1.0, "recover keeps source length")
+    assert(Tuning.playFrameIndex("light1", 0) == 0, "light1 frame 0")
+    assert(Tuning.playFrameIndex("light1", 0.40) == 10, "light1 last frame")
+    assert(Tuning.playFrameIndex("light1", Tuning.LIGHT[1].impactTime) == 7, "light1 impact frame")
+    assert(Tuning.playFrameIndex("light2", 0) == 0 and Tuning.playFrameIndex("light2", 0.55) == 19, "light2 span")
+    assert(Tuning.playFrameIndex("light2", Tuning.LIGHT[2].impactTime) == 16, "light2 impact frame")
+    assert(Tuning.playFrameIndex("light3", Tuning.LIGHT[3].impactTime) == 11, "light3 impact frame")
+    assert(Tuning.playFrameIndex("light3", 0.62) == 15, "light3 last frame")
+    assert(Tuning.playFrameIndex("light1_recover", 0) == 0, "recover starts at 0")
+    assert(Tuning.playFrameIndex("light1_recover", 1 / 12.48) == 1, "recover steps at source fps")
+    assert(Tuning.lightFrameResource("light3", 15)
+        == "characters/hero_zhaoyun/atk_light/mainline/hero_zhaoyun_atk_light3_015.png",
+        "downward slash frame")
+    assert(Tuning.lightFrameResource("light1_recover", 12)
+        == "characters/hero_zhaoyun/atk_light/branches/hero_zhaoyun_atk_light1_recover_012.png",
+        "recover branch path")
+    local sheetCount = 0
+    for _, name in ipairs(Tuning.ATK_LIGHT_ORDER) do
+        local spec = Tuning.ATK_LIGHT_CLIPS[name]
+        sheetCount = sheetCount + spec.frames
+        assert(spec.renderScale == Tuning.ATK_LIGHT_RENDER_SCALE, name .. " render scale")
+    end
+    assert(sheetCount == 86, "86 light-attack frames")
+    assert(#Tuning.allHeroSheetResources() == 12 + 8 + 86, "hero sheet list")
+    assert(Tuning.lightArtTip("light2", 16) == nil, "cropped light2 impact tip stays unknown")
+    local backupX, backupY, backup = Tuning.lightArtTipForDebug("light2", 16)
+    assert(backup == true, "debug backup is explicit")
+    assert(backupX ~= nil and not (backupX == 0 and backupY == 0), "backup is not the origin")
+    assert(math.abs(backupX - 213.2111) < 1e-4 and math.abs(backupY - 28.6444) < 1e-4, "frame 17 backup tip")
+    local realX, realY, realBackup = Tuning.lightArtTipForDebug("light1", 7)
+    assert(realBackup == false and math.abs(realX - 243.1778) < 1e-4, "light1 impact tip")
+    local rootX, rootY = Tuning.sheetPointToWorld(3, 1, 1, 128, 248, 128, 248, 0, 0, 1)
+    assert(math.abs(rootX - 3) < 1e-9 and math.abs(rootY - 1) < 1e-9, "light root sits on the foot")
+    local idleFootX = Tuning.sheetPointToWorld(0, 0, 1, 145, 248, 128, 248, -17, -1, 1)
+    assert(math.abs(idleFootX) < 1e-9, "idle offset still parks its own foot")
+    local lightFootX = Tuning.sheetPointToWorld(
+        0, 0, 1, 145, 248,
+        Tuning.ATK_LIGHT_ROOT_X, Tuning.ATK_LIGHT_ROOT_Y,
+        Tuning.ATK_LIGHT_DRAW_OFFSET_X_PX, Tuning.ATK_LIGHT_DRAW_OFFSET_Y_PX,
+        Tuning.ATK_LIGHT_RENDER_SCALE
+    )
+    local unshifted = 17 * (Tuning.HERO_DRAW_H / Tuning.CANVAS) * Tuning.ATK_LIGHT_RENDER_SCALE
+    assert(math.abs(lightFootX - unshifted) < 1e-9, "light sheet is not shifted by -17")
+    local scaledRootX, scaledRootY = Tuning.sheetPointToWorld(
+        3, 1, 1, 128, 248, 128, 248, 0, 0, Tuning.ATK_LIGHT_RENDER_SCALE
+    )
+    assert(
+        math.abs(scaledRootX - 3) < 1e-9 and math.abs(scaledRootY - 1) < 1e-9,
+        "render scale keeps the root on the foot"
+    )
+    -- Non-slide samples can be non-zero. They must not move the sprite,
+    -- and they must not be replaced by a snap of the sole onto (128, 248).
+    local stillX, stillY = Tuning.lightFootSlideOffsetPx("light1", 1)
+    assert(stillX == 0 and stillY == 0, "light1 frame 1 weight shift is not a root slide")
+    local plantX, plantY = Tuning.lightFootSlideOffsetPx("light1", 0)
+    assert(plantX == 0 and plantY == 0, "opening plant stays on the clip offset")
+    local slideX, slideY = Tuning.lightFootSlideOffsetPx("light1", 2)
+    assert(math.abs(slideX - 4.054) < 1e-9 and slideY == 3, "light1 frame 2 slide offset")
+    assert(math.abs(slideX - 23.781) > 1, "slide offset is not a hard snap onto (128, 248)")
+    local heldX, heldY = Tuning.lightFootSlideOffsetPx("light1", 10)
+    assert(math.abs(heldX - 47.18) < 1e-9 and heldY == 10, "light1 last frame slide offset")
+    local quietX, quietY = Tuning.lightFootSlideOffsetPx("light2", 13)
+    assert(quietX == 0 and quietY == 0, "light2 pre-slide frame keeps its ox unused")
+    local l2X, l2Y = Tuning.lightFootSlideOffsetPx("light2", 19)
+    assert(math.abs(l2X - (-34.813)) < 1e-9 and l2Y == -15, "light2 last frame slide offset")
+    local recX, recY = Tuning.lightFootSlideOffsetPx("light1_recover", 12)
+    assert(math.abs(recX - (-47.268)) < 1e-9 and recY == -10, "light1 recover last frame")
+    local recStillX, recStillY = Tuning.lightFootSlideOffsetPx("light3_recover", 3)
+    assert(recStillX == 0 and recStillY == 0, "recover non-slide stays put")
+    local drawX, drawY = Tuning.lightDrawOffsetPx("light1", 2)
+    assert(
+        math.abs(drawX - (Tuning.ATK_LIGHT_DRAW_OFFSET_X_PX + 4.054)) < 1e-9
+            and math.abs(drawY - (Tuning.ATK_LIGHT_DRAW_OFFSET_Y_PX + 3)) < 1e-9,
+        "foot ox/oy stacks on the clip draw offset"
+    )
+    local footFrames = 0
+    for _, name in ipairs(Tuning.ATK_LIGHT_ORDER) do
+        local spec = Tuning.ATK_LIGHT_CLIPS[name]
+        for index = 0, spec.frames - 1 do
+            assert(Tuning.lightFootRegistered(name, index), name .. " foot frame " .. index)
+            footFrames = footFrames + 1
+        end
+    end
+    assert(footFrames == 86, "foot registration covers 86 frames")
+    local movedX, movedY = Tuning.sheetPointToWorld(
+        3, 1, 1, 128, 248, 128, 248, slideX, slideY, Tuning.ATK_LIGHT_RENDER_SCALE
+    )
+    local metersPerPx = (Tuning.HERO_DRAW_H / Tuning.CANVAS) * Tuning.ATK_LIGHT_RENDER_SCALE
+    assert(math.abs(movedX - (3 + slideX * metersPerPx)) < 1e-9, "slide offset shifts the sheet in x")
+    assert(math.abs(movedY - (1 - slideY * metersPerPx)) < 1e-9, "slide offset shifts the sheet in y")
+    assert(math.abs(scaledRootX - 3) < 1e-9, "per-frame sheet offset does not move the body by itself")
+    local paths = Tuning.atkLightPaths()
+    assert(#paths == 86, "literal attack path list")
+    local seen = {}
+    for _, path in ipairs(paths) do
+        assert(type(path) == "string" and string.find(path, "%", 1, true) == nil, "path is a literal")
+        assert(seen[path] == nil, "duplicate path " .. path)
+        seen[path] = true
+    end
+    assert(
+        Tuning.lightFrameResource("light1", 0)
+            == "characters/hero_zhaoyun/atk_light/mainline/hero_zhaoyun_atk_light1_000.png",
+        "light1 frame 0 literal"
+    )
+    assert(
+        Tuning.lightFrameResource("light1", 10)
+            == "characters/hero_zhaoyun/atk_light/mainline/hero_zhaoyun_atk_light1_010.png",
+        "light1 last literal"
+    )
+    assert(
+        Tuning.lightFrameResource("light3_recover", 14)
+            == "characters/hero_zhaoyun/atk_light/branches/hero_zhaoyun_atk_light3_recover_014.png",
+        "light3 recover last literal"
+    )
+    assert(Tuning.lightFrameResource("light2", 19) == paths[11 + 20], "light2 last sits in the flat list")
+    local actorScale = Tuning.attackActorScale()
+    assert(math.abs(actorScale - ((Tuning.HERO_DRAW_H / Tuning.CANVAS) * Tuning.ATK_LIGHT_RENDER_SCALE)) < 1e-12, "actor scale")
+    local bx, bClip, bOx = Tuning.advancePlant(2, 1, nil, 0, "light1", 47.18)
+    assert(bx == 2 and bClip == "light1" and bOx == 47.18, "entering light1 does not bake")
+    bx, bClip, bOx = Tuning.advancePlant(bx, 1, bClip, bOx, "light1", 47.18)
+    assert(bx == 2, "same clip does not bake a new ox")
+    local visualBefore = bx + 1 * 47.18 * actorScale
+    bx, bClip, bOx = Tuning.advancePlant(bx, 1, bClip, 47.18, "light2", 0)
+    assert(bClip == "light2" and bOx == 0, "light2 latch starts clean")
+    assert(math.abs(bx - (2 + 47.18 * actorScale)) < 1e-9, "light1 ox is baked into X")
+    assert(math.abs((bx + 0) - visualBefore) < 1e-9, "light1 to light2 does not jump")
+    local leftX = Tuning.advancePlant(0, -1, "light1", 47.18, "light2", 0)
+    assert(math.abs(leftX - (-47.18 * actorScale)) < 1e-9, "bake is facing-aware")
+    local idleX, idleClip, idleOx = Tuning.advancePlant(bx, 1, "light2", 0, nil, 0)
+    assert(idleClip == nil and idleOx == 0, "idle clears the plant latch")
+    assert(math.abs(idleX - bx) < 1e-9, "zero ox bake leaves X")
+    local clearedX, clearedClip, clearedOx = Tuning.advancePlant(1, 1, "light1_recover", -47.268, nil, 99)
+    assert(clearedClip == nil and clearedOx == 0, "idle clears even if a new ox was passed")
+    assert(math.abs(clearedX - (1 + -47.268 * actorScale)) < 1e-9, "return to idle bakes the last ox")
 
     for i, hit in ipairs(Tuning.LIGHT) do
+        local spec = Tuning.ATK_LIGHT_CLIPS[hit.name]
+        assert(spec.playback == "duration", hit.name .. " duration playback")
+        assert(math.abs(spec.duration - hit.duration) < 1e-9, hit.name .. " sheet duration")
+        assert(spec.renderScale == Tuning.ATK_LIGHT_RENDER_SCALE, hit.name .. " render scale")
+        assert(spec.cancelFrame == spec.frames - 1, hit.name .. " cancel frame is the last mainline frame")
+        assert(Tuning.playFrameIndex(hit.name, hit.impactTime) == spec.impactFrame, hit.name .. " impact frame")
+        local cancelStart = hit.impactTime + Tuning.LIGHT_CHAIN_HOLD
+        assert(math.abs(hit.cancelWindow[1] - cancelStart) < 1e-12, hit.name .. " cancel opens after impact plus chain hold")
+        assert(
+            math.abs(hit.cancelWindow[1] - (cancelStart + Tuning.HIT_STOP)) > 1e-4,
+            hit.name .. " hit-stop is not added to the cancel start"
+        )
+        assert(hit.cancelWindow[2] == hit.duration, hit.name .. " cancel runs to the end of the clip")
         assert(hit.duration > 0, hit.name)
         assert(hit.hitWindow[1] >= 0 and hit.hitWindow[2] <= hit.duration, hit.name .. " hit window")
         assert(hit.hitWindow[1] < hit.hitWindow[2], hit.name .. " hit window order")
@@ -261,6 +881,11 @@ function Tuning.validate()
         local leftCx = Tuning.attackBox(0, 0, -1, i)
         assert(leftCx < 0, hit.name .. " mirrors with facing")
     end
+
+    local LightAttack = require("combat.light_attack")
+    LightAttack.check()
+    local LightAnim = require("combat.light_anim")
+    LightAnim.check()
     return true
 end
 
