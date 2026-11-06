@@ -97,6 +97,9 @@ function LightAnim:presentation()
     if spec ~= nil and spec.renderScale ~= nil then
         scale = spec.renderScale
     end
+    -- Slide-only foot shift on top of the clip offset. A held last frame
+    -- (chain window, or recover clamped on its last index) keeps that sample.
+    local offX, offY = Tuning.lightDrawOffsetPx(self.clip, self.frame)
     return {
         kind = kind,
         clip = self.clip,
@@ -104,8 +107,8 @@ function LightAnim:presentation()
         resource = Tuning.lightFrameResource(self.clip, self.frame),
         rootX = Tuning.ATK_LIGHT_ROOT_X,
         rootY = Tuning.ATK_LIGHT_ROOT_Y,
-        offsetX = Tuning.ATK_LIGHT_DRAW_OFFSET_X_PX,
-        offsetY = Tuning.ATK_LIGHT_DRAW_OFFSET_Y_PX,
+        offsetX = offX,
+        offsetY = offY,
         scale = scale,
     }
 end
@@ -132,6 +135,8 @@ function LightAnim.check()
     step(attack, anim, 0.40)
     assert(anim.mode == "recover" and anim.clip == "light1_recover" and anim.frame == 0, "no press plays light1 recover")
     assert(attack.comboIndex == 1 and attack.comboReset > 0, "combo window still open during recover")
+    pres = anim:presentation()
+    assert(pres.offsetX == 0 and pres.offsetY == 0, "recover frame 0 during the combo window does not keep the previous slide")
     assert(Tuning.LIGHT_COMBO_RESET == 0.5, "combo reset unchanged")
     assert(Tuning.LIGHT_INPUT_BUFFER == 0.10, "input buffer unchanged")
     assert(Tuning.HIT_STOP == 0.10, "hit stop unchanged")
@@ -206,6 +211,40 @@ function LightAnim.check()
     attack:update(0.40)
     anim:update(0, attack, false)
     assert(anim.mode == "none", "an airborne ending does not play ground recover")
+
+    -- Last mainline frame stays up through the chain window, with its slide offset.
+    attack = LightAttack.new()
+    anim = LightAnim.new()
+    attack:request()
+    step(attack, anim, 0.399)
+    assert(anim.mode == "mainline" and anim.clip == "light1" and anim.frame == 10, "chain window holds light1's last frame")
+    assert(attack:canCancel(), "that held frame is inside the chain window")
+    pres = anim:presentation()
+    local holdX, holdY = Tuning.lightDrawOffsetPx("light1", 10)
+    assert(math.abs(pres.offsetX - holdX) < 1e-9 and math.abs(pres.offsetY - holdY) < 1e-9, "held light1 frame keeps its foot offset")
+    assert(pres.rootX == 128 and pres.rootY == 248, "held frame still pivots on the nominal root")
+    assert(math.abs(pres.scale - Tuning.ATK_LIGHT_RENDER_SCALE) < 1e-9, "held frame keeps the idle-matching scale")
+
+    -- A non-slide frame with a stored ox must not move.
+    attack = LightAttack.new()
+    anim = LightAnim.new()
+    attack:request()
+    step(attack, anim, (1 / 11) * 0.40 + 0.001)
+    assert(anim.frame == 1, "light1 frame 1")
+    pres = anim:presentation()
+    assert(pres.offsetX == 0 and pres.offsetY == 0, "non-slide frame does not apply ox/oy")
+
+    -- Recover clamps on its last frame and still applies that frame's slide offset.
+    attack = LightAttack.new()
+    anim = LightAnim.new()
+    attack:request()
+    step(attack, anim, 0.40)
+    local recDur = Tuning.ATK_LIGHT_CLIPS.light1_recover.duration
+    step(attack, anim, recDur - 0.0001)
+    assert(anim.mode == "recover" and anim.clip == "light1_recover" and anim.frame == 12, "light1 recover holds its last frame")
+    pres = anim:presentation()
+    local recX, recY = Tuning.lightDrawOffsetPx("light1_recover", 12)
+    assert(math.abs(pres.offsetX - recX) < 1e-9 and math.abs(pres.offsetY - recY) < 1e-9, "held recover frame keeps its foot offset")
 end
 
 return LightAnim

@@ -1,5 +1,6 @@
 -- Side-view hero: program root motion, jump, and the 3-hit light attack.
--- Position comes from the physics body, never from a sprite.
+-- Position comes from the physics body. A light-clip change also bakes the
+-- previous planted-foot ox into X so the sprite does not pop.
 
 local Tuning = require("combat.tuning")
 local LightAttack = require("combat.light_attack")
@@ -25,6 +26,8 @@ function Hero.create(scene, x, y)
     self.commandAxis = 0
     self.locomT = 0
     self.locomClip = "idle"
+    self.plantClip = nil
+    self.plantOx = 0
 
     self.node = scene:CreateChild("HeroZhaoYun")
     self.node:SetPosition2D(x, y)
@@ -244,6 +247,31 @@ function Hero:update(dt, input)
 
     self.body.linearVelocity = Vector2(vx, vy)
     self.body.awake = true
+    self:_syncPlantedFoot()
+end
+
+-- Clip change: bake the previous plant ox into X (facing * actorScale),
+-- then the new clip's draw offset applies. Idle clears the latch after the bake.
+-- Frames inside one clip update ox only and do not move X.
+function Hero:_syncPlantedFoot()
+    local clip = nil
+    local ox = 0
+    if self.anim.mode == "mainline" or self.anim.mode == "recover" then
+        local pres = self.anim:presentation()
+        if pres ~= nil then
+            clip = pres.clip
+            ox = Tuning.lightFootSlideOffsetPx(clip, pres.frame or 0)
+        end
+    end
+    local p = self:position()
+    local x, nextClip, nextOx = Tuning.advancePlant(
+        p.x, self.facing, self.plantClip, self.plantOx, clip, ox
+    )
+    self.plantClip = nextClip
+    self.plantOx = nextOx
+    if x ~= p.x then
+        self.node:SetPosition2D(x, p.y)
+    end
 end
 
 function Hero:clampInside(bounds)

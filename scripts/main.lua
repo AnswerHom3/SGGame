@@ -3,7 +3,8 @@
 -- Grounded move plays Run at 8 fps. A stop plays Idle at 10 fps with Idle's offset.
 -- Light mainline maps swing time onto the target duration. Recover branches play
 -- at source-mean fps. Attack sheets use root (128, 248), not Idle's draw offset.
--- Lunge is 0, so the attack foot stays planted. Sheet scale does not move the body.
+-- Lunge is 0. Per-frame foot offsets do not move the body. A clip change
+-- bakes the previous plant ox into X before the new clip's offset.
 
 local UI = require("urhox-libs/UI")
 local Tuning = require("combat.tuning")
@@ -11,6 +12,7 @@ local Hero = require("combat.hero")
 local MoveInput = require("combat.move_input")
 local HitStop = require("combat.hit_stop")
 local HeroSheet = require("combat.hero_sheet")
+local AtkLightConfig = require("AtkLightConfig")
 
 local CONFIG = {
     Title = "代号SG 战斗原型",
@@ -101,6 +103,11 @@ function Start()
         return
     end
     nvgCreateFont(nvg_, "sans", "Fonts/MiSans-Regular.ttf")
+    -- Maker keeps these on resources preload_groups=default.
+    -- Here the cache fetches every literal atk_light path before the first swing.
+    if cache ~= nil then
+        cache:DownloadResources(AtkLightConfig.allPaths())
+    end
     HeroSheet.preload(nvg_, Tuning.allHeroSheetResources())
 
     UI.Init({
@@ -407,11 +414,15 @@ function refreshHud()
         if atk.hitbox then
             live = "生效"
         end
+        local frameShown = 1
+        if pres.frame ~= nil then
+            frameShown = pres.frame + 1
+        end
         text = string.format(
-            "%s %s f%03d  朝向%s  t=%.2f  取消%s  判定%s  木桩%d  | 右手持枪  脚锁定",
+            "%s %s 帧%d  朝向%s  t=%.2f  取消%s  判定%s  木桩%d  | 右手持枪  脚锁定",
             state,
             pres.clip or atk.name or "",
-            pres.frame or 0,
+            frameShown,
             facing,
             atk.t,
             cancel,
@@ -419,11 +430,15 @@ function refreshHud()
             dummy_.hits
         )
     elseif pres.kind == "light_recover" then
+        local frameShown = 1
+        if pres.frame ~= nil then
+            frameShown = pres.frame + 1
+        end
         text = string.format(
-            "%s %s f%03d  朝向%s  木桩%d  | 右手持枪",
+            "%s %s 帧%d  朝向%s  木桩%d  | 右手持枪",
             state,
             pres.clip or "",
-            pres.frame or 0,
+            frameShown,
             facing,
             dummy_.hits
         )
@@ -555,17 +570,27 @@ function drawHero(vg)
     fillWorldRect(vg, footX, footY, Tuning.HERO_BODY_W * 1.15, 0.08, 0, 0, 0, 70)
 
     -- Visual only. render scale and frame bounds must not write body X.
+    -- Attack and recover blit the slide-only foot offset on top of the clip
+    -- offset, including the last frame held through the chain window.
     local drew = false
     if pres.resource ~= nil then
         local image = HeroSheet.get(vg, pres.resource)
         if image ~= nil then
             local scale = pres.scale or 1
+            local offX = pres.offsetX or 0
+            local offY = pres.offsetY or 0
+            if pres.kind == "light" or pres.kind == "light_recover" then
+                offX, offY = Tuning.lightDrawOffsetPx(pres.clip, pres.frame or 0)
+                scale = pres.scale or Tuning.ATK_LIGHT_RENDER_SCALE
+            end
             local metersPerPx = (Tuning.HERO_DRAW_H / Tuning.CANVAS) * scale
             local ppm = metersToPixels(metersPerPx)
             local rootSx, rootSy = worldToScreen(footX, footY)
             drew = HeroSheet.blit(
                 vg, image, rootSx, rootSy, ppm, hero_.facing,
-                pres.rootX, pres.rootY, pres.offsetX or 0, pres.offsetY or 0,
+                pres.rootX or Tuning.ATK_LIGHT_ROOT_X,
+                pres.rootY or Tuning.ATK_LIGHT_ROOT_Y,
+                offX, offY,
                 Tuning.CANVAS
             )
         end
@@ -609,10 +634,11 @@ function drawHero(vg)
     if debugDraw_ and (pres.kind == "light" or pres.kind == "light_recover") then
         local tipX, tipY, backup = Tuning.lightArtTipForDebug(pres.clip, pres.frame)
         if tipX ~= nil then
+            local tipOffX, tipOffY = Tuning.lightDrawOffsetPx(pres.clip, pres.frame or 0)
             local wx, wy = Tuning.sheetPointToWorld(
                 footX, footY, hero_.facing, tipX, tipY,
-                pres.rootX, pres.rootY, pres.offsetX or 0, pres.offsetY or 0,
-                pres.scale or 1
+                pres.rootX, pres.rootY, tipOffX, tipOffY,
+                pres.scale or Tuning.ATK_LIGHT_RENDER_SCALE
             )
             local sx, sy = worldToScreen(wx, wy)
             nvgBeginPath(vg)
