@@ -8,6 +8,7 @@ local UI = require("urhox-libs/UI")
 local Tuning = require("combat.tuning")
 local Hero = require("combat.hero")
 local MoveInput = require("combat.move_input")
+local HitStop = require("combat.hit_stop")
 
 local CONFIG = {
     Title = "代号SG 战斗原型",
@@ -106,6 +107,8 @@ function Start()
     })
 
     scene_ = Scene()
+    HitStop.bind(scene_)
+    HitStop.reset()
     scene_:CreateComponent("Octree")
     scene_:CreateComponent("DebugRenderer")
 
@@ -221,6 +224,7 @@ function Start()
 end
 
 function Stop()
+    HitStop.reset()
     UI.Shutdown()
     if nvg_ ~= nil then
         nvgDelete(nvg_)
@@ -332,6 +336,9 @@ function HandleUpdate(eventType, eventData)
     end
 
     local dt = eventData["TimeStep"]:GetFloat()
+    if HitStop.beginFrame(dt) == 0 then
+        dt = 0
+    end
     if input:GetKeyPress(KEY_Z) then
         debugDraw_ = not debugDraw_
     end
@@ -407,6 +414,12 @@ function refreshHud()
             facing,
             dummy_.hits
         )
+        if atk.comboReset > 0 then
+            text = string.format("%s  连段%.2f", text, atk.comboReset)
+        end
+    end
+    if HitStop.active() then
+        text = text .. "  顿帧"
     end
     label:SetText(text)
 end
@@ -426,9 +439,11 @@ function HandlePostUpdate(eventType, eventData)
     if cx ~= nil then
         overlapping = aabbOverlap(cx, cy, w, h, dummy_.x, dummy_.y, dummy_.w, dummy_.h)
     end
+    -- Damage stays on the hit counter. Hit-stop only freezes presentation time.
     if hero_:commitHit(overlapping) then
         dummy_.hits = dummy_.hits + 1
         dummy_.flash = 0.12
+        HitStop.trigger(Tuning.HIT_STOP)
         print(string.format("light hit %d -> dummy (%d)", hero_:attackDebug().index, dummy_.hits))
     end
 
@@ -570,11 +585,12 @@ function drawDebugText(vg)
     nvgFillColor(vg, nvgRGBA(255, 255, 255, 255))
     nvgTextAlign(vg, NVG_ALIGN_LEFT + NVG_ALIGN_TOP)
     nvgText(vg, 16, 88, string.format(
-        "pos (%.2f, %.2f)  vel (%.2f, %.2f)\nground %s  facing %d  phase %s  held %s",
+        "pos (%.2f, %.2f)  vel (%.2f, %.2f)\nground %s  facing %d  phase %s  held %s  combo %.2f",
         pos.x, pos.y, vel.x, vel.y,
         tostring(hero_.onGround),
         hero_.facing,
         atk.phase,
-        tostring(atk.held)
+        tostring(atk.held),
+        atk.comboReset or 0
     ), nil)
 end
