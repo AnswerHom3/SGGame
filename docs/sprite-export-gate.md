@@ -36,3 +36,8 @@
 - 轻攻：刺 → 挑 → 下劈；收招独立。其余仍按 [一页纸玩法](gameplay-onepager.md)。
 
 （赵云轻攻脚底跳位四项复验已 PASS；本文档是门禁固化，不是新开验收。）
+
+## 可勾选 checklist
+
+- [序列帧导出门禁 · 美术 checklist](sequence_export_checklist_art.md)
+- [轻击脚底复验 checklist · 测试](sequence_export_checklist_qa.md)
