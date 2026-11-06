@@ -1,13 +1,13 @@
 # 赵云轻攻三连 v1
 
-86 张 256×256 RGBA，未改像素。唯一接入图在本目录的 `mainline/` 与 `branches/`。时长以旁边的 `manifest.json` 为准。
+86 张 256×256 RGBA，未改像素。唯一接入图在本目录的 `mainline/` 与 `branches/`。游戏播放时长在 `scripts/combat/tuning.lua`。`manifest.json` 仍记录导出时的 0.46 秒提案，播放不读那份时长。
 
 ## 帧
 
 | 段 | 张数 | 文件 | 播放 | 冲击 | 取消帧 |
 | --- | ---: | --- | --- | ---: | ---: |
 | light1 | 11 | `mainline/hero_zhaoyun_atk_light1_000`–`010` | 目标 0.40s（约 27.5 fps，按时间取帧） | 007 | 010 |
-| light2 | 20 | `mainline/hero_zhaoyun_atk_light2_000`–`019` | 目标 0.46s（约 43.48 fps） | 016 | 019 |
+| light2 | 20 | `mainline/hero_zhaoyun_atk_light2_000`–`019` | 目标 0.55s（约 36.36 fps） | 016 | 019 |
 | light3 | 16 | `mainline/hero_zhaoyun_atk_light3_000`–`015` | 目标 0.62s（约 25.81 fps） | 011 | 015 |
 | light1_recover | 13 | `branches/hero_zhaoyun_atk_light1_recover_000`–`012` | 源均值 12.48 fps | — | — |
 | light2_recover | 11 | `branches/hero_zhaoyun_atk_light2_recover_000`–`010` | 源均值约 12.57 fps | — | — |
@@ -19,7 +19,7 @@ light3 是通过的下劈，不是旧横扫。不要把六段合成一条 10 fps
 
 正常：light1 → light2 → light3 → light3_recover → Idle。
 
-light1_recover / light2_recover 只在这一击没有接上下一击时播，不烧进连续主线。light3 自己的收招只接一次。取消窗口在 `scripts/combat/tuning.lua`：0.34–0.40、0.40–0.46、0.52–0.62，靠近末帧。起手连打会等到窗口，而不是立刻切走。
+light1_recover / light2_recover 只在这一击没有接上下一击时播，不烧进连续主线。light3 自己的收招只接一次。取消窗口在 `scripts/combat/tuning.lua`：约 0.354545–0.40、0.54–0.55、0.52625–0.62。起点是冲击时刻再加 `LIGHT_CHAIN_HOLD`（0.10 秒），不把顿帧再加进去。起手连打会等到窗口，而不是立刻切走。同一段只留一次缓冲。
 
 挥击前冲是 0。命中窗口里的速度分支还在，0 表示脚锁定。贴图缩放和视口边界不在 `vx == 0` 时改角色 X。
 
@@ -27,7 +27,7 @@ light1_recover / light2_recover 只在这一击没有接上下一击时播，不
 
 ## 根点与比例
 
-名义 root `(128, 248)`。不要用 Idle 的绘制偏移 `(−17, −1)`。六套共用一次缩放，相对 Idle 约 **79.7%**，相对 Run 约 **82.7%**。游戏里画布缩放保持 1，root 落在碰撞体脚底。体型差可能还在，这里不声称已经无缝对齐。逐帧脚底漂移保留，不逐帧贴脚。
+名义 root `(128, 248)`。不要用 Idle 的绘制偏移 `(−17, −1)`。六套共用一次缩放，相对 Idle 约 **79.7%**，相对 Run 约 **82.7%**。绘制 `renderScale` 取这个 Idle 比例的倒数（约 **1/0.7966**），让屏幕上的体型和 Idle 对齐。不改 PNG。root 落在碰撞体脚底。逐帧脚底漂移保留，不逐帧贴脚。
 
 ## 枪尖
 

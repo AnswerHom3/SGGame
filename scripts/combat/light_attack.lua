@@ -3,6 +3,8 @@
 -- A press before the cancel window is buffered and consumed when it opens:
 --   cancelInto "next" -> start the next hit immediately
 --   cancelInto "end"  -> remember a restart, fire it when the swing ends
+-- Only one buffered input is kept per swing. A second press is ignored until
+-- that swing ends or the open cancel window consumes a press immediately.
 -- The buffer is LIGHT_INPUT_BUFFER and is kept at least until the window opens.
 -- After recovery ends, the string stays open for LIGHT_COMBO_RESET seconds.
 -- Jump cancel is owned by the hero: it calls cancel() when canCancel() is true.
@@ -190,12 +192,62 @@ function LightAttack:request()
     end
 
     local def = self:_def()
+    -- The open window consumes this press now. A restart already queued for
+    -- this swing is the one input, so further presses do not stack another.
     if self:_in(def.cancelWindow) then
-        self:_takeCancel(def)
+        if not self.restartQueued then
+            self:_takeCancel(def)
+        end
+        return
+    end
+
+    if self.buffered or self.restartQueued then
         return
     end
 
     self:_armBuffer(def)
+end
+
+function LightAttack.check()
+    local attack = LightAttack.new()
+    attack:request()
+    attack:update(0.05)
+    attack:request()
+    assert(attack.buffered == true and attack:hitIndex() == 1, "first early press is buffered")
+    local left = attack.bufferLeft
+    attack:request()
+    attack:request()
+    assert(attack.buffered == true and attack.bufferLeft == left, "extra presses during the swing are ignored")
+    assert(attack:hitIndex() == 1, "an ignored press does not skip the swing")
+
+    local light1 = Tuning.LIGHT[1]
+    attack.t = light1.cancelWindow[1]
+    attack:request()
+    assert(attack:hitIndex() == 2 and attack.buffered == false, "cancel-window press consumes immediately")
+
+    attack:request()
+    assert(attack.buffered == true and attack:hitIndex() == 2, "the next swing can buffer one press")
+    attack:request()
+    assert(attack.buffered == true and attack:hitIndex() == 2, "light2 keeps a single buffer")
+
+    local light2 = Tuning.LIGHT[2]
+    attack.t = light2.cancelWindow[1]
+    attack:request()
+    assert(attack:hitIndex() == 3, "light2 cancel window chains to light3")
+
+    local light3 = Tuning.LIGHT[3]
+    attack.t = light3.cancelWindow[1]
+    attack:request()
+    assert(attack.restartQueued == true and attack:hitIndex() == 3, "light3 queues one restart")
+    local queuedT = attack.t
+    attack:request()
+    attack:request()
+    assert(
+        attack.restartQueued == true and attack:hitIndex() == 3 and attack.t == queuedT,
+        "further light3 presses do not queue another restart"
+    )
+    attack:update(light3.duration - attack.t + 0.001)
+    assert(attack:hitIndex() == 1 and attack:isAttacking(), "the queued restart starts light1 once")
 end
 
 function LightAttack:_tickCombo(dt)
