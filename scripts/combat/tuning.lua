@@ -52,6 +52,12 @@ Tuning.LUNGE_SPEED = { 1.2, 1.6, 2.4 }
 -- cancelWindow: jump, or the next light, can take over (half-open).
 -- cancelInto "next" chains immediately. "end" waits out the swing, then
 -- a press inside the cancel window starts light1 again. Jump still cancels now.
+--
+-- Light-string reset delay in seconds, counted from the end of recovery (收招结束).
+-- Idle longer than this and the next press starts at light1 again.
+-- Tunable. No combo-reset timer reads this yet.
+Tuning.LIGHT_COMBO_RESET = 0.5
+
 Tuning.LIGHT = {
     {
         name = "light1",

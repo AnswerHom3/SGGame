@@ -1,6 +1,6 @@
 # 代号SG · 一页纸玩法
 
-三国 Q 版 2D 横版战斗。这一页定范围和美术约定。当前可玩骨架（移动、跳跃、轻击三连、占位数值）见 [战斗原型骨架](combat-proto-skeleton.md)。时长、出手窗口和枪尖判定以 `scripts/combat/tuning.lua` 为准，不在这里抄一份。
+三国 Q 版 2D 横版战斗。这一页定范围和美术约定。当前可玩骨架（移动、跳跃、轻击三连、占位数值）见 [战斗原型骨架](combat-proto-skeleton.md)。命中窗口、取消窗口和枪尖判定盒以 `scripts/combat/tuning.lua` 为准。轻攻击连段清零时长是同文件的 `LIGHT_COMBO_RESET`。
 
 ## 题材
 
@@ -19,7 +19,13 @@
 
 ## 轻攻击
 
-三段：突刺 → 上挑 → 横扫。每段有自己的出手帧，判定点在枪尖上。时长、命中窗口、取消窗口和判定盒见 `scripts/combat/tuning.lua`。
+连点攻击键，依次打出突刺、上挑、横扫。取消窗口内再按，就接下一段。
+
+停手超过约 0.5 秒，连段清零，下一击从第一段重新开始。这 0.5 秒从收招结束算起，时长在 `scripts/combat/tuning.lua` 的 `LIGHT_COMBO_RESET` 里可调。
+
+三段分开出图。每段包含起手、出手、收招，时长分别是 0.40 秒、0.46 秒、0.62 秒，默认 10 fps。命名为 `hero_zhaoyun_atk_light1_###.png`、`hero_zhaoyun_atk_light2_###.png`、`hero_zhaoyun_atk_light3_###.png`，目录为 `assets/characters/hero_zhaoyun/{atk_light1,atk_light2,atk_light3}/`。每段标出命中帧和枪尖位置。
+
+命中窗口、取消窗口和判定盒见 `scripts/combat/tuning.lua`。
 
 重攻击后做。
 
@@ -41,8 +47,8 @@
 | 画布 | 256×256，透明 |
 | 朝向 | 角色朝右 |
 | 脚底锚点 | `(128, 248)` |
-| 命名 | `hero_zhaoyun_<clip>_###.png` |
-| 目录 | `assets/characters/hero_zhaoyun/{idle,run,atk_light}/` |
+| 命名 | Idle/Run：`hero_zhaoyun_<clip>_###.png`。轻攻击：`hero_zhaoyun_atk_light1_###.png`、`hero_zhaoyun_atk_light2_###.png`、`hero_zhaoyun_atk_light3_###.png` |
+| 目录 | `assets/characters/hero_zhaoyun/{idle,run,atk_light1,atk_light2,atk_light3}/` |
 
 - **Idle**：12 帧，10 fps，零漂移。
 - **Run**：原地跑，画面里没有位移。验收以老板通过的 Run v5 原片节奏为准：8 帧、8 fps，1 秒一循环。身体起伏 4–6 px。每个循环最多 1–2 帧低腾空。支撑脚后移的速度与 `MOVE_SPEED` 一致。Run 帧注册点约 `(128, 248)`，不沿用 Idle 的 `(-17, -1)` 偏移，由引擎对齐 Idle/Run 根点。
