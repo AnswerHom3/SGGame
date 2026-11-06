@@ -6,6 +6,8 @@
 -- Spear stays in the right hand. Facing +1 is the authored facing-right pose;
 -- local +X is "in front of the chest", which is the right-hand spear side.
 
+local AtkLightFoot = require("AtkLightFoot")
+
 local Tuning = {}
 
 Tuning.SOURCE = "provisional-placeholder"
@@ -351,6 +353,39 @@ function Tuning.playFrameIndex(clip, t)
         return Tuning.durationFrameIndex(spec.frames, spec.duration, t)
     end
     return Tuning.fpsFrameIndex(spec.frames, spec.fps, t)
+end
+
+-- Art foot registration (scripts/AtkLightFoot.lua).
+-- ox/oy are added on top of the clip draw offset only when that frame's
+-- planted foot slid in the source. A stable plant, a lift, or a weight shift
+-- keeps (0, 0) even if the sample stores a sub-pixel ox/oy.
+-- This does not snap the sole to (128, 248).
+function Tuning.lightFootSlideOffsetPx(clip, frame)
+    if type(clip) ~= "string" or type(frame) ~= "number" then
+        return 0, 0
+    end
+    local row = AtkLightFoot[clip]
+    if row == nil then
+        return 0, 0
+    end
+    local sample = row[frame]
+    if sample == nil or sample.slide ~= true then
+        return 0, 0
+    end
+    return sample.ox or 0, sample.oy or 0
+end
+
+function Tuning.lightFootRegistered(clip, frame)
+    local row = AtkLightFoot[clip]
+    return row ~= nil and row[frame] ~= nil
+end
+
+-- Clip draw offset plus the slide-only foot shift for this frame.
+-- The last held frame (chain window, or a recover clamp) uses that index.
+function Tuning.lightDrawOffsetPx(clip, frame)
+    local fox, foy = Tuning.lightFootSlideOffsetPx(clip, frame)
+    return Tuning.ATK_LIGHT_DRAW_OFFSET_X_PX + fox,
+           Tuning.ATK_LIGHT_DRAW_OFFSET_Y_PX + foy
 end
 
 function Tuning.lightArtTip(clip, frame)
@@ -706,6 +741,47 @@ function Tuning.validate()
         math.abs(scaledRootX - 3) < 1e-9 and math.abs(scaledRootY - 1) < 1e-9,
         "render scale keeps the root on the foot"
     )
+    -- Non-slide samples can be non-zero. They must not move the sprite,
+    -- and they must not be replaced by a snap of the sole onto (128, 248).
+    local stillX, stillY = Tuning.lightFootSlideOffsetPx("light1", 1)
+    assert(stillX == 0 and stillY == 0, "light1 frame 1 weight shift is not a root slide")
+    local plantX, plantY = Tuning.lightFootSlideOffsetPx("light1", 0)
+    assert(plantX == 0 and plantY == 0, "opening plant stays on the clip offset")
+    local slideX, slideY = Tuning.lightFootSlideOffsetPx("light1", 2)
+    assert(math.abs(slideX - 4.054) < 1e-9 and slideY == 3, "light1 frame 2 slide offset")
+    assert(math.abs(slideX - 23.781) > 1, "slide offset is not a hard snap onto (128, 248)")
+    local heldX, heldY = Tuning.lightFootSlideOffsetPx("light1", 10)
+    assert(math.abs(heldX - 47.18) < 1e-9 and heldY == 10, "light1 last frame slide offset")
+    local quietX, quietY = Tuning.lightFootSlideOffsetPx("light2", 13)
+    assert(quietX == 0 and quietY == 0, "light2 pre-slide frame keeps its ox unused")
+    local l2X, l2Y = Tuning.lightFootSlideOffsetPx("light2", 19)
+    assert(math.abs(l2X - (-34.813)) < 1e-9 and l2Y == -15, "light2 last frame slide offset")
+    local recX, recY = Tuning.lightFootSlideOffsetPx("light1_recover", 12)
+    assert(math.abs(recX - (-47.268)) < 1e-9 and recY == -10, "light1 recover last frame")
+    local recStillX, recStillY = Tuning.lightFootSlideOffsetPx("light3_recover", 3)
+    assert(recStillX == 0 and recStillY == 0, "recover non-slide stays put")
+    local drawX, drawY = Tuning.lightDrawOffsetPx("light1", 2)
+    assert(
+        math.abs(drawX - (Tuning.ATK_LIGHT_DRAW_OFFSET_X_PX + 4.054)) < 1e-9
+            and math.abs(drawY - (Tuning.ATK_LIGHT_DRAW_OFFSET_Y_PX + 3)) < 1e-9,
+        "foot ox/oy stacks on the clip draw offset"
+    )
+    local footFrames = 0
+    for _, name in ipairs(Tuning.ATK_LIGHT_ORDER) do
+        local spec = Tuning.ATK_LIGHT_CLIPS[name]
+        for index = 0, spec.frames - 1 do
+            assert(Tuning.lightFootRegistered(name, index), name .. " foot frame " .. index)
+            footFrames = footFrames + 1
+        end
+    end
+    assert(footFrames == 86, "foot registration covers 86 frames")
+    local movedX, movedY = Tuning.sheetPointToWorld(
+        3, 1, 1, 128, 248, 128, 248, slideX, slideY, Tuning.ATK_LIGHT_RENDER_SCALE
+    )
+    local metersPerPx = (Tuning.HERO_DRAW_H / Tuning.CANVAS) * Tuning.ATK_LIGHT_RENDER_SCALE
+    assert(math.abs(movedX - (3 + slideX * metersPerPx)) < 1e-9, "slide offset shifts the sheet in x")
+    assert(math.abs(movedY - (1 - slideY * metersPerPx)) < 1e-9, "slide offset shifts the sheet in y")
+    assert(math.abs(scaledRootX - 3) < 1e-9, "body root is unchanged by the sheet offset")
 
     for i, hit in ipairs(Tuning.LIGHT) do
         local spec = Tuning.ATK_LIGHT_CLIPS[hit.name]

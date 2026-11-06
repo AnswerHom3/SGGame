@@ -555,17 +555,27 @@ function drawHero(vg)
     fillWorldRect(vg, footX, footY, Tuning.HERO_BODY_W * 1.15, 0.08, 0, 0, 0, 70)
 
     -- Visual only. render scale and frame bounds must not write body X.
+    -- Attack and recover blit the slide-only foot offset on top of the clip
+    -- offset, including the last frame held through the chain window.
     local drew = false
     if pres.resource ~= nil then
         local image = HeroSheet.get(vg, pres.resource)
         if image ~= nil then
             local scale = pres.scale or 1
+            local offX = pres.offsetX or 0
+            local offY = pres.offsetY or 0
+            if pres.kind == "light" or pres.kind == "light_recover" then
+                offX, offY = Tuning.lightDrawOffsetPx(pres.clip, pres.frame or 0)
+                scale = pres.scale or Tuning.ATK_LIGHT_RENDER_SCALE
+            end
             local metersPerPx = (Tuning.HERO_DRAW_H / Tuning.CANVAS) * scale
             local ppm = metersToPixels(metersPerPx)
             local rootSx, rootSy = worldToScreen(footX, footY)
             drew = HeroSheet.blit(
                 vg, image, rootSx, rootSy, ppm, hero_.facing,
-                pres.rootX, pres.rootY, pres.offsetX or 0, pres.offsetY or 0,
+                pres.rootX or Tuning.ATK_LIGHT_ROOT_X,
+                pres.rootY or Tuning.ATK_LIGHT_ROOT_Y,
+                offX, offY,
                 Tuning.CANVAS
             )
         end
@@ -609,10 +619,11 @@ function drawHero(vg)
     if debugDraw_ and (pres.kind == "light" or pres.kind == "light_recover") then
         local tipX, tipY, backup = Tuning.lightArtTipForDebug(pres.clip, pres.frame)
         if tipX ~= nil then
+            local tipOffX, tipOffY = Tuning.lightDrawOffsetPx(pres.clip, pres.frame or 0)
             local wx, wy = Tuning.sheetPointToWorld(
                 footX, footY, hero_.facing, tipX, tipY,
-                pres.rootX, pres.rootY, pres.offsetX or 0, pres.offsetY or 0,
-                pres.scale or 1
+                pres.rootX, pres.rootY, tipOffX, tipOffY,
+                pres.scale or Tuning.ATK_LIGHT_RENDER_SCALE
             )
             local sx, sy = worldToScreen(wx, wy)
             nvgBeginPath(vg)

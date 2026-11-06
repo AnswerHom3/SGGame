@@ -27,7 +27,9 @@ light1_recover / light2_recover 只在这一击没有接上下一击时播，不
 
 ## 根点与比例
 
-名义 root `(128, 248)`。不要用 Idle 的绘制偏移 `(−17, −1)`。六套共用一次缩放，相对 Idle 约 **79.7%**，相对 Run 约 **82.7%**。绘制 `renderScale` 取这个 Idle 比例的倒数（约 **1/0.7966**），让屏幕上的体型和 Idle 对齐。不改 PNG。root 落在碰撞体脚底。逐帧脚底漂移保留，不逐帧贴脚。
+名义 root `(128, 248)`。不要用 Idle 的绘制偏移 `(−17, −1)`。六套共用一次缩放，相对 Idle 约 **79.7%**，相对 Run 约 **82.7%**。绘制 `renderScale` 取这个 Idle 比例的倒数（`1/0.7965875218419161`，约 **1.255×**），绕 root 放大，让屏幕上的体型和 Idle 对齐。不改 PNG。root 落在碰撞体脚底。
+
+`foot_registration.json` 是全量脚底注册（86 帧，未改 PNG）。`scripts/AtkLightFoot.lua` 是按段的紧凑表。只在 `source_slide_flag` / `slide==true` 时，把 `recommended_root_offset_xy_to_hold_planted_foot`（`ox`, `oy`）加到片段绘制偏移上，包括取消窗口里停住的末帧。其它帧保持偏移 0，不把鞋底硬贴到 `(128, 248)`，换步和抬脚保留。
 
 ## 枪尖
 

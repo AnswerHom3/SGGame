@@ -1,0 +1,8246 @@
+{
+  "version": 1,
+  "package": "/workspace/sg-art/deliver/hero_zhaoyun_atk_light_v1",
+  "canvas_px": [
+    256,
+    256
+  ],
+  "nominal_root_xy": [
+    128,
+    248
+  ],
+  "ground_line_y_for_qc": 248,
+  "frame_count": 86,
+  "method": {
+    "sole_definition": "Alpha>=128 largest connected component inside a per-side ROI around each boot; sole = alpha-weighted centroid of the lowest 2 rows of that component.",
+    "anatomy": "Character faces right. screen-left ROI -> left_foot; screen-right ROI -> right_foot. Confirmed by visual inspection of silver boots.",
+    "exclusions": "Spear butt and blue cape excluded by ROI placement. Slam impact graphic excluded via narrowed right ROI on light3 frames 10-15 (frame 13 tightest).",
+    "states": "grounded if sole y within 2px of the lower sole that frame; lifted if >=4px higher; else partial. support_foot = grounded/partial foot with lower sole (ties: nearer x=128).",
+    "null_policy": "If a boot cannot be isolated, sole_xy/state/confidence are null — never invented.",
+    "existing_data_reused": [
+      "manifest.png256_bottom_silhouette per frame",
+      "manifest.spear_tip_png256_xy",
+      "manifest.transform relative_scale_to_idle/run",
+      "source indices/times"
+    ],
+    "no_png_modification": true,
+    "no_manifest_or_source_index_modification": true
+  },
+  "null_counts": {
+    "left_sole": 0,
+    "right_sole": 0,
+    "support": 0
+  },
+  "low_confidence_entries": [
+    {
+      "segment": "light3",
+      "index": 13,
+      "side": "right_foot",
+      "confidence": 0.55
+    }
+  ],
+  "segment_summaries": {
+    "light1": {
+      "baseline_first_planted_sole_xy": [
+        108.273,
+        242
+      ],
+      "planted_sole_x_range": [
+        61.026,
+        108.273
+      ],
+      "planted_sole_y_range": [
+        232,
+        242
+      ],
+      "net_planted_translation_xy": [
+        -47.18,
+        -10
+      ],
+      "frames_flagged_source_slide": [
+        2,
+        3,
+        4,
+        5,
+        6,
+        7,
+        8,
+        9,
+        10
+      ],
+      "slide_frame_count": 9,
+      "notes": "Offsets hold a SAME planted foot fixed within a stretch. Stance changes / foot swaps are body motion and must NOT be cancelled by root. Do not align every frame lowest silhouette to y=248."
+    },
+    "light2": {
+      "baseline_first_planted_sole_xy": [
+        61.002,
+        232
+      ],
+      "planted_sole_x_range": [
+        60.826,
+        95.815
+      ],
+      "planted_sole_y_range": [
+        231,
+        247
+      ],
+      "net_planted_translation_xy": [
+        34.813,
+        15
+      ],
+      "frames_flagged_source_slide": [
+        14,
+        15,
+        16,
+        17,
+        18,
+        19
+      ],
+      "slide_frame_count": 6,
+      "notes": "Offsets hold a SAME planted foot fixed within a stretch. Stance changes / foot swaps are body motion and must NOT be cancelled by root. Do not align every frame lowest silhouette to y=248."
+    },
+    "light3": {
+      "baseline_first_planted_sole_xy": [
+        95.817,
+        247
+      ],
+      "planted_sole_x_range": [
+        69.43,
+        95.82
+      ],
+      "planted_sole_y_range": [
+        233,
+        247
+      ],
+      "net_planted_translation_xy": [
+        -26.387,
+        -14
+      ],
+      "frames_flagged_source_slide": [
+        8,
+        9,
+        10,
+        11,
+        12,
+        13,
+        14,
+        15
+      ],
+      "slide_frame_count": 8,
+      "notes": "Offsets hold a SAME planted foot fixed within a stretch. Stance changes / foot swaps are body motion and must NOT be cancelled by root. Do not align every frame lowest silhouette to y=248."
+    },
+    "light1_recover": {
+      "baseline_first_planted_sole_xy": [
+        60.985,
+        232
+      ],
+      "planted_sole_x_range": [
+        60.984,
+        108.253
+      ],
+      "planted_sole_y_range": [
+        232,
+        242
+      ],
+      "net_planted_translation_xy": [
+        47.268,
+        10
+      ],
+      "frames_flagged_source_slide": [
+        4,
+        5,
+        6,
+        7,
+        8,
+        9,
+        10,
+        11,
+        12
+      ],
+      "slide_frame_count": 9,
+      "notes": "Offsets hold a SAME planted foot fixed within a stretch. Stance changes / foot swaps are body motion and must NOT be cancelled by root. Do not align every frame lowest silhouette to y=248."
+    },
+    "light2_recover": {
+      "baseline_first_planted_sole_xy": [
+        95.812,
+        247
+      ],
+      "planted_sole_x_range": [
+        95.812,
+        108.396
+      ],
+      "planted_sole_y_range": [
+        242,
+        247
+      ],
+      "net_planted_translation_xy": [
+        12.463,
+        -5
+      ],
+      "frames_flagged_source_slide": [
+        2,
+        3,
+        4,
+        5,
+        6,
+        7,
+        8,
+        9,
+        10
+      ],
+      "slide_frame_count": 9,
+      "notes": "Offsets hold a SAME planted foot fixed within a stretch. Stance changes / foot swaps are body motion and must NOT be cancelled by root. Do not align every frame lowest silhouette to y=248."
+    },
+    "light3_recover": {
+      "baseline_first_planted_sole_xy": [
+        69.386,
+        233
+      ],
+      "planted_sole_x_range": [
+        69.233,
+        108.251
+      ],
+      "planted_sole_y_range": [
+        233,
+        242
+      ],
+      "net_planted_translation_xy": [
+        38.857,
+        9
+      ],
+      "frames_flagged_source_slide": [
+        4,
+        5,
+        6,
+        7,
+        8,
+        9,
+        10,
+        11,
+        12,
+        13,
+        14
+      ],
+      "slide_frame_count": 11,
+      "notes": "Offsets hold a SAME planted foot fixed within a stretch. Stance changes / foot swaps are body motion and must NOT be cancelled by root. Do not align every frame lowest silhouette to y=248."
+    }
+  },
+  "joins": [
+    {
+      "join": "A_mainline",
+      "from": "light1/010",
+      "to": "light2/000",
+      "left_sole_delta_xy": [
+        -0.091,
+        0
+      ],
+      "right_sole_delta_xy": [
+        -0.015,
+        0
+      ],
+      "support_from": "left",
+      "support_to": "left",
+      "planted_sole_delta_xy": [
+        -0.091,
+        0
+      ],
+      "status": "UNVERIFIED seam; deltas measured on exported png256, no correction applied"
+    },
+    {
+      "join": "B_mainline",
+      "from": "light2/019",
+      "to": "light3/000",
+      "left_sole_delta_xy": [
+        0.002,
+        0
+      ],
+      "right_sole_delta_xy": [
+        0.089,
+        0
+      ],
+      "support_from": "left",
+      "support_to": "left",
+      "planted_sole_delta_xy": [
+        0.002,
+        0
+      ],
+      "status": "UNVERIFIED seam; deltas measured on exported png256, no correction applied"
+    },
+    {
+      "join": "slam_to_own_recovery",
+      "from": "light3/015",
+      "to": "light3_recover/000",
+      "left_sole_delta_xy": [
+        -0.044,
+        0
+      ],
+      "right_sole_delta_xy": [
+        0.16,
+        0
+      ],
+      "support_from": "left",
+      "support_to": "left",
+      "planted_sole_delta_xy": [
+        -0.044,
+        0
+      ],
+      "status": "UNVERIFIED seam; deltas measured on exported png256, no correction applied"
+    },
+    {
+      "join": "A_interrupt",
+      "from": "light1/010",
+      "to": "light1_recover/000",
+      "left_sole_delta_xy": [
+        -0.108,
+        0
+      ],
+      "right_sole_delta_xy": [
+        0.046,
+        0
+      ],
+      "support_from": "left",
+      "support_to": "left",
+      "planted_sole_delta_xy": [
+        -0.108,
+        0
+      ],
+      "status": "UNVERIFIED seam; deltas measured on exported png256, no correction applied"
+    },
+    {
+      "join": "B_interrupt",
+      "from": "light2/019",
+      "to": "light2_recover/000",
+      "left_sole_delta_xy": [
+        -0.003,
+        0
+      ],
+      "right_sole_delta_xy": [
+        -0.12,
+        0
+      ],
+      "support_from": "left",
+      "support_to": "left",
+      "planted_sole_delta_xy": [
+        -0.003,
+        0
+      ],
+      "status": "UNVERIFIED seam; deltas measured on exported png256, no correction applied"
+    },
+    {
+      "join": "light1_recover_to_Idle",
+      "from": "light1_recover/012",
+      "to": "Idle/000",
+      "left_sole_delta_xy": [
+        4.867,
+        7
+      ],
+      "right_sole_delta_xy": [
+        19.971,
+        6
+      ],
+      "support_from": "left",
+      "support_to": "left",
+      "planted_sole_delta_xy": [
+        4.867,
+        7
+      ],
+      "status": "Cross-package compare; attack character is smaller than Idle — deltas mix pose AND scale. See scale_compensation."
+    },
+    {
+      "join": "light2_recover_to_Idle",
+      "from": "light2_recover/010",
+      "to": "Idle/000",
+      "left_sole_delta_xy": [
+        4.845,
+        7
+      ],
+      "right_sole_delta_xy": [
+        19.96,
+        6
+      ],
+      "support_from": "left",
+      "support_to": "left",
+      "planted_sole_delta_xy": [
+        4.845,
+        7
+      ],
+      "status": "Cross-package compare; attack character is smaller than Idle — deltas mix pose AND scale. See scale_compensation."
+    },
+    {
+      "join": "light3_recover_to_Idle",
+      "from": "light3_recover/014",
+      "to": "Idle/000",
+      "left_sole_delta_xy": [
+        4.877,
+        7
+      ],
+      "right_sole_delta_xy": [
+        19.614,
+        6
+      ],
+      "support_from": "left",
+      "support_to": "left",
+      "planted_sole_delta_xy": [
+        4.877,
+        7
+      ],
+      "status": "Cross-package compare; attack character is smaller than Idle — deltas mix pose AND scale. See scale_compensation."
+    }
+  ],
+  "scale_compensation": {
+    "attack_uniform_scale": 0.34444444444444444,
+    "attack_nominal_root_xy": [
+      128,
+      248
+    ],
+    "attack_mapped_union_root_xy": [
+      128.4777777777778,
+      248.05555555555554
+    ],
+    "relative_scale_to_idle_960_equivalent": 0.7965875218419161,
+    "relative_scale_to_run_960_equivalent": 0.8266666666666667,
+    "idle_reference": {
+      "file": "hero_zhaoyun_idle_direct_12/png256/hero_zhaoyun_idle_000.png",
+      "left_sole_xy": [
+        113.12,
+        249
+      ],
+      "right_sole_xy": [
+        176.736,
+        242
+      ],
+      "support_foot": "left",
+      "nominal_root_xy": [
+        128,
+        248
+      ],
+      "note": "Idle package uses ground line near y=249/250 in README; Run uses nominal (128,248). Attack package nominal root is (128,248)."
+    },
+    "run_reference_frame0": {
+      "file": "hero_zhaoyun_run_v5_8/png256/hero_zhaoyun_run_000.png",
+      "left_sole_xy": [
+        90.18,
+        236
+      ],
+      "right_sole_xy": [
+        178.535,
+        237
+      ],
+      "nominal_root_xy": [
+        128,
+        248
+      ],
+      "note": "Run frame0 is mid-stride; one or both feet may be lifted. Not a standing calibration pose."
+    },
+    "stance_width_px": {
+      "idle_000": 63.616,
+      "attack_light1_recover_end": 48.512,
+      "attack_over_idle_stance_ratio": 0.7626
+    },
+    "engine_recommendation": [
+      "Attack sprites are drawn at ~79.66% of Idle equivalent scale and ~82.67% of Run equivalent scale (from export transform union fit).",
+      "To place Attack under the same world root as Idle/Run, either (a) scale Attack draw size by 1/relative_scale (~1.255× toward Idle, ~1.210× toward Run) around nominal root (128,248), OR (b) keep Attack scale and accept smaller on-screen character with separate hitboxes.",
+      "Do NOT only translate root by Idle-minus-Attack sole deltas without scale compensation — those deltas mix pose difference and scale.",
+      "After scale match, align using planted support sole (prefer left sole on Idle-like poses) rather than lowest silhouette (spear butt / cape / impact FX can be lower).",
+      "Idle left sole ≈ [113.12, 249], right ≈ [176.736, 242]; Attack recover-end left ≈ [108.253, 242], right ≈ [156.765, 236]."
+    ]
+  },
+  "engine_usage": {
+    "preferred": "For each frame, if registration.source_slide_flag, apply recommended_root_offset_xy_to_hold_planted_foot relative to the stretch start when you want a locked plant. Otherwise keep offset (0,0) and let stance/weight shift play as body animation.",
+    "absolute": "planted_sole_minus_nominal_root_xy tells where the planted sole sits vs (128,248) if the engine parents sprites to that root.",
+    "do_not": "Do not snap every frame lowest silhouette or both soles to (128,248). That erases lunges and lifts. Do not treat spear tip / impact FX / cape as feet."
+  },
+  "frames": [
+    {
+      "segment": "light1",
+      "group": "mainline",
+      "index": 0,
+      "file": "png256/mainline/hero_zhaoyun_atk_light1_000.png",
+      "source_frame": 101,
+      "source_time_s": 4.208333333333333,
+      "nominal_root_xy": [
+        128,
+        248
+      ],
+      "left_foot": {
+        "sole_xy": [
+          108.273,
+          242
+        ],
+        "state": "grounded",
+        "confidence": 0.95,
+        "component_bbox": [
+          100,
+          210,
+          125,
+          243
+        ],
+        "measurement_roi": [
+          40,
+          210,
+          125,
+          252
+        ]
+      },
+      "right_foot": {
+        "sole_xy": [
+          156.759,
+          236
+        ],
+        "state": "lifted",
+        "confidence": 0.95,
+        "component_bbox": [
+          125,
+          210,
+          171,
+          237
+        ],
+        "measurement_roi": [
+          125,
+          210,
+          190,
+          252
+        ]
+      },
+      "support_foot": "left",
+      "existing_png256_bottom_silhouette": {
+        "x": 108.82656628125841,
+        "y": 242,
+        "definition": "alpha>=128 lowest five silhouette rows, not anatomical foot identification; impact glow can contribute"
+      },
+      "existing_spear_tip_png256_xy": [
+        194.9556,
+        53.4444
+      ],
+      "notes": null,
+      "planted_support_sole_xy": [
+        108.273,
+        242
+      ],
+      "raw_offset_from_nominal_root_xy": [
+        -19.727,
+        -6
+      ],
+      "registration": {
+        "index": 0,
+        "planted_foot": "left",
+        "planted_sole_xy": [
+          108.273,
+          242
+        ],
+        "stretch_start_sole_xy": [
+          108.273,
+          242
+        ],
+        "recommended_root_offset_xy_to_hold_planted_foot": [
+          -0.0,
+          0
+        ],
+        "planted_sole_minus_nominal_root_xy": [
+          -19.727,
+          -6
+        ],
+        "source_slide_flag": false,
+        "reason": "planted left stable within stretch; offset ~0 preserves natural pose, no lowest-point snap"
+      }
+    },
+    {
+      "segment": "light1",
+      "group": "mainline",
+      "index": 1,
+      "file": "png256/mainline/hero_zhaoyun_atk_light1_001.png",
+      "source_frame": 103,
+      "source_time_s": 4.291666666666667,
+      "nominal_root_xy": [
+        128,
+        248
+      ],
+      "left_foot": {
+        "sole_xy": [
+          107.782,
+          241
+        ],
+        "state": "grounded",
+        "confidence": 0.95,
+        "component_bbox": [
+          100,
+          210,
+          125,
+          242
+        ],
+        "measurement_roi": [
+          40,
+          210,
+          125,
+          252
+        ]
+      },
+      "right_foot": {
+        "sole_xy": [
+          158.592,
+          236
+        ],
+        "state": "lifted",
+        "confidence": 0.95,
+        "component_bbox": [
+          125,
+          210,
+          171,
+          237
+        ],
+        "measurement_roi": [
+          125,
+          210,
+          190,
+          252
+        ]
+      },
+      "support_foot": "left",
+      "existing_png256_bottom_silhouette": {
+        "x": 108.4392260883133,
+        "y": 241,
+        "definition": "alpha>=128 lowest five silhouette rows, not anatomical foot identification; impact glow can contribute"
+      },
+      "existing_spear_tip_png256_xy": null,
+      "notes": null,
+      "planted_support_sole_xy": [
+        107.782,
+        241
+      ],
+      "raw_offset_from_nominal_root_xy": [
+        -20.218,
+        -7
+      ],
+      "registration": {
+        "index": 1,
+        "planted_foot": "left",
+        "planted_sole_xy": [
+          107.782,
+          241
+        ],
+        "stretch_start_sole_xy": [
+          108.273,
+          242
+        ],
+        "recommended_root_offset_xy_to_hold_planted_foot": [
+          0.491,
+          1
+        ],
+        "planted_sole_minus_nominal_root_xy": [
+          -20.218,
+          -7
+        ],
+        "source_slide_flag": false,
+        "reason": "planted left stable within stretch; offset ~0 preserves natural pose, no lowest-point snap"
+      }
+    },
+    {
+      "segment": "light1",
+      "group": "mainline",
+      "index": 2,
+      "file": "png256/mainline/hero_zhaoyun_atk_light1_002.png",
+      "source_frame": 105,
+      "source_time_s": 4.375,
+      "nominal_root_xy": [
+        128,
+        248
+      ],
+      "left_foot": {
+        "sole_xy": [
+          104.219,
+          239
+        ],
+        "state": "grounded",
+        "confidence": 0.95,
+        "component_bbox": [
+          97,
+          210,
+          125,
+          240
+        ],
+        "measurement_roi": [
+          40,
+          210,
+          125,
+          252
+        ]
+      },
+      "right_foot": {
+        "sole_xy": [
+          157.95,
+          234
+        ],
+        "state": "lifted",
+        "confidence": 0.95,
+        "component_bbox": [
+          125,
+          210,
+          167,
+          235
+        ],
+        "measurement_roi": [
+          125,
+          210,
+          190,
+          252
+        ]
+      },
+      "support_foot": "left",
+      "existing_png256_bottom_silhouette": {
+        "x": 104.86808944179313,
+        "y": 239,
+        "definition": "alpha>=128 lowest five silhouette rows, not anatomical foot identification; impact glow can contribute"
+      },
+      "existing_spear_tip_png256_xy": null,
+      "notes": null,
+      "planted_support_sole_xy": [
+        104.219,
+        239
+      ],
+      "raw_offset_from_nominal_root_xy": [
+        -23.781,
+        -9
+      ],
+      "registration": {
+        "index": 2,
+        "planted_foot": "left",
+        "planted_sole_xy": [
+          104.219,
+          239
+        ],
+        "stretch_start_sole_xy": [
+          108.273,
+          242
+        ],
+        "recommended_root_offset_xy_to_hold_planted_foot": [
+          4.054,
+          3
+        ],
+        "planted_sole_minus_nominal_root_xy": [
+          -23.781,
+          -9
+        ],
+        "source_slide_flag": true,
+        "reason": "planted left translates in source (-4.05,-3.00) vs stretch start; offset holds plant"
+      }
+    },
+    {
+      "segment": "light1",
+      "group": "mainline",
+      "index": 3,
+      "file": "png256/mainline/hero_zhaoyun_atk_light1_003.png",
+      "source_frame": 107,
+      "source_time_s": 4.458333333333333,
+      "nominal_root_xy": [
+        128,
+        248
+      ],
+      "left_foot": {
+        "sole_xy": [
+          93.928,
+          237
+        ],
+        "state": "grounded",
+        "confidence": 0.95,
+        "component_bbox": [
+          88,
+          210,
+          115,
+          238
+        ],
+        "measurement_roi": [
+          40,
+          210,
+          125,
+          252
+        ]
+      },
+      "right_foot": {
+        "sole_xy": [
+          156.077,
+          231
+        ],
+        "state": "lifted",
+        "confidence": 0.95,
+        "component_bbox": [
+          140,
+          210,
+          166,
+          232
+        ],
+        "measurement_roi": [
+          125,
+          210,
+          190,
+          252
+        ]
+      },
+      "support_foot": "left",
+      "existing_png256_bottom_silhouette": {
+        "x": 95.39334449021626,
+        "y": 237,
+        "definition": "alpha>=128 lowest five silhouette rows, not anatomical foot identification; impact glow can contribute"
+      },
+      "existing_spear_tip_png256_xy": null,
+      "notes": null,
+      "planted_support_sole_xy": [
+        93.928,
+        237
+      ],
+      "raw_offset_from_nominal_root_xy": [
+        -34.072,
+        -11
+      ],
+      "registration": {
+        "index": 3,
+        "planted_foot": "left",
+        "planted_sole_xy": [
+          93.928,
+          237
+        ],
+        "stretch_start_sole_xy": [
+          108.273,
+          242
+        ],
+        "recommended_root_offset_xy_to_hold_planted_foot": [
+          14.345,
+          5
+        ],
+        "planted_sole_minus_nominal_root_xy": [
+          -34.072,
+          -11
+        ],
+        "source_slide_flag": true,
+        "reason": "planted left translates in source (-14.35,-5.00) vs stretch start; offset holds plant"
+      }
+    },
+    {
+      "segment": "light1",
+      "group": "mainline",
+      "index": 4,
+      "file": "png256/mainline/hero_zhaoyun_atk_light1_004.png",
+      "source_frame": 109,
+      "source_time_s": 4.541666666666667,
+      "nominal_root_xy": [
+        128,
+        248
+      ],
+      "left_foot": {
+        "sole_xy": [
+          77.379,
+          235
+        ],
+        "state": "grounded",
+        "confidence": 0.95,
+        "component_bbox": [
+          71,
+          210,
+          100,
+          236
+        ],
+        "measurement_roi": [
+          40,
+          210,
+          125,
+          252
+        ]
+      },
+      "right_foot": {
+        "sole_xy": [
+          156.187,
+          229
+        ],
+        "state": "lifted",
+        "confidence": 0.95,
+        "component_bbox": [
+          139,
+          210,
+          164,
+          230
+        ],
+        "measurement_roi": [
+          125,
+          210,
+          190,
+          252
+        ]
+      },
+      "support_foot": "left",
+      "existing_png256_bottom_silhouette": {
+        "x": 78.58014931927976,
+        "y": 235,
+        "definition": "alpha>=128 lowest five silhouette rows, not anatomical foot identification; impact glow can contribute"
+      },
+      "existing_spear_tip_png256_xy": null,
+      "notes": null,
+      "planted_support_sole_xy": [
+        77.379,
+        235
+      ],
+      "raw_offset_from_nominal_root_xy": [
+        -50.621,
+        -13
+      ],
+      "registration": {
+        "index": 4,
+        "planted_foot": "left",
+        "planted_sole_xy": [
+          77.379,
+          235
+        ],
+        "stretch_start_sole_xy": [
+          108.273,
+          242
+        ],
+        "recommended_root_offset_xy_to_hold_planted_foot": [
+          30.894,
+          7
+        ],
+        "planted_sole_minus_nominal_root_xy": [
+          -50.621,
+          -13
+        ],
+        "source_slide_flag": true,
+        "reason": "planted left translates in source (-30.89,-7.00) vs stretch start; offset holds plant"
+      }
+    },
+    {
+      "segment": "light1",
+      "group": "mainline",
+      "index": 5,
+      "file": "png256/mainline/hero_zhaoyun_atk_light1_005.png",
+      "source_frame": 111,
+      "source_time_s": 4.625,
+      "nominal_root_xy": [
+        128,
+        248
+      ],
+      "left_foot": {
+        "sole_xy": [
+          63.164,
+          232
+        ],
+        "state": "grounded",
+        "confidence": 0.95,
+        "component_bbox": [
+          56,
+          210,
+          87,
+          233
+        ],
+        "measurement_roi": [
+          40,
+          210,
+          125,
+          252
+        ]
+      },
+      "right_foot": {
+        "sole_xy": [
+          152.905,
+          227
+        ],
+        "state": "lifted",
+        "confidence": 0.95,
+        "component_bbox": [
+          138,
+          210,
+          163,
+          228
+        ],
+        "measurement_roi": [
+          125,
+          210,
+          190,
+          252
+        ]
+      },
+      "support_foot": "left",
+      "existing_png256_bottom_silhouette": {
+        "x": 63.95962113659023,
+        "y": 232,
+        "definition": "alpha>=128 lowest five silhouette rows, not anatomical foot identification; impact glow can contribute"
+      },
+      "existing_spear_tip_png256_xy": null,
+      "notes": null,
+      "planted_support_sole_xy": [
+        63.164,
+        232
+      ],
+      "raw_offset_from_nominal_root_xy": [
+        -64.836,
+        -16
+      ],
+      "registration": {
+        "index": 5,
+        "planted_foot": "left",
+        "planted_sole_xy": [
+          63.164,
+          232
+        ],
+        "stretch_start_sole_xy": [
+          108.273,
+          242
+        ],
+        "recommended_root_offset_xy_to_hold_planted_foot": [
+          45.109,
+          10
+        ],
+        "planted_sole_minus_nominal_root_xy": [
+          -64.836,
+          -16
+        ],
+        "source_slide_flag": true,
+        "reason": "planted left translates in source (-45.11,-10.00) vs stretch start; offset holds plant"
+      }
+    },
+    {
+      "segment": "light1",
+      "group": "mainline",
+      "index": 6,
+      "file": "png256/mainline/hero_zhaoyun_atk_light1_006.png",
+      "source_frame": 112,
+      "source_time_s": 4.666666666666667,
+      "nominal_root_xy": [
+        128,
+        248
+      ],
+      "left_foot": {
+        "sole_xy": [
+          61.324,
+          232
+        ],
+        "state": "grounded",
+        "confidence": 0.95,
+        "component_bbox": [
+          54,
+          210,
+          85,
+          233
+        ],
+        "measurement_roi": [
+          40,
+          210,
+          125,
+          252
+        ]
+      },
+      "right_foot": {
+        "sole_xy": [
+          151.123,
+          226
+        ],
+        "state": "lifted",
+        "confidence": 0.95,
+        "component_bbox": [
+          138,
+          210,
+          162,
+          227
+        ],
+        "measurement_roi": [
+          125,
+          210,
+          190,
+          252
+        ]
+      },
+      "support_foot": "left",
+      "existing_png256_bottom_silhouette": {
+        "x": 61.930518754048165,
+        "y": 232,
+        "definition": "alpha>=128 lowest five silhouette rows, not anatomical foot identification; impact glow can contribute"
+      },
+      "existing_spear_tip_png256_xy": null,
+      "notes": null,
+      "planted_support_sole_xy": [
+        61.324,
+        232
+      ],
+      "raw_offset_from_nominal_root_xy": [
+        -66.676,
+        -16
+      ],
+      "registration": {
+        "index": 6,
+        "planted_foot": "left",
+        "planted_sole_xy": [
+          61.324,
+          232
+        ],
+        "stretch_start_sole_xy": [
+          108.273,
+          242
+        ],
+        "recommended_root_offset_xy_to_hold_planted_foot": [
+          46.949,
+          10
+        ],
+        "planted_sole_minus_nominal_root_xy": [
+          -66.676,
+          -16
+        ],
+        "source_slide_flag": true,
+        "reason": "planted left translates in source (-46.95,-10.00) vs stretch start; offset holds plant"
+      }
+    },
+    {
+      "segment": "light1",
+      "group": "mainline",
+      "index": 7,
+      "file": "png256/mainline/hero_zhaoyun_atk_light1_007.png",
+      "source_frame": 114,
+      "source_time_s": 4.75,
+      "nominal_root_xy": [
+        128,
+        248
+      ],
+      "left_foot": {
+        "sole_xy": [
+          61.026,
+          232
+        ],
+        "state": "grounded",
+        "confidence": 0.95,
+        "component_bbox": [
+          54,
+          210,
+          85,
+          233
+        ],
+        "measurement_roi": [
+          40,
+          210,
+          125,
+          252
+        ]
+      },
+      "right_foot": {
+        "sole_xy": [
+          151.436,
+          226
+        ],
+        "state": "lifted",
+        "confidence": 0.95,
+        "component_bbox": [
+          137,
+          210,
+          162,
+          227
+        ],
+        "measurement_roi": [
+          125,
+          210,
+          190,
+          252
+        ]
+      },
+      "support_foot": "left",
+      "existing_png256_bottom_silhouette": {
+        "x": 61.64334043352963,
+        "y": 232,
+        "definition": "alpha>=128 lowest five silhouette rows, not anatomical foot identification; impact glow can contribute"
+      },
+      "existing_spear_tip_png256_xy": [
+        243.1778,
+        132.3222
+      ],
+      "notes": null,
+      "planted_support_sole_xy": [
+        61.026,
+        232
+      ],
+      "raw_offset_from_nominal_root_xy": [
+        -66.974,
+        -16
+      ],
+      "registration": {
+        "index": 7,
+        "planted_foot": "left",
+        "planted_sole_xy": [
+          61.026,
+          232
+        ],
+        "stretch_start_sole_xy": [
+          108.273,
+          242
+        ],
+        "recommended_root_offset_xy_to_hold_planted_foot": [
+          47.247,
+          10
+        ],
+        "planted_sole_minus_nominal_root_xy": [
+          -66.974,
+          -16
+        ],
+        "source_slide_flag": true,
+        "reason": "planted left translates in source (-47.25,-10.00) vs stretch start; offset holds plant"
+      }
+    },
+    {
+      "segment": "light1",
+      "group": "mainline",
+      "index": 8,
+      "file": "png256/mainline/hero_zhaoyun_atk_light1_008.png",
+      "source_frame": 116,
+      "source_time_s": 4.833333333333333,
+      "nominal_root_xy": [
+        128,
+        248
+      ],
+      "left_foot": {
+        "sole_xy": [
+          61.13,
+          232
+        ],
+        "state": "grounded",
+        "confidence": 0.95,
+        "component_bbox": [
+          54,
+          210,
+          85,
+          233
+        ],
+        "measurement_roi": [
+          40,
+          210,
+          125,
+          252
+        ]
+      },
+      "right_foot": {
+        "sole_xy": [
+          151.353,
+          226
+        ],
+        "state": "lifted",
+        "confidence": 0.95,
+        "component_bbox": [
+          137,
+          210,
+          162,
+          227
+        ],
+        "measurement_roi": [
+          125,
+          210,
+          190,
+          252
+        ]
+      },
+      "support_foot": "left",
+      "existing_png256_bottom_silhouette": {
+        "x": 61.67213634059807,
+        "y": 232,
+        "definition": "alpha>=128 lowest five silhouette rows, not anatomical foot identification; impact glow can contribute"
+      },
+      "existing_spear_tip_png256_xy": null,
+      "notes": null,
+      "planted_support_sole_xy": [
+        61.13,
+        232
+      ],
+      "raw_offset_from_nominal_root_xy": [
+        -66.87,
+        -16
+      ],
+      "registration": {
+        "index": 8,
+        "planted_foot": "left",
+        "planted_sole_xy": [
+          61.13,
+          232
+        ],
+        "stretch_start_sole_xy": [
+          108.273,
+          242
+        ],
+        "recommended_root_offset_xy_to_hold_planted_foot": [
+          47.143,
+          10
+        ],
+        "planted_sole_minus_nominal_root_xy": [
+          -66.87,
+          -16
+        ],
+        "source_slide_flag": true,
+        "reason": "planted left translates in source (-47.14,-10.00) vs stretch start; offset holds plant"
+      }
+    },
+    {
+      "segment": "light1",
+      "group": "mainline",
+      "index": 9,
+      "file": "png256/mainline/hero_zhaoyun_atk_light1_009.png",
+      "source_frame": 118,
+      "source_time_s": 4.916666666666667,
+      "nominal_root_xy": [
+        128,
+        248
+      ],
+      "left_foot": {
+        "sole_xy": [
+          61.093,
+          232
+        ],
+        "state": "grounded",
+        "confidence": 0.95,
+        "component_bbox": [
+          54,
+          210,
+          85,
+          233
+        ],
+        "measurement_roi": [
+          40,
+          210,
+          125,
+          252
+        ]
+      },
+      "right_foot": {
+        "sole_xy": [
+          151.352,
+          226
+        ],
+        "state": "lifted",
+        "confidence": 0.95,
+        "component_bbox": [
+          137,
+          210,
+          162,
+          227
+        ],
+        "measurement_roi": [
+          125,
+          210,
+          190,
+          252
+        ]
+      },
+      "support_foot": "left",
+      "existing_png256_bottom_silhouette": {
+        "x": 61.67673542371799,
+        "y": 232,
+        "definition": "alpha>=128 lowest five silhouette rows, not anatomical foot identification; impact glow can contribute"
+      },
+      "existing_spear_tip_png256_xy": null,
+      "notes": null,
+      "planted_support_sole_xy": [
+        61.093,
+        232
+      ],
+      "raw_offset_from_nominal_root_xy": [
+        -66.907,
+        -16
+      ],
+      "registration": {
+        "index": 9,
+        "planted_foot": "left",
+        "planted_sole_xy": [
+          61.093,
+          232
+        ],
+        "stretch_start_sole_xy": [
+          108.273,
+          242
+        ],
+        "recommended_root_offset_xy_to_hold_planted_foot": [
+          47.18,
+          10
+        ],
+        "planted_sole_minus_nominal_root_xy": [
+          -66.907,
+          -16
+        ],
+        "source_slide_flag": true,
+        "reason": "planted left translates in source (-47.18,-10.00) vs stretch start; offset holds plant"
+      }
+    },
+    {
+      "segment": "light1",
+      "group": "mainline",
+      "index": 10,
+      "file": "png256/mainline/hero_zhaoyun_atk_light1_010.png",
+      "source_frame": 120,
+      "source_time_s": 5.0,
+      "nominal_root_xy": [
+        128,
+        248
+      ],
+      "left_foot": {
+        "sole_xy": [
+          61.093,
+          232
+        ],
+        "state": "grounded",
+        "confidence": 0.95,
+        "component_bbox": [
+          54,
+          210,
+          85,
+          233
+        ],
+        "measurement_roi": [
+          40,
+          210,
+          125,
+          252
+        ]
+      },
+      "right_foot": {
+        "sole_xy": [
+          151.355,
+          226
+        ],
+        "state": "lifted",
+        "confidence": 0.95,
+        "component_bbox": [
+          137,
+          210,
+          162,
+          227
+        ],
+        "measurement_roi": [
+          125,
+          210,
+          190,
+          252
+        ]
+      },
+      "support_foot": "left",
+      "existing_png256_bottom_silhouette": {
+        "x": 61.67673542371799,
+        "y": 232,
+        "definition": "alpha>=128 lowest five silhouette rows, not anatomical foot identification; impact glow can contribute"
+      },
+      "existing_spear_tip_png256_xy": [
+        243.8667,
+        132.3222
+      ],
+      "notes": null,
+      "planted_support_sole_xy": [
+        61.093,
+        232
+      ],
+      "raw_offset_from_nominal_root_xy": [
+        -66.907,
+        -16
+      ],
+      "registration": {
+        "index": 10,
+        "planted_foot": "left",
+        "planted_sole_xy": [
+          61.093,
+          232
+        ],
+        "stretch_start_sole_xy": [
+          108.273,
+          242
+        ],
+        "recommended_root_offset_xy_to_hold_planted_foot": [
+          47.18,
+          10
+        ],
+        "planted_sole_minus_nominal_root_xy": [
+          -66.907,
+          -16
+        ],
+        "source_slide_flag": true,
+        "reason": "planted left translates in source (-47.18,-10.00) vs stretch start; offset holds plant"
+      }
+    },
+    {
+      "segment": "light2",
+      "group": "mainline",
+      "index": 0,
+      "file": "png256/mainline/hero_zhaoyun_atk_light2_000.png",
+      "source_frame": 0,
+      "source_time_s": 0.0,
+      "nominal_root_xy": [
+        128,
+        248
+      ],
+      "left_foot": {
+        "sole_xy": [
+          61.002,
+          232
+        ],
+        "state": "grounded",
+        "confidence": 0.95,
+        "component_bbox": [
+          54,
+          210,
+          85,
+          233
+        ],
+        "measurement_roi": [
+          40,
+          210,
+          125,
+          252
+        ]
+      },
+      "right_foot": {
+        "sole_xy": [
+          151.34,
+          226
+        ],
+        "state": "lifted",
+        "confidence": 0.95,
+        "component_bbox": [
+          137,
+          210,
+          162,
+          227
+        ],
+        "measurement_roi": [
+          125,
+          210,
+          190,
+          252
+        ]
+      },
+      "support_foot": "left",
+      "existing_png256_bottom_silhouette": {
+        "x": 61.65147637180848,
+        "y": 232,
+        "definition": "alpha>=128 lowest five silhouette rows, not anatomical foot identification; impact glow can contribute"
+      },
+      "existing_spear_tip_png256_xy": [
+        243.1778,
+        132.3222
+      ],
+      "notes": null,
+      "planted_support_sole_xy": [
+        61.002,
+        232
+      ],
+      "raw_offset_from_nominal_root_xy": [
+        -66.998,
+        -16
+      ],
+      "registration": {
+        "index": 0,
+        "planted_foot": "left",
+        "planted_sole_xy": [
+          61.002,
+          232
+        ],
+        "stretch_start_sole_xy": [
+          61.002,
+          232
+        ],
+        "recommended_root_offset_xy_to_hold_planted_foot": [
+          -0.0,
+          0
+        ],
+        "planted_sole_minus_nominal_root_xy": [
+          -66.998,
+          -16
+        ],
+        "source_slide_flag": false,
+        "reason": "planted left stable within stretch; offset ~0 preserves natural pose, no lowest-point snap"
+      }
+    },
+    {
+      "segment": "light2",
+      "group": "mainline",
+      "index": 1,
+      "file": "png256/mainline/hero_zhaoyun_atk_light2_001.png",
+      "source_frame": 24,
+      "source_time_s": 1.0,
+      "nominal_root_xy": [
+        128,
+        248
+      ],
+      "left_foot": {
+        "sole_xy": [
+          61.138,
+          232
+        ],
+        "state": "grounded",
+        "confidence": 0.95,
+        "component_bbox": [
+          54,
+          210,
+          85,
+          233
+        ],
+        "measurement_roi": [
+          40,
+          210,
+          125,
+          252
+        ]
+      },
+      "right_foot": {
+        "sole_xy": [
+          151.381,
+          226
+        ],
+        "state": "lifted",
+        "confidence": 0.95,
+        "component_bbox": [
+          137,
+          210,
+          162,
+          227
+        ],
+        "measurement_roi": [
+          125,
+          210,
+          190,
+          252
+        ]
+      },
+      "support_foot": "left",
+      "existing_png256_bottom_silhouette": {
+        "x": 61.68822752155037,
+        "y": 232,
+        "definition": "alpha>=128 lowest five silhouette rows, not anatomical foot identification; impact glow can contribute"
+      },
+      "existing_spear_tip_png256_xy": null,
+      "notes": null,
+      "planted_support_sole_xy": [
+        61.138,
+        232
+      ],
+      "raw_offset_from_nominal_root_xy": [
+        -66.862,
+        -16
+      ],
+      "registration": {
+        "index": 1,
+        "planted_foot": "left",
+        "planted_sole_xy": [
+          61.138,
+          232
+        ],
+        "stretch_start_sole_xy": [
+          61.002,
+          232
+        ],
+        "recommended_root_offset_xy_to_hold_planted_foot": [
+          -0.136,
+          0
+        ],
+        "planted_sole_minus_nominal_root_xy": [
+          -66.862,
+          -16
+        ],
+        "source_slide_flag": false,
+        "reason": "planted left stable within stretch; offset ~0 preserves natural pose, no lowest-point snap"
+      }
+    },
+    {
+      "segment": "light2",
+      "group": "mainline",
+      "index": 2,
+      "file": "png256/mainline/hero_zhaoyun_atk_light2_002.png",
+      "source_frame": 27,
+      "source_time_s": 1.125,
+      "nominal_root_xy": [
+        128,
+        248
+      ],
+      "left_foot": {
+        "sole_xy": [
+          61.143,
+          232
+        ],
+        "state": "grounded",
+        "confidence": 0.95,
+        "component_bbox": [
+          54,
+          210,
+          85,
+          233
+        ],
+        "measurement_roi": [
+          40,
+          210,
+          125,
+          252
+        ]
+      },
+      "right_foot": {
+        "sole_xy": [
+          151.375,
+          226
+        ],
+        "state": "lifted",
+        "confidence": 0.95,
+        "component_bbox": [
+          137,
+          210,
+          162,
+          227
+        ],
+        "measurement_roi": [
+          125,
+          210,
+          190,
+          252
+        ]
+      },
+      "support_foot": "left",
+      "existing_png256_bottom_silhouette": {
+        "x": 61.69223026108839,
+        "y": 232,
+        "definition": "alpha>=128 lowest five silhouette rows, not anatomical foot identification; impact glow can contribute"
+      },
+      "existing_spear_tip_png256_xy": null,
+      "notes": null,
+      "planted_support_sole_xy": [
+        61.143,
+        232
+      ],
+      "raw_offset_from_nominal_root_xy": [
+        -66.857,
+        -16
+      ],
+      "registration": {
+        "index": 2,
+        "planted_foot": "left",
+        "planted_sole_xy": [
+          61.143,
+          232
+        ],
+        "stretch_start_sole_xy": [
+          61.002,
+          232
+        ],
+        "recommended_root_offset_xy_to_hold_planted_foot": [
+          -0.141,
+          0
+        ],
+        "planted_sole_minus_nominal_root_xy": [
+          -66.857,
+          -16
+        ],
+        "source_slide_flag": false,
+        "reason": "planted left stable within stretch; offset ~0 preserves natural pose, no lowest-point snap"
+      }
+    },
+    {
+      "segment": "light2",
+      "group": "mainline",
+      "index": 3,
+      "file": "png256/mainline/hero_zhaoyun_atk_light2_003.png",
+      "source_frame": 30,
+      "source_time_s": 1.25,
+      "nominal_root_xy": [
+        128,
+        248
+      ],
+      "left_foot": {
+        "sole_xy": [
+          61.029,
+          232
+        ],
+        "state": "grounded",
+        "confidence": 0.95,
+        "component_bbox": [
+          54,
+          210,
+          86,
+          233
+        ],
+        "measurement_roi": [
+          40,
+          210,
+          125,
+          252
+        ]
+      },
+      "right_foot": {
+        "sole_xy": [
+          151.345,
+          226
+        ],
+        "state": "lifted",
+        "confidence": 0.95,
+        "component_bbox": [
+          137,
+          210,
+          162,
+          227
+        ],
+        "measurement_roi": [
+          125,
+          210,
+          190,
+          252
+        ]
+      },
+      "support_foot": "left",
+      "existing_png256_bottom_silhouette": {
+        "x": 61.66942766394719,
+        "y": 232,
+        "definition": "alpha>=128 lowest five silhouette rows, not anatomical foot identification; impact glow can contribute"
+      },
+      "existing_spear_tip_png256_xy": null,
+      "notes": null,
+      "planted_support_sole_xy": [
+        61.029,
+        232
+      ],
+      "raw_offset_from_nominal_root_xy": [
+        -66.971,
+        -16
+      ],
+      "registration": {
+        "index": 3,
+        "planted_foot": "left",
+        "planted_sole_xy": [
+          61.029,
+          232
+        ],
+        "stretch_start_sole_xy": [
+          61.002,
+          232
+        ],
+        "recommended_root_offset_xy_to_hold_planted_foot": [
+          -0.027,
+          0
+        ],
+        "planted_sole_minus_nominal_root_xy": [
+          -66.971,
+          -16
+        ],
+        "source_slide_flag": false,
+        "reason": "planted left stable within stretch; offset ~0 preserves natural pose, no lowest-point snap"
+      }
+    },
+    {
+      "segment": "light2",
+      "group": "mainline",
+      "index": 4,
+      "file": "png256/mainline/hero_zhaoyun_atk_light2_004.png",
+      "source_frame": 33,
+      "source_time_s": 1.375,
+      "nominal_root_xy": [
+        128,
+        248
+      ],
+      "left_foot": {
+        "sole_xy": [
+          61.028,
+          232
+        ],
+        "state": "grounded",
+        "confidence": 0.95,
+        "component_bbox": [
+          54,
+          210,
+          88,
+          233
+        ],
+        "measurement_roi": [
+          40,
+          210,
+          125,
+          252
+        ]
+      },
+      "right_foot": {
+        "sole_xy": [
+          151.343,
+          226
+        ],
+        "state": "lifted",
+        "confidence": 0.95,
+        "component_bbox": [
+          137,
+          210,
+          162,
+          227
+        ],
+        "measurement_roi": [
+          125,
+          210,
+          190,
+          252
+        ]
+      },
+      "support_foot": "left",
+      "existing_png256_bottom_silhouette": {
+        "x": 61.66922118380062,
+        "y": 232,
+        "definition": "alpha>=128 lowest five silhouette rows, not anatomical foot identification; impact glow can contribute"
+      },
+      "existing_spear_tip_png256_xy": null,
+      "notes": null,
+      "planted_support_sole_xy": [
+        61.028,
+        232
+      ],
+      "raw_offset_from_nominal_root_xy": [
+        -66.972,
+        -16
+      ],
+      "registration": {
+        "index": 4,
+        "planted_foot": "left",
+        "planted_sole_xy": [
+          61.028,
+          232
+        ],
+        "stretch_start_sole_xy": [
+          61.002,
+          232
+        ],
+        "recommended_root_offset_xy_to_hold_planted_foot": [
+          -0.026,
+          0
+        ],
+        "planted_sole_minus_nominal_root_xy": [
+          -66.972,
+          -16
+        ],
+        "source_slide_flag": false,
+        "reason": "planted left stable within stretch; offset ~0 preserves natural pose, no lowest-point snap"
+      }
+    },
+    {
+      "segment": "light2",
+      "group": "mainline",
+      "index": 5,
+      "file": "png256/mainline/hero_zhaoyun_atk_light2_005.png",
+      "source_frame": 36,
+      "source_time_s": 1.5,
+      "nominal_root_xy": [
+        128,
+        248
+      ],
+      "left_foot": {
+        "sole_xy": [
+          61.029,
+          232
+        ],
+        "state": "grounded",
+        "confidence": 0.95,
+        "component_bbox": [
+          54,
+          210,
+          93,
+          233
+        ],
+        "measurement_roi": [
+          40,
+          210,
+          125,
+          252
+        ]
+      },
+      "right_foot": {
+        "sole_xy": [
+          151.354,
+          226
+        ],
+        "state": "lifted",
+        "confidence": 0.95,
+        "component_bbox": [
+          137,
+          210,
+          162,
+          227
+        ],
+        "measurement_roi": [
+          125,
+          210,
+          190,
+          252
+        ]
+      },
+      "support_foot": "left",
+      "existing_png256_bottom_silhouette": {
+        "x": 61.66988537253925,
+        "y": 232,
+        "definition": "alpha>=128 lowest five silhouette rows, not anatomical foot identification; impact glow can contribute"
+      },
+      "existing_spear_tip_png256_xy": null,
+      "notes": null,
+      "planted_support_sole_xy": [
+        61.029,
+        232
+      ],
+      "raw_offset_from_nominal_root_xy": [
+        -66.971,
+        -16
+      ],
+      "registration": {
+        "index": 5,
+        "planted_foot": "left",
+        "planted_sole_xy": [
+          61.029,
+          232
+        ],
+        "stretch_start_sole_xy": [
+          61.002,
+          232
+        ],
+        "recommended_root_offset_xy_to_hold_planted_foot": [
+          -0.027,
+          0
+        ],
+        "planted_sole_minus_nominal_root_xy": [
+          -66.971,
+          -16
+        ],
+        "source_slide_flag": false,
+        "reason": "planted left stable within stretch; offset ~0 preserves natural pose, no lowest-point snap"
+      }
+    },
+    {
+      "segment": "light2",
+      "group": "mainline",
+      "index": 6,
+      "file": "png256/mainline/hero_zhaoyun_atk_light2_006.png",
+      "source_frame": 39,
+      "source_time_s": 1.625,
+      "nominal_root_xy": [
+        128,
+        248
+      ],
+      "left_foot": {
+        "sole_xy": [
+          61.04,
+          232
+        ],
+        "state": "grounded",
+        "confidence": 0.95,
+        "component_bbox": [
+          54,
+          210,
+          102,
+          233
+        ],
+        "measurement_roi": [
+          40,
+          210,
+          125,
+          252
+        ]
+      },
+      "right_foot": {
+        "sole_xy": [
+          151.359,
+          226
+        ],
+        "state": "lifted",
+        "confidence": 0.95,
+        "component_bbox": [
+          137,
+          210,
+          162,
+          227
+        ],
+        "measurement_roi": [
+          125,
+          210,
+          190,
+          252
+        ]
+      },
+      "support_foot": "left",
+      "existing_png256_bottom_silhouette": {
+        "x": 61.67305538270068,
+        "y": 232,
+        "definition": "alpha>=128 lowest five silhouette rows, not anatomical foot identification; impact glow can contribute"
+      },
+      "existing_spear_tip_png256_xy": null,
+      "notes": null,
+      "planted_support_sole_xy": [
+        61.04,
+        232
+      ],
+      "raw_offset_from_nominal_root_xy": [
+        -66.96,
+        -16
+      ],
+      "registration": {
+        "index": 6,
+        "planted_foot": "left",
+        "planted_sole_xy": [
+          61.04,
+          232
+        ],
+        "stretch_start_sole_xy": [
+          61.002,
+          232
+        ],
+        "recommended_root_offset_xy_to_hold_planted_foot": [
+          -0.038,
+          0
+        ],
+        "planted_sole_minus_nominal_root_xy": [
+          -66.96,
+          -16
+        ],
+        "source_slide_flag": false,
+        "reason": "planted left stable within stretch; offset ~0 preserves natural pose, no lowest-point snap"
+      }
+    },
+    {
+      "segment": "light2",
+      "group": "mainline",
+      "index": 7,
+      "file": "png256/mainline/hero_zhaoyun_atk_light2_007.png",
+      "source_frame": 42,
+      "source_time_s": 1.75,
+      "nominal_root_xy": [
+        128,
+        248
+      ],
+      "left_foot": {
+        "sole_xy": [
+          61.033,
+          232
+        ],
+        "state": "grounded",
+        "confidence": 0.95,
+        "component_bbox": [
+          54,
+          210,
+          108,
+          233
+        ],
+        "measurement_roi": [
+          40,
+          210,
+          125,
+          252
+        ]
+      },
+      "right_foot": {
+        "sole_xy": [
+          151.351,
+          226
+        ],
+        "state": "lifted",
+        "confidence": 0.95,
+        "component_bbox": [
+          137,
+          210,
+          162,
+          227
+        ],
+        "measurement_roi": [
+          125,
+          210,
+          190,
+          252
+        ]
+      },
+      "support_foot": "left",
+      "existing_png256_bottom_silhouette": {
+        "x": 61.67200348866185,
+        "y": 232,
+        "definition": "alpha>=128 lowest five silhouette rows, not anatomical foot identification; impact glow can contribute"
+      },
+      "existing_spear_tip_png256_xy": null,
+      "notes": null,
+      "planted_support_sole_xy": [
+        61.033,
+        232
+      ],
+      "raw_offset_from_nominal_root_xy": [
+        -66.967,
+        -16
+      ],
+      "registration": {
+        "index": 7,
+        "planted_foot": "left",
+        "planted_sole_xy": [
+          61.033,
+          232
+        ],
+        "stretch_start_sole_xy": [
+          61.002,
+          232
+        ],
+        "recommended_root_offset_xy_to_hold_planted_foot": [
+          -0.031,
+          0
+        ],
+        "planted_sole_minus_nominal_root_xy": [
+          -66.967,
+          -16
+        ],
+        "source_slide_flag": false,
+        "reason": "planted left stable within stretch; offset ~0 preserves natural pose, no lowest-point snap"
+      }
+    },
+    {
+      "segment": "light2",
+      "group": "mainline",
+      "index": 8,
+      "file": "png256/mainline/hero_zhaoyun_atk_light2_008.png",
+      "source_frame": 50,
+      "source_time_s": 2.0833333333333335,
+      "nominal_root_xy": [
+        128,
+        248
+      ],
+      "left_foot": {
+        "sole_xy": [
+          61.029,
+          232
+        ],
+        "state": "grounded",
+        "confidence": 0.95,
+        "component_bbox": [
+          54,
+          210,
+          94,
+          233
+        ],
+        "measurement_roi": [
+          40,
+          210,
+          125,
+          252
+        ]
+      },
+      "right_foot": {
+        "sole_xy": [
+          151.34,
+          226
+        ],
+        "state": "lifted",
+        "confidence": 0.95,
+        "component_bbox": [
+          137,
+          210,
+          162,
+          227
+        ],
+        "measurement_roi": [
+          125,
+          210,
+          190,
+          252
+        ]
+      },
+      "support_foot": "left",
+      "existing_png256_bottom_silhouette": {
+        "x": 61.67249017283334,
+        "y": 232,
+        "definition": "alpha>=128 lowest five silhouette rows, not anatomical foot identification; impact glow can contribute"
+      },
+      "existing_spear_tip_png256_xy": null,
+      "notes": null,
+      "planted_support_sole_xy": [
+        61.029,
+        232
+      ],
+      "raw_offset_from_nominal_root_xy": [
+        -66.971,
+        -16
+      ],
+      "registration": {
+        "index": 8,
+        "planted_foot": "left",
+        "planted_sole_xy": [
+          61.029,
+          232
+        ],
+        "stretch_start_sole_xy": [
+          61.002,
+          232
+        ],
+        "recommended_root_offset_xy_to_hold_planted_foot": [
+          -0.027,
+          0
+        ],
+        "planted_sole_minus_nominal_root_xy": [
+          -66.971,
+          -16
+        ],
+        "source_slide_flag": false,
+        "reason": "planted left stable within stretch; offset ~0 preserves natural pose, no lowest-point snap"
+      }
+    },
+    {
+      "segment": "light2",
+      "group": "mainline",
+      "index": 9,
+      "file": "png256/mainline/hero_zhaoyun_atk_light2_009.png",
+      "source_frame": 53,
+      "source_time_s": 2.2083333333333335,
+      "nominal_root_xy": [
+        128,
+        248
+      ],
+      "left_foot": {
+        "sole_xy": [
+          61.026,
+          232
+        ],
+        "state": "grounded",
+        "confidence": 0.95,
+        "component_bbox": [
+          54,
+          210,
+          94,
+          233
+        ],
+        "measurement_roi": [
+          40,
+          210,
+          125,
+          252
+        ]
+      },
+      "right_foot": {
+        "sole_xy": [
+          151.34,
+          226
+        ],
+        "state": "lifted",
+        "confidence": 0.95,
+        "component_bbox": [
+          137,
+          210,
+          162,
+          227
+        ],
+        "measurement_roi": [
+          125,
+          210,
+          190,
+          252
+        ]
+      },
+      "support_foot": "left",
+      "existing_png256_bottom_silhouette": {
+        "x": 61.671991015161915,
+        "y": 232,
+        "definition": "alpha>=128 lowest five silhouette rows, not anatomical foot identification; impact glow can contribute"
+      },
+      "existing_spear_tip_png256_xy": null,
+      "notes": null,
+      "planted_support_sole_xy": [
+        61.026,
+        232
+      ],
+      "raw_offset_from_nominal_root_xy": [
+        -66.974,
+        -16
+      ],
+      "registration": {
+        "index": 9,
+        "planted_foot": "left",
+        "planted_sole_xy": [
+          61.026,
+          232
+        ],
+        "stretch_start_sole_xy": [
+          61.002,
+          232
+        ],
+        "recommended_root_offset_xy_to_hold_planted_foot": [
+          -0.024,
+          0
+        ],
+        "planted_sole_minus_nominal_root_xy": [
+          -66.974,
+          -16
+        ],
+        "source_slide_flag": false,
+        "reason": "planted left stable within stretch; offset ~0 preserves natural pose, no lowest-point snap"
+      }
+    },
+    {
+      "segment": "light2",
+      "group": "mainline",
+      "index": 10,
+      "file": "png256/mainline/hero_zhaoyun_atk_light2_010.png",
+      "source_frame": 56,
+      "source_time_s": 2.3333333333333335,
+      "nominal_root_xy": [
+        128,
+        248
+      ],
+      "left_foot": {
+        "sole_xy": [
+          61.029,
+          232
+        ],
+        "state": "grounded",
+        "confidence": 0.95,
+        "component_bbox": [
+          54,
+          210,
+          93,
+          233
+        ],
+        "measurement_roi": [
+          40,
+          210,
+          125,
+          252
+        ]
+      },
+      "right_foot": {
+        "sole_xy": [
+          151.338,
+          226
+        ],
+        "state": "lifted",
+        "confidence": 0.95,
+        "component_bbox": [
+          137,
+          210,
+          162,
+          227
+        ],
+        "measurement_roi": [
+          125,
+          210,
+          190,
+          252
+        ]
+      },
+      "support_foot": "left",
+      "existing_png256_bottom_silhouette": {
+        "x": 61.674334517798144,
+        "y": 232,
+        "definition": "alpha>=128 lowest five silhouette rows, not anatomical foot identification; impact glow can contribute"
+      },
+      "existing_spear_tip_png256_xy": null,
+      "notes": null,
+      "planted_support_sole_xy": [
+        61.029,
+        232
+      ],
+      "raw_offset_from_nominal_root_xy": [
+        -66.971,
+        -16
+      ],
+      "registration": {
+        "index": 10,
+        "planted_foot": "left",
+        "planted_sole_xy": [
+          61.029,
+          232
+        ],
+        "stretch_start_sole_xy": [
+          61.002,
+          232
+        ],
+        "recommended_root_offset_xy_to_hold_planted_foot": [
+          -0.027,
+          0
+        ],
+        "planted_sole_minus_nominal_root_xy": [
+          -66.971,
+          -16
+        ],
+        "source_slide_flag": false,
+        "reason": "planted left stable within stretch; offset ~0 preserves natural pose, no lowest-point snap"
+      }
+    },
+    {
+      "segment": "light2",
+      "group": "mainline",
+      "index": 11,
+      "file": "png256/mainline/hero_zhaoyun_atk_light2_011.png",
+      "source_frame": 59,
+      "source_time_s": 2.4583333333333335,
+      "nominal_root_xy": [
+        128,
+        248
+      ],
+      "left_foot": {
+        "sole_xy": [
+          60.826,
+          232
+        ],
+        "state": "grounded",
+        "confidence": 0.95,
+        "component_bbox": [
+          54,
+          210,
+          90,
+          233
+        ],
+        "measurement_roi": [
+          40,
+          210,
+          125,
+          252
+        ]
+      },
+      "right_foot": {
+        "sole_xy": [
+          151.344,
+          226
+        ],
+        "state": "lifted",
+        "confidence": 0.95,
+        "component_bbox": [
+          137,
+          210,
+          162,
+          227
+        ],
+        "measurement_roi": [
+          125,
+          210,
+          190,
+          252
+        ]
+      },
+      "support_foot": "left",
+      "existing_png256_bottom_silhouette": {
+        "x": 61.618346125278535,
+        "y": 232,
+        "definition": "alpha>=128 lowest five silhouette rows, not anatomical foot identification; impact glow can contribute"
+      },
+      "existing_spear_tip_png256_xy": null,
+      "notes": null,
+      "planted_support_sole_xy": [
+        60.826,
+        232
+      ],
+      "raw_offset_from_nominal_root_xy": [
+        -67.174,
+        -16
+      ],
+      "registration": {
+        "index": 11,
+        "planted_foot": "left",
+        "planted_sole_xy": [
+          60.826,
+          232
+        ],
+        "stretch_start_sole_xy": [
+          61.002,
+          232
+        ],
+        "recommended_root_offset_xy_to_hold_planted_foot": [
+          0.176,
+          0
+        ],
+        "planted_sole_minus_nominal_root_xy": [
+          -67.174,
+          -16
+        ],
+        "source_slide_flag": false,
+        "reason": "planted left stable within stretch; offset ~0 preserves natural pose, no lowest-point snap"
+      }
+    },
+    {
+      "segment": "light2",
+      "group": "mainline",
+      "index": 12,
+      "file": "png256/mainline/hero_zhaoyun_atk_light2_012.png",
+      "source_frame": 62,
+      "source_time_s": 2.5833333333333335,
+      "nominal_root_xy": [
+        128,
+        248
+      ],
+      "left_foot": {
+        "sole_xy": [
+          61.038,
+          232
+        ],
+        "state": "grounded",
+        "confidence": 0.95,
+        "component_bbox": [
+          54,
+          210,
+          88,
+          233
+        ],
+        "measurement_roi": [
+          40,
+          210,
+          125,
+          252
+        ]
+      },
+      "right_foot": {
+        "sole_xy": [
+          151.341,
+          226
+        ],
+        "state": "lifted",
+        "confidence": 0.95,
+        "component_bbox": [
+          137,
+          210,
+          162,
+          227
+        ],
+        "measurement_roi": [
+          125,
+          210,
+          190,
+          252
+        ]
+      },
+      "support_foot": "left",
+      "existing_png256_bottom_silhouette": {
+        "x": 61.67226209048362,
+        "y": 232,
+        "definition": "alpha>=128 lowest five silhouette rows, not anatomical foot identification; impact glow can contribute"
+      },
+      "existing_spear_tip_png256_xy": null,
+      "notes": null,
+      "planted_support_sole_xy": [
+        61.038,
+        232
+      ],
+      "raw_offset_from_nominal_root_xy": [
+        -66.962,
+        -16
+      ],
+      "registration": {
+        "index": 12,
+        "planted_foot": "left",
+        "planted_sole_xy": [
+          61.038,
+          232
+        ],
+        "stretch_start_sole_xy": [
+          61.002,
+          232
+        ],
+        "recommended_root_offset_xy_to_hold_planted_foot": [
+          -0.036,
+          0
+        ],
+        "planted_sole_minus_nominal_root_xy": [
+          -66.962,
+          -16
+        ],
+        "source_slide_flag": false,
+        "reason": "planted left stable within stretch; offset ~0 preserves natural pose, no lowest-point snap"
+      }
+    },
+    {
+      "segment": "light2",
+      "group": "mainline",
+      "index": 13,
+      "file": "png256/mainline/hero_zhaoyun_atk_light2_013.png",
+      "source_frame": 65,
+      "source_time_s": 2.7083333333333335,
+      "nominal_root_xy": [
+        128,
+        248
+      ],
+      "left_foot": {
+        "sole_xy": [
+          61.237,
+          232
+        ],
+        "state": "grounded",
+        "confidence": 0.95,
+        "component_bbox": [
+          54,
+          210,
+          87,
+          233
+        ],
+        "measurement_roi": [
+          40,
+          210,
+          125,
+          252
+        ]
+      },
+      "right_foot": {
+        "sole_xy": [
+          151.349,
+          226
+        ],
+        "state": "lifted",
+        "confidence": 0.95,
+        "component_bbox": [
+          137,
+          210,
+          162,
+          227
+        ],
+        "measurement_roi": [
+          125,
+          210,
+          190,
+          252
+        ]
+      },
+      "support_foot": "left",
+      "existing_png256_bottom_silhouette": {
+        "x": 61.76217240290496,
+        "y": 232,
+        "definition": "alpha>=128 lowest five silhouette rows, not anatomical foot identification; impact glow can contribute"
+      },
+      "existing_spear_tip_png256_xy": null,
+      "notes": null,
+      "planted_support_sole_xy": [
+        61.237,
+        232
+      ],
+      "raw_offset_from_nominal_root_xy": [
+        -66.763,
+        -16
+      ],
+      "registration": {
+        "index": 13,
+        "planted_foot": "left",
+        "planted_sole_xy": [
+          61.237,
+          232
+        ],
+        "stretch_start_sole_xy": [
+          61.002,
+          232
+        ],
+        "recommended_root_offset_xy_to_hold_planted_foot": [
+          -0.235,
+          0
+        ],
+        "planted_sole_minus_nominal_root_xy": [
+          -66.763,
+          -16
+        ],
+        "source_slide_flag": false,
+        "reason": "planted left stable within stretch; offset ~0 preserves natural pose, no lowest-point snap"
+      }
+    },
+    {
+      "segment": "light2",
+      "group": "mainline",
+      "index": 14,
+      "file": "png256/mainline/hero_zhaoyun_atk_light2_014.png",
+      "source_frame": 68,
+      "source_time_s": 2.8333333333333335,
+      "nominal_root_xy": [
+        128,
+        248
+      ],
+      "left_foot": {
+        "sole_xy": [
+          69.117,
+          231
+        ],
+        "state": "grounded",
+        "confidence": 0.95,
+        "component_bbox": [
+          61,
+          210,
+          89,
+          232
+        ],
+        "measurement_roi": [
+          40,
+          210,
+          125,
+          252
+        ]
+      },
+      "right_foot": {
+        "sole_xy": [
+          151.418,
+          226
+        ],
+        "state": "lifted",
+        "confidence": 0.95,
+        "component_bbox": [
+          137,
+          210,
+          162,
+          227
+        ],
+        "measurement_roi": [
+          125,
+          210,
+          190,
+          252
+        ]
+      },
+      "support_foot": "left",
+      "existing_png256_bottom_silhouette": {
+        "x": 69.22178326474622,
+        "y": 231,
+        "definition": "alpha>=128 lowest five silhouette rows, not anatomical foot identification; impact glow can contribute"
+      },
+      "existing_spear_tip_png256_xy": null,
+      "notes": null,
+      "planted_support_sole_xy": [
+        69.117,
+        231
+      ],
+      "raw_offset_from_nominal_root_xy": [
+        -58.883,
+        -17
+      ],
+      "registration": {
+        "index": 14,
+        "planted_foot": "left",
+        "planted_sole_xy": [
+          69.117,
+          231
+        ],
+        "stretch_start_sole_xy": [
+          61.002,
+          232
+        ],
+        "recommended_root_offset_xy_to_hold_planted_foot": [
+          -8.115,
+          1
+        ],
+        "planted_sole_minus_nominal_root_xy": [
+          -58.883,
+          -17
+        ],
+        "source_slide_flag": true,
+        "reason": "planted left translates in source (8.12,-1.00) vs stretch start; offset holds plant"
+      }
+    },
+    {
+      "segment": "light2",
+      "group": "mainline",
+      "index": 15,
+      "file": "png256/mainline/hero_zhaoyun_atk_light2_015.png",
+      "source_frame": 70,
+      "source_time_s": 2.9166666666666665,
+      "nominal_root_xy": [
+        128,
+        248
+      ],
+      "left_foot": {
+        "sole_xy": [
+          80.639,
+          234
+        ],
+        "state": "grounded",
+        "confidence": 0.95,
+        "component_bbox": [
+          73,
+          210,
+          101,
+          235
+        ],
+        "measurement_roi": [
+          40,
+          210,
+          125,
+          252
+        ]
+      },
+      "right_foot": {
+        "sole_xy": [
+          157.118,
+          229
+        ],
+        "state": "lifted",
+        "confidence": 0.95,
+        "component_bbox": [
+          142,
+          210,
+          167,
+          230
+        ],
+        "measurement_roi": [
+          125,
+          210,
+          190,
+          252
+        ]
+      },
+      "support_foot": "left",
+      "existing_png256_bottom_silhouette": {
+        "x": 81.07420034713613,
+        "y": 234,
+        "definition": "alpha>=128 lowest five silhouette rows, not anatomical foot identification; impact glow can contribute"
+      },
+      "existing_spear_tip_png256_xy": null,
+      "notes": null,
+      "planted_support_sole_xy": [
+        80.639,
+        234
+      ],
+      "raw_offset_from_nominal_root_xy": [
+        -47.361,
+        -14
+      ],
+      "registration": {
+        "index": 15,
+        "planted_foot": "left",
+        "planted_sole_xy": [
+          80.639,
+          234
+        ],
+        "stretch_start_sole_xy": [
+          61.002,
+          232
+        ],
+        "recommended_root_offset_xy_to_hold_planted_foot": [
+          -19.637,
+          -2
+        ],
+        "planted_sole_minus_nominal_root_xy": [
+          -47.361,
+          -14
+        ],
+        "source_slide_flag": true,
+        "reason": "planted left translates in source (19.64,2.00) vs stretch start; offset holds plant"
+      }
+    },
+    {
+      "segment": "light2",
+      "group": "mainline",
+      "index": 16,
+      "file": "png256/mainline/hero_zhaoyun_atk_light2_016.png",
+      "source_frame": 72,
+      "source_time_s": 3.0,
+      "nominal_root_xy": [
+        128,
+        248
+      ],
+      "left_foot": {
+        "sole_xy": [
+          91.218,
+          241
+        ],
+        "state": "grounded",
+        "confidence": 0.95,
+        "component_bbox": [
+          85,
+          210,
+          116,
+          242
+        ],
+        "measurement_roi": [
+          40,
+          210,
+          125,
+          252
+        ]
+      },
+      "right_foot": {
+        "sole_xy": [
+          163.928,
+          235
+        ],
+        "state": "lifted",
+        "confidence": 0.95,
+        "component_bbox": [
+          150,
+          210,
+          175,
+          236
+        ],
+        "measurement_roi": [
+          125,
+          210,
+          190,
+          252
+        ]
+      },
+      "support_foot": "left",
+      "existing_png256_bottom_silhouette": {
+        "x": 92.1195887129754,
+        "y": 241,
+        "definition": "alpha>=128 lowest five silhouette rows, not anatomical foot identification; impact glow can contribute"
+      },
+      "existing_spear_tip_png256_xy": null,
+      "notes": null,
+      "planted_support_sole_xy": [
+        91.218,
+        241
+      ],
+      "raw_offset_from_nominal_root_xy": [
+        -36.782,
+        -7
+      ],
+      "registration": {
+        "index": 16,
+        "planted_foot": "left",
+        "planted_sole_xy": [
+          91.218,
+          241
+        ],
+        "stretch_start_sole_xy": [
+          61.002,
+          232
+        ],
+        "recommended_root_offset_xy_to_hold_planted_foot": [
+          -30.216,
+          -9
+        ],
+        "planted_sole_minus_nominal_root_xy": [
+          -36.782,
+          -7
+        ],
+        "source_slide_flag": true,
+        "reason": "planted left translates in source (30.22,9.00) vs stretch start; offset holds plant"
+      }
+    },
+    {
+      "segment": "light2",
+      "group": "mainline",
+      "index": 17,
+      "file": "png256/mainline/hero_zhaoyun_atk_light2_017.png",
+      "source_frame": 74,
+      "source_time_s": 3.0833333333333335,
+      "nominal_root_xy": [
+        128,
+        248
+      ],
+      "left_foot": {
+        "sole_xy": [
+          95.73,
+          247
+        ],
+        "state": "grounded",
+        "confidence": 0.95,
+        "component_bbox": [
+          81,
+          210,
+          125,
+          248
+        ],
+        "measurement_roi": [
+          40,
+          210,
+          125,
+          252
+        ]
+      },
+      "right_foot": {
+        "sole_xy": [
+          169.057,
+          240
+        ],
+        "state": "lifted",
+        "confidence": 0.95,
+        "component_bbox": [
+          125,
+          210,
+          180,
+          241
+        ],
+        "measurement_roi": [
+          125,
+          210,
+          190,
+          252
+        ]
+      },
+      "support_foot": "left",
+      "existing_png256_bottom_silhouette": {
+        "x": 96.42893877267358,
+        "y": 247,
+        "definition": "alpha>=128 lowest five silhouette rows, not anatomical foot identification; impact glow can contribute"
+      },
+      "existing_spear_tip_png256_xy": [
+        213.2111,
+        28.6444
+      ],
+      "notes": null,
+      "planted_support_sole_xy": [
+        95.73,
+        247
+      ],
+      "raw_offset_from_nominal_root_xy": [
+        -32.27,
+        -1
+      ],
+      "registration": {
+        "index": 17,
+        "planted_foot": "left",
+        "planted_sole_xy": [
+          95.73,
+          247
+        ],
+        "stretch_start_sole_xy": [
+          61.002,
+          232
+        ],
+        "recommended_root_offset_xy_to_hold_planted_foot": [
+          -34.728,
+          -15
+        ],
+        "planted_sole_minus_nominal_root_xy": [
+          -32.27,
+          -1
+        ],
+        "source_slide_flag": true,
+        "reason": "planted left translates in source (34.73,15.00) vs stretch start; offset holds plant"
+      }
+    },
+    {
+      "segment": "light2",
+      "group": "mainline",
+      "index": 18,
+      "file": "png256/mainline/hero_zhaoyun_atk_light2_018.png",
+      "source_frame": 76,
+      "source_time_s": 3.1666666666666665,
+      "nominal_root_xy": [
+        128,
+        248
+      ],
+      "left_foot": {
+        "sole_xy": [
+          95.772,
+          247
+        ],
+        "state": "grounded",
+        "confidence": 0.95,
+        "component_bbox": [
+          78,
+          210,
+          125,
+          248
+        ],
+        "measurement_roi": [
+          40,
+          210,
+          125,
+          252
+        ]
+      },
+      "right_foot": {
+        "sole_xy": [
+          168.718,
+          240
+        ],
+        "state": "lifted",
+        "confidence": 0.95,
+        "component_bbox": [
+          125,
+          210,
+          180,
+          241
+        ],
+        "measurement_roi": [
+          125,
+          210,
+          190,
+          252
+        ]
+      },
+      "support_foot": "left",
+      "existing_png256_bottom_silhouette": {
+        "x": 96.71102199538218,
+        "y": 247,
+        "definition": "alpha>=128 lowest five silhouette rows, not anatomical foot identification; impact glow can contribute"
+      },
+      "existing_spear_tip_png256_xy": [
+        214.2444,
+        29.3333
+      ],
+      "notes": null,
+      "planted_support_sole_xy": [
+        95.772,
+        247
+      ],
+      "raw_offset_from_nominal_root_xy": [
+        -32.228,
+        -1
+      ],
+      "registration": {
+        "index": 18,
+        "planted_foot": "left",
+        "planted_sole_xy": [
+          95.772,
+          247
+        ],
+        "stretch_start_sole_xy": [
+          61.002,
+          232
+        ],
+        "recommended_root_offset_xy_to_hold_planted_foot": [
+          -34.77,
+          -15
+        ],
+        "planted_sole_minus_nominal_root_xy": [
+          -32.228,
+          -1
+        ],
+        "source_slide_flag": true,
+        "reason": "planted left translates in source (34.77,15.00) vs stretch start; offset holds plant"
+      }
+    },
+    {
+      "segment": "light2",
+      "group": "mainline",
+      "index": 19,
+      "file": "png256/mainline/hero_zhaoyun_atk_light2_019.png",
+      "source_frame": 120,
+      "source_time_s": 5.0,
+      "nominal_root_xy": [
+        128,
+        248
+      ],
+      "left_foot": {
+        "sole_xy": [
+          95.815,
+          247
+        ],
+        "state": "grounded",
+        "confidence": 0.95,
+        "component_bbox": [
+          80,
+          210,
+          125,
+          248
+        ],
+        "measurement_roi": [
+          40,
+          210,
+          125,
+          252
+        ]
+      },
+      "right_foot": {
+        "sole_xy": [
+          168.954,
+          240
+        ],
+        "state": "lifted",
+        "confidence": 0.95,
+        "component_bbox": [
+          125,
+          210,
+          180,
+          241
+        ],
+        "measurement_roi": [
+          125,
+          210,
+          190,
+          252
+        ]
+      },
+      "support_foot": "left",
+      "existing_png256_bottom_silhouette": {
+        "x": 96.73770392749245,
+        "y": 247,
+        "definition": "alpha>=128 lowest five silhouette rows, not anatomical foot identification; impact glow can contribute"
+      },
+      "existing_spear_tip_png256_xy": [
+        214.2444,
+        29.6778
+      ],
+      "notes": null,
+      "planted_support_sole_xy": [
+        95.815,
+        247
+      ],
+      "raw_offset_from_nominal_root_xy": [
+        -32.185,
+        -1
+      ],
+      "registration": {
+        "index": 19,
+        "planted_foot": "left",
+        "planted_sole_xy": [
+          95.815,
+          247
+        ],
+        "stretch_start_sole_xy": [
+          61.002,
+          232
+        ],
+        "recommended_root_offset_xy_to_hold_planted_foot": [
+          -34.813,
+          -15
+        ],
+        "planted_sole_minus_nominal_root_xy": [
+          -32.185,
+          -1
+        ],
+        "source_slide_flag": true,
+        "reason": "planted left translates in source (34.81,15.00) vs stretch start; offset holds plant"
+      }
+    },
+    {
+      "segment": "light3",
+      "group": "mainline",
+      "index": 0,
+      "file": "png256/mainline/hero_zhaoyun_atk_light3_000.png",
+      "source_frame": 0,
+      "source_time_s": 0.0,
+      "nominal_root_xy": [
+        128,
+        248
+      ],
+      "left_foot": {
+        "sole_xy": [
+          95.817,
+          247
+        ],
+        "state": "grounded",
+        "confidence": 0.95,
+        "component_bbox": [
+          79,
+          210,
+          125,
+          248
+        ],
+        "measurement_roi": [
+          40,
+          210,
+          125,
+          252
+        ]
+      },
+      "right_foot": {
+        "sole_xy": [
+          169.043,
+          240
+        ],
+        "state": "lifted",
+        "confidence": 0.95,
+        "component_bbox": [
+          125,
+          210,
+          180,
+          241
+        ],
+        "measurement_roi": [
+          125,
+          210,
+          190,
+          252
+        ]
+      },
+      "support_foot": "left",
+      "existing_png256_bottom_silhouette": {
+        "x": 96.73273672753658,
+        "y": 247,
+        "definition": "alpha>=128 lowest five silhouette rows, not anatomical foot identification; impact glow can contribute"
+      },
+      "existing_spear_tip_png256_xy": [
+        213.9,
+        28.9889
+      ],
+      "notes": null,
+      "planted_support_sole_xy": [
+        95.817,
+        247
+      ],
+      "raw_offset_from_nominal_root_xy": [
+        -32.183,
+        -1
+      ],
+      "registration": {
+        "index": 0,
+        "planted_foot": "left",
+        "planted_sole_xy": [
+          95.817,
+          247
+        ],
+        "stretch_start_sole_xy": [
+          95.817,
+          247
+        ],
+        "recommended_root_offset_xy_to_hold_planted_foot": [
+          -0.0,
+          0
+        ],
+        "planted_sole_minus_nominal_root_xy": [
+          -32.183,
+          -1
+        ],
+        "source_slide_flag": false,
+        "reason": "planted left stable within stretch; offset ~0 preserves natural pose, no lowest-point snap"
+      }
+    },
+    {
+      "segment": "light3",
+      "group": "mainline",
+      "index": 1,
+      "file": "png256/mainline/hero_zhaoyun_atk_light3_001.png",
+      "source_frame": 2,
+      "source_time_s": 0.08333333333333333,
+      "nominal_root_xy": [
+        128,
+        248
+      ],
+      "left_foot": {
+        "sole_xy": [
+          95.819,
+          247
+        ],
+        "state": "grounded",
+        "confidence": 0.95,
+        "component_bbox": [
+          78,
+          210,
+          125,
+          248
+        ],
+        "measurement_roi": [
+          40,
+          210,
+          125,
+          252
+        ]
+      },
+      "right_foot": {
+        "sole_xy": [
+          169.146,
+          240
+        ],
+        "state": "lifted",
+        "confidence": 0.95,
+        "component_bbox": [
+          125,
+          210,
+          180,
+          241
+        ],
+        "measurement_roi": [
+          125,
+          210,
+          190,
+          252
+        ]
+      },
+      "support_foot": "left",
+      "existing_png256_bottom_silhouette": {
+        "x": 96.734333413985,
+        "y": 247,
+        "definition": "alpha>=128 lowest five silhouette rows, not anatomical foot identification; impact glow can contribute"
+      },
+      "existing_spear_tip_png256_xy": null,
+      "notes": null,
+      "planted_support_sole_xy": [
+        95.819,
+        247
+      ],
+      "raw_offset_from_nominal_root_xy": [
+        -32.181,
+        -1
+      ],
+      "registration": {
+        "index": 1,
+        "planted_foot": "left",
+        "planted_sole_xy": [
+          95.819,
+          247
+        ],
+        "stretch_start_sole_xy": [
+          95.817,
+          247
+        ],
+        "recommended_root_offset_xy_to_hold_planted_foot": [
+          -0.002,
+          0
+        ],
+        "planted_sole_minus_nominal_root_xy": [
+          -32.181,
+          -1
+        ],
+        "source_slide_flag": false,
+        "reason": "planted left stable within stretch; offset ~0 preserves natural pose, no lowest-point snap"
+      }
+    },
+    {
+      "segment": "light3",
+      "group": "mainline",
+      "index": 2,
+      "file": "png256/mainline/hero_zhaoyun_atk_light3_002.png",
+      "source_frame": 4,
+      "source_time_s": 0.16666666666666666,
+      "nominal_root_xy": [
+        128,
+        248
+      ],
+      "left_foot": {
+        "sole_xy": [
+          95.815,
+          247
+        ],
+        "state": "grounded",
+        "confidence": 0.95,
+        "component_bbox": [
+          89,
+          210,
+          125,
+          248
+        ],
+        "measurement_roi": [
+          40,
+          210,
+          125,
+          252
+        ]
+      },
+      "right_foot": {
+        "sole_xy": [
+          169.163,
+          240
+        ],
+        "state": "lifted",
+        "confidence": 0.95,
+        "component_bbox": [
+          125,
+          210,
+          180,
+          241
+        ],
+        "measurement_roi": [
+          125,
+          210,
+          190,
+          252
+        ]
+      },
+      "support_foot": "left",
+      "existing_png256_bottom_silhouette": {
+        "x": 96.73161142027583,
+        "y": 247,
+        "definition": "alpha>=128 lowest five silhouette rows, not anatomical foot identification; impact glow can contribute"
+      },
+      "existing_spear_tip_png256_xy": null,
+      "notes": null,
+      "planted_support_sole_xy": [
+        95.815,
+        247
+      ],
+      "raw_offset_from_nominal_root_xy": [
+        -32.185,
+        -1
+      ],
+      "registration": {
+        "index": 2,
+        "planted_foot": "left",
+        "planted_sole_xy": [
+          95.815,
+          247
+        ],
+        "stretch_start_sole_xy": [
+          95.817,
+          247
+        ],
+        "recommended_root_offset_xy_to_hold_planted_foot": [
+          0.002,
+          0
+        ],
+        "planted_sole_minus_nominal_root_xy": [
+          -32.185,
+          -1
+        ],
+        "source_slide_flag": false,
+        "reason": "planted left stable within stretch; offset ~0 preserves natural pose, no lowest-point snap"
+      }
+    },
+    {
+      "segment": "light3",
+      "group": "mainline",
+      "index": 3,
+      "file": "png256/mainline/hero_zhaoyun_atk_light3_003.png",
+      "source_frame": 6,
+      "source_time_s": 0.25,
+      "nominal_root_xy": [
+        128,
+        248
+      ],
+      "left_foot": {
+        "sole_xy": [
+          95.818,
+          247
+        ],
+        "state": "grounded",
+        "confidence": 0.95,
+        "component_bbox": [
+          89,
+          210,
+          125,
+          248
+        ],
+        "measurement_roi": [
+          40,
+          210,
+          125,
+          252
+        ]
+      },
+      "right_foot": {
+        "sole_xy": [
+          169.054,
+          240
+        ],
+        "state": "lifted",
+        "confidence": 0.95,
+        "component_bbox": [
+          125,
+          210,
+          180,
+          241
+        ],
+        "measurement_roi": [
+          125,
+          210,
+          190,
+          252
+        ]
+      },
+      "support_foot": "left",
+      "existing_png256_bottom_silhouette": {
+        "x": 96.73205221174764,
+        "y": 247,
+        "definition": "alpha>=128 lowest five silhouette rows, not anatomical foot identification; impact glow can contribute"
+      },
+      "existing_spear_tip_png256_xy": null,
+      "notes": null,
+      "planted_support_sole_xy": [
+        95.818,
+        247
+      ],
+      "raw_offset_from_nominal_root_xy": [
+        -32.182,
+        -1
+      ],
+      "registration": {
+        "index": 3,
+        "planted_foot": "left",
+        "planted_sole_xy": [
+          95.818,
+          247
+        ],
+        "stretch_start_sole_xy": [
+          95.817,
+          247
+        ],
+        "recommended_root_offset_xy_to_hold_planted_foot": [
+          -0.001,
+          0
+        ],
+        "planted_sole_minus_nominal_root_xy": [
+          -32.182,
+          -1
+        ],
+        "source_slide_flag": false,
+        "reason": "planted left stable within stretch; offset ~0 preserves natural pose, no lowest-point snap"
+      }
+    },
+    {
+      "segment": "light3",
+      "group": "mainline",
+      "index": 4,
+      "file": "png256/mainline/hero_zhaoyun_atk_light3_004.png",
+      "source_frame": 8,
+      "source_time_s": 0.3333333333333333,
+      "nominal_root_xy": [
+        128,
+        248
+      ],
+      "left_foot": {
+        "sole_xy": [
+          95.82,
+          247
+        ],
+        "state": "grounded",
+        "confidence": 0.95,
+        "component_bbox": [
+          89,
+          210,
+          125,
+          248
+        ],
+        "measurement_roi": [
+          40,
+          210,
+          125,
+          252
+        ]
+      },
+      "right_foot": {
+        "sole_xy": [
+          169.056,
+          240
+        ],
+        "state": "lifted",
+        "confidence": 0.95,
+        "component_bbox": [
+          125,
+          210,
+          180,
+          241
+        ],
+        "measurement_roi": [
+          125,
+          210,
+          190,
+          252
+        ]
+      },
+      "support_foot": "left",
+      "existing_png256_bottom_silhouette": {
+        "x": 96.73067406915696,
+        "y": 247,
+        "definition": "alpha>=128 lowest five silhouette rows, not anatomical foot identification; impact glow can contribute"
+      },
+      "existing_spear_tip_png256_xy": null,
+      "notes": null,
+      "planted_support_sole_xy": [
+        95.82,
+        247
+      ],
+      "raw_offset_from_nominal_root_xy": [
+        -32.18,
+        -1
+      ],
+      "registration": {
+        "index": 4,
+        "planted_foot": "left",
+        "planted_sole_xy": [
+          95.82,
+          247
+        ],
+        "stretch_start_sole_xy": [
+          95.817,
+          247
+        ],
+        "recommended_root_offset_xy_to_hold_planted_foot": [
+          -0.003,
+          0
+        ],
+        "planted_sole_minus_nominal_root_xy": [
+          -32.18,
+          -1
+        ],
+        "source_slide_flag": false,
+        "reason": "planted left stable within stretch; offset ~0 preserves natural pose, no lowest-point snap"
+      }
+    },
+    {
+      "segment": "light3",
+      "group": "mainline",
+      "index": 5,
+      "file": "png256/mainline/hero_zhaoyun_atk_light3_005.png",
+      "source_frame": 10,
+      "source_time_s": 0.4166666666666667,
+      "nominal_root_xy": [
+        128,
+        248
+      ],
+      "left_foot": {
+        "sole_xy": [
+          95.815,
+          247
+        ],
+        "state": "grounded",
+        "confidence": 0.95,
+        "component_bbox": [
+          89,
+          210,
+          125,
+          248
+        ],
+        "measurement_roi": [
+          40,
+          210,
+          125,
+          252
+        ]
+      },
+      "right_foot": {
+        "sole_xy": [
+          169.062,
+          240
+        ],
+        "state": "lifted",
+        "confidence": 0.95,
+        "component_bbox": [
+          125,
+          210,
+          180,
+          241
+        ],
+        "measurement_roi": [
+          125,
+          210,
+          190,
+          252
+        ]
+      },
+      "support_foot": "left",
+      "existing_png256_bottom_silhouette": {
+        "x": 96.73043740573152,
+        "y": 247,
+        "definition": "alpha>=128 lowest five silhouette rows, not anatomical foot identification; impact glow can contribute"
+      },
+      "existing_spear_tip_png256_xy": null,
+      "notes": null,
+      "planted_support_sole_xy": [
+        95.815,
+        247
+      ],
+      "raw_offset_from_nominal_root_xy": [
+        -32.185,
+        -1
+      ],
+      "registration": {
+        "index": 5,
+        "planted_foot": "left",
+        "planted_sole_xy": [
+          95.815,
+          247
+        ],
+        "stretch_start_sole_xy": [
+          95.817,
+          247
+        ],
+        "recommended_root_offset_xy_to_hold_planted_foot": [
+          0.002,
+          0
+        ],
+        "planted_sole_minus_nominal_root_xy": [
+          -32.185,
+          -1
+        ],
+        "source_slide_flag": false,
+        "reason": "planted left stable within stretch; offset ~0 preserves natural pose, no lowest-point snap"
+      }
+    },
+    {
+      "segment": "light3",
+      "group": "mainline",
+      "index": 6,
+      "file": "png256/mainline/hero_zhaoyun_atk_light3_006.png",
+      "source_frame": 12,
+      "source_time_s": 0.5,
+      "nominal_root_xy": [
+        128,
+        248
+      ],
+      "left_foot": {
+        "sole_xy": [
+          95.819,
+          247
+        ],
+        "state": "grounded",
+        "confidence": 0.95,
+        "component_bbox": [
+          89,
+          210,
+          125,
+          248
+        ],
+        "measurement_roi": [
+          40,
+          210,
+          125,
+          252
+        ]
+      },
+      "right_foot": {
+        "sole_xy": [
+          169.064,
+          240
+        ],
+        "state": "lifted",
+        "confidence": 0.95,
+        "component_bbox": [
+          125,
+          210,
+          180,
+          241
+        ],
+        "measurement_roi": [
+          125,
+          210,
+          190,
+          252
+        ]
+      },
+      "support_foot": "left",
+      "existing_png256_bottom_silhouette": {
+        "x": 96.73524441762221,
+        "y": 247,
+        "definition": "alpha>=128 lowest five silhouette rows, not anatomical foot identification; impact glow can contribute"
+      },
+      "existing_spear_tip_png256_xy": null,
+      "notes": null,
+      "planted_support_sole_xy": [
+        95.819,
+        247
+      ],
+      "raw_offset_from_nominal_root_xy": [
+        -32.181,
+        -1
+      ],
+      "registration": {
+        "index": 6,
+        "planted_foot": "left",
+        "planted_sole_xy": [
+          95.819,
+          247
+        ],
+        "stretch_start_sole_xy": [
+          95.817,
+          247
+        ],
+        "recommended_root_offset_xy_to_hold_planted_foot": [
+          -0.002,
+          0
+        ],
+        "planted_sole_minus_nominal_root_xy": [
+          -32.181,
+          -1
+        ],
+        "source_slide_flag": false,
+        "reason": "planted left stable within stretch; offset ~0 preserves natural pose, no lowest-point snap"
+      }
+    },
+    {
+      "segment": "light3",
+      "group": "mainline",
+      "index": 7,
+      "file": "png256/mainline/hero_zhaoyun_atk_light3_007.png",
+      "source_frame": 14,
+      "source_time_s": 0.5833333333333334,
+      "nominal_root_xy": [
+        128,
+        248
+      ],
+      "left_foot": {
+        "sole_xy": [
+          95.589,
+          247
+        ],
+        "state": "grounded",
+        "confidence": 0.95,
+        "component_bbox": [
+          89,
+          210,
+          125,
+          248
+        ],
+        "measurement_roi": [
+          40,
+          210,
+          125,
+          252
+        ]
+      },
+      "right_foot": {
+        "sole_xy": [
+          169.133,
+          240
+        ],
+        "state": "lifted",
+        "confidence": 0.95,
+        "component_bbox": [
+          125,
+          210,
+          180,
+          241
+        ],
+        "measurement_roi": [
+          125,
+          210,
+          190,
+          252
+        ]
+      },
+      "support_foot": "left",
+      "existing_png256_bottom_silhouette": {
+        "x": 96.40359559007767,
+        "y": 247,
+        "definition": "alpha>=128 lowest five silhouette rows, not anatomical foot identification; impact glow can contribute"
+      },
+      "existing_spear_tip_png256_xy": null,
+      "notes": null,
+      "planted_support_sole_xy": [
+        95.589,
+        247
+      ],
+      "raw_offset_from_nominal_root_xy": [
+        -32.411,
+        -1
+      ],
+      "registration": {
+        "index": 7,
+        "planted_foot": "left",
+        "planted_sole_xy": [
+          95.589,
+          247
+        ],
+        "stretch_start_sole_xy": [
+          95.817,
+          247
+        ],
+        "recommended_root_offset_xy_to_hold_planted_foot": [
+          0.228,
+          0
+        ],
+        "planted_sole_minus_nominal_root_xy": [
+          -32.411,
+          -1
+        ],
+        "source_slide_flag": false,
+        "reason": "planted left stable within stretch; offset ~0 preserves natural pose, no lowest-point snap"
+      }
+    },
+    {
+      "segment": "light3",
+      "group": "mainline",
+      "index": 8,
+      "file": "png256/mainline/hero_zhaoyun_atk_light3_008.png",
+      "source_frame": 16,
+      "source_time_s": 0.6666666666666666,
+      "nominal_root_xy": [
+        128,
+        248
+      ],
+      "left_foot": {
+        "sole_xy": [
+          93.744,
+          246
+        ],
+        "state": "grounded",
+        "confidence": 0.95,
+        "component_bbox": [
+          87,
+          210,
+          125,
+          247
+        ],
+        "measurement_roi": [
+          40,
+          210,
+          125,
+          252
+        ]
+      },
+      "right_foot": {
+        "sole_xy": [
+          167.163,
+          238
+        ],
+        "state": "lifted",
+        "confidence": 0.95,
+        "component_bbox": [
+          125,
+          210,
+          179,
+          239
+        ],
+        "measurement_roi": [
+          125,
+          210,
+          190,
+          252
+        ]
+      },
+      "support_foot": "left",
+      "existing_png256_bottom_silhouette": {
+        "x": 94.58650190114068,
+        "y": 246,
+        "definition": "alpha>=128 lowest five silhouette rows, not anatomical foot identification; impact glow can contribute"
+      },
+      "existing_spear_tip_png256_xy": null,
+      "notes": null,
+      "planted_support_sole_xy": [
+        93.744,
+        246
+      ],
+      "raw_offset_from_nominal_root_xy": [
+        -34.256,
+        -2
+      ],
+      "registration": {
+        "index": 8,
+        "planted_foot": "left",
+        "planted_sole_xy": [
+          93.744,
+          246
+        ],
+        "stretch_start_sole_xy": [
+          95.817,
+          247
+        ],
+        "recommended_root_offset_xy_to_hold_planted_foot": [
+          2.073,
+          1
+        ],
+        "planted_sole_minus_nominal_root_xy": [
+          -34.256,
+          -2
+        ],
+        "source_slide_flag": true,
+        "reason": "planted left translates in source (-2.07,-1.00) vs stretch start; offset holds plant"
+      }
+    },
+    {
+      "segment": "light3",
+      "group": "mainline",
+      "index": 9,
+      "file": "png256/mainline/hero_zhaoyun_atk_light3_009.png",
+      "source_frame": 18,
+      "source_time_s": 0.75,
+      "nominal_root_xy": [
+        128,
+        248
+      ],
+      "left_foot": {
+        "sole_xy": [
+          86.209,
+          242
+        ],
+        "state": "grounded",
+        "confidence": 0.95,
+        "component_bbox": [
+          80,
+          210,
+          125,
+          243
+        ],
+        "measurement_roi": [
+          40,
+          210,
+          125,
+          252
+        ]
+      },
+      "right_foot": {
+        "sole_xy": [
+          162.019,
+          234
+        ],
+        "state": "lifted",
+        "confidence": 0.95,
+        "component_bbox": [
+          125,
+          210,
+          173,
+          235
+        ],
+        "measurement_roi": [
+          125,
+          210,
+          190,
+          252
+        ]
+      },
+      "support_foot": "left",
+      "existing_png256_bottom_silhouette": {
+        "x": 87.0966738123228,
+        "y": 242,
+        "definition": "alpha>=128 lowest five silhouette rows, not anatomical foot identification; impact glow can contribute"
+      },
+      "existing_spear_tip_png256_xy": null,
+      "notes": null,
+      "planted_support_sole_xy": [
+        86.209,
+        242
+      ],
+      "raw_offset_from_nominal_root_xy": [
+        -41.791,
+        -6
+      ],
+      "registration": {
+        "index": 9,
+        "planted_foot": "left",
+        "planted_sole_xy": [
+          86.209,
+          242
+        ],
+        "stretch_start_sole_xy": [
+          95.817,
+          247
+        ],
+        "recommended_root_offset_xy_to_hold_planted_foot": [
+          9.608,
+          5
+        ],
+        "planted_sole_minus_nominal_root_xy": [
+          -41.791,
+          -6
+        ],
+        "source_slide_flag": true,
+        "reason": "planted left translates in source (-9.61,-5.00) vs stretch start; offset holds plant"
+      }
+    },
+    {
+      "segment": "light3",
+      "group": "mainline",
+      "index": 10,
+      "file": "png256/mainline/hero_zhaoyun_atk_light3_010.png",
+      "source_frame": 19,
+      "source_time_s": 0.7916666666666666,
+      "nominal_root_xy": [
+        128,
+        248
+      ],
+      "left_foot": {
+        "sole_xy": [
+          81.936,
+          240
+        ],
+        "state": "grounded",
+        "confidence": 0.95,
+        "component_bbox": [
+          76,
+          210,
+          125,
+          241
+        ],
+        "measurement_roi": [
+          40,
+          210,
+          125,
+          252
+        ]
+      },
+      "right_foot": {
+        "sole_xy": [
+          162.842,
+          233
+        ],
+        "state": "lifted",
+        "confidence": 0.95,
+        "component_bbox": [
+          146,
+          210,
+          171,
+          234
+        ],
+        "measurement_roi": [
+          130,
+          210,
+          175,
+          244
+        ]
+      },
+      "support_foot": "left",
+      "existing_png256_bottom_silhouette": {
+        "x": 82.91597301951779,
+        "y": 240,
+        "definition": "alpha>=128 lowest five silhouette rows, not anatomical foot identification; impact glow can contribute"
+      },
+      "existing_spear_tip_png256_xy": null,
+      "notes": null,
+      "planted_support_sole_xy": [
+        81.936,
+        240
+      ],
+      "raw_offset_from_nominal_root_xy": [
+        -46.064,
+        -8
+      ],
+      "registration": {
+        "index": 10,
+        "planted_foot": "left",
+        "planted_sole_xy": [
+          81.936,
+          240
+        ],
+        "stretch_start_sole_xy": [
+          95.817,
+          247
+        ],
+        "recommended_root_offset_xy_to_hold_planted_foot": [
+          13.881,
+          7
+        ],
+        "planted_sole_minus_nominal_root_xy": [
+          -46.064,
+          -8
+        ],
+        "source_slide_flag": true,
+        "reason": "planted left translates in source (-13.88,-7.00) vs stretch start; offset holds plant"
+      }
+    },
+    {
+      "segment": "light3",
+      "group": "mainline",
+      "index": 11,
+      "file": "png256/mainline/hero_zhaoyun_atk_light3_011.png",
+      "source_frame": 20,
+      "source_time_s": 0.8333333333333334,
+      "nominal_root_xy": [
+        128,
+        248
+      ],
+      "left_foot": {
+        "sole_xy": [
+          75.007,
+          237
+        ],
+        "state": "grounded",
+        "confidence": 0.95,
+        "component_bbox": [
+          68,
+          210,
+          98,
+          238
+        ],
+        "measurement_roi": [
+          40,
+          210,
+          125,
+          252
+        ]
+      },
+      "right_foot": {
+        "sole_xy": [
+          158.273,
+          230
+        ],
+        "state": "lifted",
+        "confidence": 0.95,
+        "component_bbox": [
+          145,
+          210,
+          169,
+          231
+        ],
+        "measurement_roi": [
+          130,
+          210,
+          175,
+          244
+        ]
+      },
+      "support_foot": "left",
+      "existing_png256_bottom_silhouette": {
+        "x": 215.29165674996693,
+        "y": 241,
+        "definition": "alpha>=128 lowest five silhouette rows, not anatomical foot identification; impact glow can contribute"
+      },
+      "existing_spear_tip_png256_xy": [
+        236.6333,
+        238.0667
+      ],
+      "notes": null,
+      "planted_support_sole_xy": [
+        75.007,
+        237
+      ],
+      "raw_offset_from_nominal_root_xy": [
+        -52.993,
+        -11
+      ],
+      "registration": {
+        "index": 11,
+        "planted_foot": "left",
+        "planted_sole_xy": [
+          75.007,
+          237
+        ],
+        "stretch_start_sole_xy": [
+          95.817,
+          247
+        ],
+        "recommended_root_offset_xy_to_hold_planted_foot": [
+          20.81,
+          10
+        ],
+        "planted_sole_minus_nominal_root_xy": [
+          -52.993,
+          -11
+        ],
+        "source_slide_flag": true,
+        "reason": "planted left translates in source (-20.81,-10.00) vs stretch start; offset holds plant"
+      }
+    },
+    {
+      "segment": "light3",
+      "group": "mainline",
+      "index": 12,
+      "file": "png256/mainline/hero_zhaoyun_atk_light3_012.png",
+      "source_frame": 21,
+      "source_time_s": 0.875,
+      "nominal_root_xy": [
+        128,
+        248
+      ],
+      "left_foot": {
+        "sole_xy": [
+          71.77,
+          236
+        ],
+        "state": "grounded",
+        "confidence": 0.95,
+        "component_bbox": [
+          65,
+          210,
+          96,
+          237
+        ],
+        "measurement_roi": [
+          40,
+          210,
+          125,
+          252
+        ]
+      },
+      "right_foot": {
+        "sole_xy": [
+          160.904,
+          230
+        ],
+        "state": "lifted",
+        "confidence": 0.8,
+        "component_bbox": [
+          144,
+          210,
+          169,
+          231
+        ],
+        "measurement_roi": [
+          130,
+          210,
+          175,
+          244
+        ]
+      },
+      "support_foot": "left",
+      "existing_png256_bottom_silhouette": {
+        "x": 208.5406944305355,
+        "y": 242,
+        "definition": "alpha>=128 lowest five silhouette rows, not anatomical foot identification; impact glow can contribute"
+      },
+      "existing_spear_tip_png256_xy": [
+        231.8111,
+        236.6889
+      ],
+      "notes": "Nearby slam graphic; right ROI constrained.",
+      "planted_support_sole_xy": [
+        71.77,
+        236
+      ],
+      "raw_offset_from_nominal_root_xy": [
+        -56.23,
+        -12
+      ],
+      "registration": {
+        "index": 12,
+        "planted_foot": "left",
+        "planted_sole_xy": [
+          71.77,
+          236
+        ],
+        "stretch_start_sole_xy": [
+          95.817,
+          247
+        ],
+        "recommended_root_offset_xy_to_hold_planted_foot": [
+          24.047,
+          11
+        ],
+        "planted_sole_minus_nominal_root_xy": [
+          -56.23,
+          -12
+        ],
+        "source_slide_flag": true,
+        "reason": "planted left translates in source (-24.05,-11.00) vs stretch start; offset holds plant"
+      }
+    },
+    {
+      "segment": "light3",
+      "group": "mainline",
+      "index": 13,
+      "file": "png256/mainline/hero_zhaoyun_atk_light3_013.png",
+      "source_frame": 22,
+      "source_time_s": 0.9166666666666666,
+      "nominal_root_xy": [
+        128,
+        248
+      ],
+      "left_foot": {
+        "sole_xy": [
+          70.661,
+          235
+        ],
+        "state": "grounded",
+        "confidence": 0.95,
+        "component_bbox": [
+          64,
+          210,
+          94,
+          236
+        ],
+        "measurement_roi": [
+          40,
+          210,
+          125,
+          252
+        ]
+      },
+      "right_foot": {
+        "sole_xy": [
+          164.852,
+          231
+        ],
+        "state": "lifted",
+        "confidence": 0.55,
+        "component_bbox": [
+          143,
+          210,
+          168,
+          232
+        ],
+        "measurement_roi": [
+          135,
+          210,
+          168,
+          232
+        ]
+      },
+      "support_foot": "left",
+      "existing_png256_bottom_silhouette": {
+        "x": 209.7527293900723,
+        "y": 244,
+        "definition": "alpha>=128 lowest five silhouette rows, not anatomical foot identification; impact glow can contribute"
+      },
+      "existing_spear_tip_png256_xy": null,
+      "notes": "Right sole measured with narrowed ROI to exclude slam impact graphic; confidence reduced.",
+      "planted_support_sole_xy": [
+        70.661,
+        235
+      ],
+      "raw_offset_from_nominal_root_xy": [
+        -57.339,
+        -13
+      ],
+      "registration": {
+        "index": 13,
+        "planted_foot": "left",
+        "planted_sole_xy": [
+          70.661,
+          235
+        ],
+        "stretch_start_sole_xy": [
+          95.817,
+          247
+        ],
+        "recommended_root_offset_xy_to_hold_planted_foot": [
+          25.156,
+          12
+        ],
+        "planted_sole_minus_nominal_root_xy": [
+          -57.339,
+          -13
+        ],
+        "source_slide_flag": true,
+        "reason": "planted left translates in source (-25.16,-12.00) vs stretch start; offset holds plant"
+      }
+    },
+    {
+      "segment": "light3",
+      "group": "mainline",
+      "index": 14,
+      "file": "png256/mainline/hero_zhaoyun_atk_light3_014.png",
+      "source_frame": 24,
+      "source_time_s": 1.0,
+      "nominal_root_xy": [
+        128,
+        248
+      ],
+      "left_foot": {
+        "sole_xy": [
+          69.678,
+          234
+        ],
+        "state": "grounded",
+        "confidence": 0.95,
+        "component_bbox": [
+          63,
+          210,
+          92,
+          235
+        ],
+        "measurement_roi": [
+          40,
+          210,
+          125,
+          252
+        ]
+      },
+      "right_foot": {
+        "sole_xy": [
+          154.72,
+          227
+        ],
+        "state": "lifted",
+        "confidence": 0.8,
+        "component_bbox": [
+          142,
+          210,
+          166,
+          228
+        ],
+        "measurement_roi": [
+          130,
+          210,
+          175,
+          244
+        ]
+      },
+      "support_foot": "left",
+      "existing_png256_bottom_silhouette": {
+        "x": 173.58174904942965,
+        "y": 243,
+        "definition": "alpha>=128 lowest five silhouette rows, not anatomical foot identification; impact glow can contribute"
+      },
+      "existing_spear_tip_png256_xy": null,
+      "notes": "Nearby slam graphic; right ROI constrained.",
+      "planted_support_sole_xy": [
+        69.678,
+        234
+      ],
+      "raw_offset_from_nominal_root_xy": [
+        -58.322,
+        -14
+      ],
+      "registration": {
+        "index": 14,
+        "planted_foot": "left",
+        "planted_sole_xy": [
+          69.678,
+          234
+        ],
+        "stretch_start_sole_xy": [
+          95.817,
+          247
+        ],
+        "recommended_root_offset_xy_to_hold_planted_foot": [
+          26.139,
+          13
+        ],
+        "planted_sole_minus_nominal_root_xy": [
+          -58.322,
+          -14
+        ],
+        "source_slide_flag": true,
+        "reason": "planted left translates in source (-26.14,-13.00) vs stretch start; offset holds plant"
+      }
+    },
+    {
+      "segment": "light3",
+      "group": "mainline",
+      "index": 15,
+      "file": "png256/mainline/hero_zhaoyun_atk_light3_015.png",
+      "source_frame": 26,
+      "source_time_s": 1.0833333333333333,
+      "nominal_root_xy": [
+        128,
+        248
+      ],
+      "left_foot": {
+        "sole_xy": [
+          69.43,
+          233
+        ],
+        "state": "grounded",
+        "confidence": 0.95,
+        "component_bbox": [
+          62,
+          210,
+          92,
+          234
+        ],
+        "measurement_roi": [
+          40,
+          210,
+          125,
+          252
+        ]
+      },
+      "right_foot": {
+        "sole_xy": [
+          154.923,
+          227
+        ],
+        "state": "lifted",
+        "confidence": 0.8,
+        "component_bbox": [
+          142,
+          210,
+          166,
+          228
+        ],
+        "measurement_roi": [
+          130,
+          210,
+          175,
+          244
+        ]
+      },
+      "support_foot": "left",
+      "existing_png256_bottom_silhouette": {
+        "x": 182.41990376716348,
+        "y": 237,
+        "definition": "alpha>=128 lowest five silhouette rows, not anatomical foot identification; impact glow can contribute"
+      },
+      "existing_spear_tip_png256_xy": [
+        242.4889,
+        243.2333
+      ],
+      "notes": "Nearby slam graphic; right ROI constrained.",
+      "planted_support_sole_xy": [
+        69.43,
+        233
+      ],
+      "raw_offset_from_nominal_root_xy": [
+        -58.57,
+        -15
+      ],
+      "registration": {
+        "index": 15,
+        "planted_foot": "left",
+        "planted_sole_xy": [
+          69.43,
+          233
+        ],
+        "stretch_start_sole_xy": [
+          95.817,
+          247
+        ],
+        "recommended_root_offset_xy_to_hold_planted_foot": [
+          26.387,
+          14
+        ],
+        "planted_sole_minus_nominal_root_xy": [
+          -58.57,
+          -15
+        ],
+        "source_slide_flag": true,
+        "reason": "planted left translates in source (-26.39,-14.00) vs stretch start; offset holds plant"
+      }
+    },
+    {
+      "segment": "light1_recover",
+      "group": "branches",
+      "index": 0,
+      "file": "png256/branches/hero_zhaoyun_atk_light1_recover_000.png",
+      "source_frame": 58,
+      "source_time_s": 2.4166666666666665,
+      "nominal_root_xy": [
+        128,
+        248
+      ],
+      "left_foot": {
+        "sole_xy": [
+          60.985,
+          232
+        ],
+        "state": "grounded",
+        "confidence": 0.95,
+        "component_bbox": [
+          54,
+          210,
+          85,
+          233
+        ],
+        "measurement_roi": [
+          40,
+          210,
+          125,
+          252
+        ]
+      },
+      "right_foot": {
+        "sole_xy": [
+          151.401,
+          226
+        ],
+        "state": "lifted",
+        "confidence": 0.95,
+        "component_bbox": [
+          137,
+          210,
+          162,
+          227
+        ],
+        "measurement_roi": [
+          125,
+          210,
+          190,
+          252
+        ]
+      },
+      "support_foot": "left",
+      "existing_png256_bottom_silhouette": {
+        "x": 61.63985707121364,
+        "y": 232,
+        "definition": "alpha>=128 lowest five silhouette rows, not anatomical foot identification; impact glow can contribute"
+      },
+      "existing_spear_tip_png256_xy": [
+        243.1778,
+        132.3222
+      ],
+      "notes": null,
+      "planted_support_sole_xy": [
+        60.985,
+        232
+      ],
+      "raw_offset_from_nominal_root_xy": [
+        -67.015,
+        -16
+      ],
+      "registration": {
+        "index": 0,
+        "planted_foot": "left",
+        "planted_sole_xy": [
+          60.985,
+          232
+        ],
+        "stretch_start_sole_xy": [
+          60.985,
+          232
+        ],
+        "recommended_root_offset_xy_to_hold_planted_foot": [
+          -0.0,
+          0
+        ],
+        "planted_sole_minus_nominal_root_xy": [
+          -67.015,
+          -16
+        ],
+        "source_slide_flag": false,
+        "reason": "planted left stable within stretch; offset ~0 preserves natural pose, no lowest-point snap"
+      }
+    },
+    {
+      "segment": "light1_recover",
+      "group": "branches",
+      "index": 1,
+      "file": "png256/branches/hero_zhaoyun_atk_light1_recover_001.png",
+      "source_frame": 60,
+      "source_time_s": 2.5,
+      "nominal_root_xy": [
+        128,
+        248
+      ],
+      "left_foot": {
+        "sole_xy": [
+          60.984,
+          232
+        ],
+        "state": "grounded",
+        "confidence": 0.95,
+        "component_bbox": [
+          54,
+          210,
+          85,
+          233
+        ],
+        "measurement_roi": [
+          40,
+          210,
+          125,
+          252
+        ]
+      },
+      "right_foot": {
+        "sole_xy": [
+          151.407,
+          226
+        ],
+        "state": "lifted",
+        "confidence": 0.95,
+        "component_bbox": [
+          137,
+          210,
+          162,
+          227
+        ],
+        "measurement_roi": [
+          125,
+          210,
+          190,
+          252
+        ]
+      },
+      "support_foot": "left",
+      "existing_png256_bottom_silhouette": {
+        "x": 61.63869390824768,
+        "y": 232,
+        "definition": "alpha>=128 lowest five silhouette rows, not anatomical foot identification; impact glow can contribute"
+      },
+      "existing_spear_tip_png256_xy": null,
+      "notes": null,
+      "planted_support_sole_xy": [
+        60.984,
+        232
+      ],
+      "raw_offset_from_nominal_root_xy": [
+        -67.016,
+        -16
+      ],
+      "registration": {
+        "index": 1,
+        "planted_foot": "left",
+        "planted_sole_xy": [
+          60.984,
+          232
+        ],
+        "stretch_start_sole_xy": [
+          60.985,
+          232
+        ],
+        "recommended_root_offset_xy_to_hold_planted_foot": [
+          0.001,
+          0
+        ],
+        "planted_sole_minus_nominal_root_xy": [
+          -67.016,
+          -16
+        ],
+        "source_slide_flag": false,
+        "reason": "planted left stable within stretch; offset ~0 preserves natural pose, no lowest-point snap"
+      }
+    },
+    {
+      "segment": "light1_recover",
+      "group": "branches",
+      "index": 2,
+      "file": "png256/branches/hero_zhaoyun_atk_light1_recover_002.png",
+      "source_frame": 62,
+      "source_time_s": 2.5833333333333335,
+      "nominal_root_xy": [
+        128,
+        248
+      ],
+      "left_foot": {
+        "sole_xy": [
+          61.0,
+          232
+        ],
+        "state": "grounded",
+        "confidence": 0.95,
+        "component_bbox": [
+          54,
+          210,
+          85,
+          233
+        ],
+        "measurement_roi": [
+          40,
+          210,
+          125,
+          252
+        ]
+      },
+      "right_foot": {
+        "sole_xy": [
+          151.309,
+          226
+        ],
+        "state": "lifted",
+        "confidence": 0.95,
+        "component_bbox": [
+          137,
+          210,
+          162,
+          227
+        ],
+        "measurement_roi": [
+          125,
+          210,
+          190,
+          252
+        ]
+      },
+      "support_foot": "left",
+      "existing_png256_bottom_silhouette": {
+        "x": 61.66135980520697,
+        "y": 232,
+        "definition": "alpha>=128 lowest five silhouette rows, not anatomical foot identification; impact glow can contribute"
+      },
+      "existing_spear_tip_png256_xy": null,
+      "notes": null,
+      "planted_support_sole_xy": [
+        61.0,
+        232
+      ],
+      "raw_offset_from_nominal_root_xy": [
+        -67.0,
+        -16
+      ],
+      "registration": {
+        "index": 2,
+        "planted_foot": "left",
+        "planted_sole_xy": [
+          61.0,
+          232
+        ],
+        "stretch_start_sole_xy": [
+          60.985,
+          232
+        ],
+        "recommended_root_offset_xy_to_hold_planted_foot": [
+          -0.015,
+          0
+        ],
+        "planted_sole_minus_nominal_root_xy": [
+          -67.0,
+          -16
+        ],
+        "source_slide_flag": false,
+        "reason": "planted left stable within stretch; offset ~0 preserves natural pose, no lowest-point snap"
+      }
+    },
+    {
+      "segment": "light1_recover",
+      "group": "branches",
+      "index": 3,
+      "file": "png256/branches/hero_zhaoyun_atk_light1_recover_003.png",
+      "source_frame": 64,
+      "source_time_s": 2.6666666666666665,
+      "nominal_root_xy": [
+        128,
+        248
+      ],
+      "left_foot": {
+        "sole_xy": [
+          61.308,
+          232
+        ],
+        "state": "grounded",
+        "confidence": 0.95,
+        "component_bbox": [
+          54,
+          210,
+          86,
+          233
+        ],
+        "measurement_roi": [
+          40,
+          210,
+          125,
+          252
+        ]
+      },
+      "right_foot": {
+        "sole_xy": [
+          151.033,
+          226
+        ],
+        "state": "lifted",
+        "confidence": 0.95,
+        "component_bbox": [
+          138,
+          210,
+          162,
+          227
+        ],
+        "measurement_roi": [
+          125,
+          210,
+          190,
+          252
+        ]
+      },
+      "support_foot": "left",
+      "existing_png256_bottom_silhouette": {
+        "x": 61.9211517589223,
+        "y": 232,
+        "definition": "alpha>=128 lowest five silhouette rows, not anatomical foot identification; impact glow can contribute"
+      },
+      "existing_spear_tip_png256_xy": null,
+      "notes": null,
+      "planted_support_sole_xy": [
+        61.308,
+        232
+      ],
+      "raw_offset_from_nominal_root_xy": [
+        -66.692,
+        -16
+      ],
+      "registration": {
+        "index": 3,
+        "planted_foot": "left",
+        "planted_sole_xy": [
+          61.308,
+          232
+        ],
+        "stretch_start_sole_xy": [
+          60.985,
+          232
+        ],
+        "recommended_root_offset_xy_to_hold_planted_foot": [
+          -0.323,
+          0
+        ],
+        "planted_sole_minus_nominal_root_xy": [
+          -66.692,
+          -16
+        ],
+        "source_slide_flag": false,
+        "reason": "planted left stable within stretch; offset ~0 preserves natural pose, no lowest-point snap"
+      }
+    },
+    {
+      "segment": "light1_recover",
+      "group": "branches",
+      "index": 4,
+      "file": "png256/branches/hero_zhaoyun_atk_light1_recover_004.png",
+      "source_frame": 66,
+      "source_time_s": 2.75,
+      "nominal_root_xy": [
+        128,
+        248
+      ],
+      "left_foot": {
+        "sole_xy": [
+          66.505,
+          232
+        ],
+        "state": "grounded",
+        "confidence": 0.95,
+        "component_bbox": [
+          60,
+          210,
+          91,
+          233
+        ],
+        "measurement_roi": [
+          40,
+          210,
+          125,
+          252
+        ]
+      },
+      "right_foot": {
+        "sole_xy": [
+          153.59,
+          228
+        ],
+        "state": "lifted",
+        "confidence": 0.95,
+        "component_bbox": [
+          138,
+          210,
+          163,
+          229
+        ],
+        "measurement_roi": [
+          125,
+          210,
+          190,
+          252
+        ]
+      },
+      "support_foot": "left",
+      "existing_png256_bottom_silhouette": {
+        "x": 72.70287784823357,
+        "y": 232,
+        "definition": "alpha>=128 lowest five silhouette rows, not anatomical foot identification; impact glow can contribute"
+      },
+      "existing_spear_tip_png256_xy": null,
+      "notes": null,
+      "planted_support_sole_xy": [
+        66.505,
+        232
+      ],
+      "raw_offset_from_nominal_root_xy": [
+        -61.495,
+        -16
+      ],
+      "registration": {
+        "index": 4,
+        "planted_foot": "left",
+        "planted_sole_xy": [
+          66.505,
+          232
+        ],
+        "stretch_start_sole_xy": [
+          60.985,
+          232
+        ],
+        "recommended_root_offset_xy_to_hold_planted_foot": [
+          -5.52,
+          0
+        ],
+        "planted_sole_minus_nominal_root_xy": [
+          -61.495,
+          -16
+        ],
+        "source_slide_flag": true,
+        "reason": "planted left translates in source (5.52,0.00) vs stretch start; offset holds plant"
+      }
+    },
+    {
+      "segment": "light1_recover",
+      "group": "branches",
+      "index": 5,
+      "file": "png256/branches/hero_zhaoyun_atk_light1_recover_005.png",
+      "source_frame": 68,
+      "source_time_s": 2.8333333333333335,
+      "nominal_root_xy": [
+        128,
+        248
+      ],
+      "left_foot": {
+        "sole_xy": [
+          78.076,
+          232
+        ],
+        "state": "grounded",
+        "confidence": 0.95,
+        "component_bbox": [
+          72,
+          210,
+          100,
+          233
+        ],
+        "measurement_roi": [
+          40,
+          210,
+          125,
+          252
+        ]
+      },
+      "right_foot": {
+        "sole_xy": [
+          153.413,
+          229
+        ],
+        "state": "partial",
+        "confidence": 0.95,
+        "component_bbox": [
+          139,
+          210,
+          164,
+          230
+        ],
+        "measurement_roi": [
+          125,
+          210,
+          190,
+          252
+        ]
+      },
+      "support_foot": "left",
+      "existing_png256_bottom_silhouette": {
+        "x": 108.77736046401066,
+        "y": 232,
+        "definition": "alpha>=128 lowest five silhouette rows, not anatomical foot identification; impact glow can contribute"
+      },
+      "existing_spear_tip_png256_xy": null,
+      "notes": null,
+      "planted_support_sole_xy": [
+        78.076,
+        232
+      ],
+      "raw_offset_from_nominal_root_xy": [
+        -49.924,
+        -16
+      ],
+      "registration": {
+        "index": 5,
+        "planted_foot": "left",
+        "planted_sole_xy": [
+          78.076,
+          232
+        ],
+        "stretch_start_sole_xy": [
+          60.985,
+          232
+        ],
+        "recommended_root_offset_xy_to_hold_planted_foot": [
+          -17.091,
+          0
+        ],
+        "planted_sole_minus_nominal_root_xy": [
+          -49.924,
+          -16
+        ],
+        "source_slide_flag": true,
+        "reason": "planted left translates in source (17.09,0.00) vs stretch start; offset holds plant"
+      }
+    },
+    {
+      "segment": "light1_recover",
+      "group": "branches",
+      "index": 6,
+      "file": "png256/branches/hero_zhaoyun_atk_light1_recover_006.png",
+      "source_frame": 70,
+      "source_time_s": 2.9166666666666665,
+      "nominal_root_xy": [
+        128,
+        248
+      ],
+      "left_foot": {
+        "sole_xy": [
+          98.769,
+          236
+        ],
+        "state": "grounded",
+        "confidence": 0.95,
+        "component_bbox": [
+          92,
+          210,
+          120,
+          237
+        ],
+        "measurement_roi": [
+          40,
+          210,
+          125,
+          252
+        ]
+      },
+      "right_foot": {
+        "sole_xy": [
+          155.561,
+          232
+        ],
+        "state": "lifted",
+        "confidence": 0.95,
+        "component_bbox": [
+          140,
+          210,
+          166,
+          233
+        ],
+        "measurement_roi": [
+          125,
+          210,
+          190,
+          252
+        ]
+      },
+      "support_foot": "left",
+      "existing_png256_bottom_silhouette": {
+        "x": 105.10036301516122,
+        "y": 236,
+        "definition": "alpha>=128 lowest five silhouette rows, not anatomical foot identification; impact glow can contribute"
+      },
+      "existing_spear_tip_png256_xy": null,
+      "notes": null,
+      "planted_support_sole_xy": [
+        98.769,
+        236
+      ],
+      "raw_offset_from_nominal_root_xy": [
+        -29.231,
+        -12
+      ],
+      "registration": {
+        "index": 6,
+        "planted_foot": "left",
+        "planted_sole_xy": [
+          98.769,
+          236
+        ],
+        "stretch_start_sole_xy": [
+          60.985,
+          232
+        ],
+        "recommended_root_offset_xy_to_hold_planted_foot": [
+          -37.784,
+          -4
+        ],
+        "planted_sole_minus_nominal_root_xy": [
+          -29.231,
+          -12
+        ],
+        "source_slide_flag": true,
+        "reason": "planted left translates in source (37.78,4.00) vs stretch start; offset holds plant"
+      }
+    },
+    {
+      "segment": "light1_recover",
+      "group": "branches",
+      "index": 7,
+      "file": "png256/branches/hero_zhaoyun_atk_light1_recover_007.png",
+      "source_frame": 72,
+      "source_time_s": 3.0,
+      "nominal_root_xy": [
+        128,
+        248
+      ],
+      "left_foot": {
+        "sole_xy": [
+          105.516,
+          240
+        ],
+        "state": "grounded",
+        "confidence": 0.95,
+        "component_bbox": [
+          99,
+          210,
+          125,
+          241
+        ],
+        "measurement_roi": [
+          40,
+          210,
+          125,
+          252
+        ]
+      },
+      "right_foot": {
+        "sole_xy": [
+          156.403,
+          234
+        ],
+        "state": "lifted",
+        "confidence": 0.95,
+        "component_bbox": [
+          141,
+          210,
+          168,
+          235
+        ],
+        "measurement_roi": [
+          125,
+          210,
+          190,
+          252
+        ]
+      },
+      "support_foot": "left",
+      "existing_png256_bottom_silhouette": {
+        "x": 106.15275167785235,
+        "y": 240,
+        "definition": "alpha>=128 lowest five silhouette rows, not anatomical foot identification; impact glow can contribute"
+      },
+      "existing_spear_tip_png256_xy": null,
+      "notes": null,
+      "planted_support_sole_xy": [
+        105.516,
+        240
+      ],
+      "raw_offset_from_nominal_root_xy": [
+        -22.484,
+        -8
+      ],
+      "registration": {
+        "index": 7,
+        "planted_foot": "left",
+        "planted_sole_xy": [
+          105.516,
+          240
+        ],
+        "stretch_start_sole_xy": [
+          60.985,
+          232
+        ],
+        "recommended_root_offset_xy_to_hold_planted_foot": [
+          -44.531,
+          -8
+        ],
+        "planted_sole_minus_nominal_root_xy": [
+          -22.484,
+          -8
+        ],
+        "source_slide_flag": true,
+        "reason": "planted left translates in source (44.53,8.00) vs stretch start; offset holds plant"
+      }
+    },
+    {
+      "segment": "light1_recover",
+      "group": "branches",
+      "index": 8,
+      "file": "png256/branches/hero_zhaoyun_atk_light1_recover_008.png",
+      "source_frame": 74,
+      "source_time_s": 3.0833333333333335,
+      "nominal_root_xy": [
+        128,
+        248
+      ],
+      "left_foot": {
+        "sole_xy": [
+          108.177,
+          242
+        ],
+        "state": "grounded",
+        "confidence": 0.95,
+        "component_bbox": [
+          96,
+          210,
+          125,
+          243
+        ],
+        "measurement_roi": [
+          40,
+          210,
+          125,
+          252
+        ]
+      },
+      "right_foot": {
+        "sole_xy": [
+          157.093,
+          236
+        ],
+        "state": "lifted",
+        "confidence": 0.95,
+        "component_bbox": [
+          125,
+          210,
+          169,
+          237
+        ],
+        "measurement_roi": [
+          125,
+          210,
+          190,
+          252
+        ]
+      },
+      "support_foot": "left",
+      "existing_png256_bottom_silhouette": {
+        "x": 108.67656890570798,
+        "y": 242,
+        "definition": "alpha>=128 lowest five silhouette rows, not anatomical foot identification; impact glow can contribute"
+      },
+      "existing_spear_tip_png256_xy": null,
+      "notes": null,
+      "planted_support_sole_xy": [
+        108.177,
+        242
+      ],
+      "raw_offset_from_nominal_root_xy": [
+        -19.823,
+        -6
+      ],
+      "registration": {
+        "index": 8,
+        "planted_foot": "left",
+        "planted_sole_xy": [
+          108.177,
+          242
+        ],
+        "stretch_start_sole_xy": [
+          60.985,
+          232
+        ],
+        "recommended_root_offset_xy_to_hold_planted_foot": [
+          -47.192,
+          -10
+        ],
+        "planted_sole_minus_nominal_root_xy": [
+          -19.823,
+          -6
+        ],
+        "source_slide_flag": true,
+        "reason": "planted left translates in source (47.19,10.00) vs stretch start; offset holds plant"
+      }
+    },
+    {
+      "segment": "light1_recover",
+      "group": "branches",
+      "index": 9,
+      "file": "png256/branches/hero_zhaoyun_atk_light1_recover_009.png",
+      "source_frame": 76,
+      "source_time_s": 3.1666666666666665,
+      "nominal_root_xy": [
+        128,
+        248
+      ],
+      "left_foot": {
+        "sole_xy": [
+          108.25,
+          242
+        ],
+        "state": "grounded",
+        "confidence": 0.95,
+        "component_bbox": [
+          97,
+          210,
+          125,
+          243
+        ],
+        "measurement_roi": [
+          40,
+          210,
+          125,
+          252
+        ]
+      },
+      "right_foot": {
+        "sole_xy": [
+          157.199,
+          236
+        ],
+        "state": "lifted",
+        "confidence": 0.95,
+        "component_bbox": [
+          125,
+          210,
+          170,
+          237
+        ],
+        "measurement_roi": [
+          125,
+          210,
+          190,
+          252
+        ]
+      },
+      "support_foot": "left",
+      "existing_png256_bottom_silhouette": {
+        "x": 108.83251478959706,
+        "y": 242,
+        "definition": "alpha>=128 lowest five silhouette rows, not anatomical foot identification; impact glow can contribute"
+      },
+      "existing_spear_tip_png256_xy": null,
+      "notes": null,
+      "planted_support_sole_xy": [
+        108.25,
+        242
+      ],
+      "raw_offset_from_nominal_root_xy": [
+        -19.75,
+        -6
+      ],
+      "registration": {
+        "index": 9,
+        "planted_foot": "left",
+        "planted_sole_xy": [
+          108.25,
+          242
+        ],
+        "stretch_start_sole_xy": [
+          60.985,
+          232
+        ],
+        "recommended_root_offset_xy_to_hold_planted_foot": [
+          -47.265,
+          -10
+        ],
+        "planted_sole_minus_nominal_root_xy": [
+          -19.75,
+          -6
+        ],
+        "source_slide_flag": true,
+        "reason": "planted left translates in source (47.27,10.00) vs stretch start; offset holds plant"
+      }
+    },
+    {
+      "segment": "light1_recover",
+      "group": "branches",
+      "index": 10,
+      "file": "png256/branches/hero_zhaoyun_atk_light1_recover_010.png",
+      "source_frame": 78,
+      "source_time_s": 3.25,
+      "nominal_root_xy": [
+        128,
+        248
+      ],
+      "left_foot": {
+        "sole_xy": [
+          108.234,
+          242
+        ],
+        "state": "grounded",
+        "confidence": 0.95,
+        "component_bbox": [
+          101,
+          210,
+          125,
+          243
+        ],
+        "measurement_roi": [
+          40,
+          210,
+          125,
+          252
+        ]
+      },
+      "right_foot": {
+        "sole_xy": [
+          156.773,
+          236
+        ],
+        "state": "lifted",
+        "confidence": 0.95,
+        "component_bbox": [
+          125,
+          210,
+          171,
+          237
+        ],
+        "measurement_roi": [
+          125,
+          210,
+          190,
+          252
+        ]
+      },
+      "support_foot": "left",
+      "existing_png256_bottom_silhouette": {
+        "x": 108.8189262472885,
+        "y": 242,
+        "definition": "alpha>=128 lowest five silhouette rows, not anatomical foot identification; impact glow can contribute"
+      },
+      "existing_spear_tip_png256_xy": null,
+      "notes": null,
+      "planted_support_sole_xy": [
+        108.234,
+        242
+      ],
+      "raw_offset_from_nominal_root_xy": [
+        -19.766,
+        -6
+      ],
+      "registration": {
+        "index": 10,
+        "planted_foot": "left",
+        "planted_sole_xy": [
+          108.234,
+          242
+        ],
+        "stretch_start_sole_xy": [
+          60.985,
+          232
+        ],
+        "recommended_root_offset_xy_to_hold_planted_foot": [
+          -47.249,
+          -10
+        ],
+        "planted_sole_minus_nominal_root_xy": [
+          -19.766,
+          -6
+        ],
+        "source_slide_flag": true,
+        "reason": "planted left translates in source (47.25,10.00) vs stretch start; offset holds plant"
+      }
+    },
+    {
+      "segment": "light1_recover",
+      "group": "branches",
+      "index": 11,
+      "file": "png256/branches/hero_zhaoyun_atk_light1_recover_011.png",
+      "source_frame": 80,
+      "source_time_s": 3.3333333333333335,
+      "nominal_root_xy": [
+        128,
+        248
+      ],
+      "left_foot": {
+        "sole_xy": [
+          108.239,
+          242
+        ],
+        "state": "grounded",
+        "confidence": 0.95,
+        "component_bbox": [
+          101,
+          210,
+          125,
+          243
+        ],
+        "measurement_roi": [
+          40,
+          210,
+          125,
+          252
+        ]
+      },
+      "right_foot": {
+        "sole_xy": [
+          156.762,
+          236
+        ],
+        "state": "lifted",
+        "confidence": 0.95,
+        "component_bbox": [
+          125,
+          210,
+          171,
+          237
+        ],
+        "measurement_roi": [
+          125,
+          210,
+          190,
+          252
+        ]
+      },
+      "support_foot": "left",
+      "existing_png256_bottom_silhouette": {
+        "x": 108.81973342002601,
+        "y": 242,
+        "definition": "alpha>=128 lowest five silhouette rows, not anatomical foot identification; impact glow can contribute"
+      },
+      "existing_spear_tip_png256_xy": null,
+      "notes": null,
+      "planted_support_sole_xy": [
+        108.239,
+        242
+      ],
+      "raw_offset_from_nominal_root_xy": [
+        -19.761,
+        -6
+      ],
+      "registration": {
+        "index": 11,
+        "planted_foot": "left",
+        "planted_sole_xy": [
+          108.239,
+          242
+        ],
+        "stretch_start_sole_xy": [
+          60.985,
+          232
+        ],
+        "recommended_root_offset_xy_to_hold_planted_foot": [
+          -47.254,
+          -10
+        ],
+        "planted_sole_minus_nominal_root_xy": [
+          -19.761,
+          -6
+        ],
+        "source_slide_flag": true,
+        "reason": "planted left translates in source (47.25,10.00) vs stretch start; offset holds plant"
+      }
+    },
+    {
+      "segment": "light1_recover",
+      "group": "branches",
+      "index": 12,
+      "file": "png256/branches/hero_zhaoyun_atk_light1_recover_012.png",
+      "source_frame": 82,
+      "source_time_s": 3.4166666666666665,
+      "nominal_root_xy": [
+        128,
+        248
+      ],
+      "left_foot": {
+        "sole_xy": [
+          108.253,
+          242
+        ],
+        "state": "grounded",
+        "confidence": 0.95,
+        "component_bbox": [
+          101,
+          210,
+          125,
+          243
+        ],
+        "measurement_roi": [
+          40,
+          210,
+          125,
+          252
+        ]
+      },
+      "right_foot": {
+        "sole_xy": [
+          156.765,
+          236
+        ],
+        "state": "lifted",
+        "confidence": 0.95,
+        "component_bbox": [
+          125,
+          210,
+          176,
+          237
+        ],
+        "measurement_roi": [
+          125,
+          210,
+          190,
+          252
+        ]
+      },
+      "support_foot": "left",
+      "existing_png256_bottom_silhouette": {
+        "x": 108.8235166738848,
+        "y": 242,
+        "definition": "alpha>=128 lowest five silhouette rows, not anatomical foot identification; impact glow can contribute"
+      },
+      "existing_spear_tip_png256_xy": [
+        195.6444,
+        53.1
+      ],
+      "notes": null,
+      "planted_support_sole_xy": [
+        108.253,
+        242
+      ],
+      "raw_offset_from_nominal_root_xy": [
+        -19.747,
+        -6
+      ],
+      "registration": {
+        "index": 12,
+        "planted_foot": "left",
+        "planted_sole_xy": [
+          108.253,
+          242
+        ],
+        "stretch_start_sole_xy": [
+          60.985,
+          232
+        ],
+        "recommended_root_offset_xy_to_hold_planted_foot": [
+          -47.268,
+          -10
+        ],
+        "planted_sole_minus_nominal_root_xy": [
+          -19.747,
+          -6
+        ],
+        "source_slide_flag": true,
+        "reason": "planted left translates in source (47.27,10.00) vs stretch start; offset holds plant"
+      }
+    },
+    {
+      "segment": "light2_recover",
+      "group": "branches",
+      "index": 0,
+      "file": "png256/branches/hero_zhaoyun_atk_light2_recover_000.png",
+      "source_frame": 60,
+      "source_time_s": 2.5,
+      "nominal_root_xy": [
+        128,
+        248
+      ],
+      "left_foot": {
+        "sole_xy": [
+          95.812,
+          247
+        ],
+        "state": "grounded",
+        "confidence": 0.95,
+        "component_bbox": [
+          79,
+          210,
+          125,
+          248
+        ],
+        "measurement_roi": [
+          40,
+          210,
+          125,
+          252
+        ]
+      },
+      "right_foot": {
+        "sole_xy": [
+          168.834,
+          240
+        ],
+        "state": "lifted",
+        "confidence": 0.95,
+        "component_bbox": [
+          125,
+          210,
+          180,
+          241
+        ],
+        "measurement_roi": [
+          125,
+          210,
+          190,
+          252
+        ]
+      },
+      "support_foot": "left",
+      "existing_png256_bottom_silhouette": {
+        "x": 96.73344651952462,
+        "y": 247,
+        "definition": "alpha>=128 lowest five silhouette rows, not anatomical foot identification; impact glow can contribute"
+      },
+      "existing_spear_tip_png256_xy": [
+        213.9,
+        28.9889
+      ],
+      "notes": null,
+      "planted_support_sole_xy": [
+        95.812,
+        247
+      ],
+      "raw_offset_from_nominal_root_xy": [
+        -32.188,
+        -1
+      ],
+      "registration": {
+        "index": 0,
+        "planted_foot": "left",
+        "planted_sole_xy": [
+          95.812,
+          247
+        ],
+        "stretch_start_sole_xy": [
+          95.812,
+          247
+        ],
+        "recommended_root_offset_xy_to_hold_planted_foot": [
+          -0.0,
+          0
+        ],
+        "planted_sole_minus_nominal_root_xy": [
+          -32.188,
+          -1
+        ],
+        "source_slide_flag": false,
+        "reason": "planted left stable within stretch; offset ~0 preserves natural pose, no lowest-point snap"
+      }
+    },
+    {
+      "segment": "light2_recover",
+      "group": "branches",
+      "index": 1,
+      "file": "png256/branches/hero_zhaoyun_atk_light2_recover_001.png",
+      "source_frame": 62,
+      "source_time_s": 2.5833333333333335,
+      "nominal_root_xy": [
+        128,
+        248
+      ],
+      "left_foot": {
+        "sole_xy": [
+          96.456,
+          247
+        ],
+        "state": "grounded",
+        "confidence": 0.95,
+        "component_bbox": [
+          79,
+          210,
+          125,
+          248
+        ],
+        "measurement_roi": [
+          40,
+          210,
+          125,
+          252
+        ]
+      },
+      "right_foot": {
+        "sole_xy": [
+          168.834,
+          240
+        ],
+        "state": "lifted",
+        "confidence": 0.95,
+        "component_bbox": [
+          125,
+          210,
+          180,
+          241
+        ],
+        "measurement_roi": [
+          125,
+          210,
+          190,
+          252
+        ]
+      },
+      "support_foot": "left",
+      "existing_png256_bottom_silhouette": {
+        "x": 97.40889212827989,
+        "y": 247,
+        "definition": "alpha>=128 lowest five silhouette rows, not anatomical foot identification; impact glow can contribute"
+      },
+      "existing_spear_tip_png256_xy": null,
+      "notes": null,
+      "planted_support_sole_xy": [
+        96.456,
+        247
+      ],
+      "raw_offset_from_nominal_root_xy": [
+        -31.544,
+        -1
+      ],
+      "registration": {
+        "index": 1,
+        "planted_foot": "left",
+        "planted_sole_xy": [
+          96.456,
+          247
+        ],
+        "stretch_start_sole_xy": [
+          95.812,
+          247
+        ],
+        "recommended_root_offset_xy_to_hold_planted_foot": [
+          -0.644,
+          0
+        ],
+        "planted_sole_minus_nominal_root_xy": [
+          -31.544,
+          -1
+        ],
+        "source_slide_flag": false,
+        "reason": "planted left stable within stretch; offset ~0 preserves natural pose, no lowest-point snap"
+      }
+    },
+    {
+      "segment": "light2_recover",
+      "group": "branches",
+      "index": 2,
+      "file": "png256/branches/hero_zhaoyun_atk_light2_recover_002.png",
+      "source_frame": 64,
+      "source_time_s": 2.6666666666666665,
+      "nominal_root_xy": [
+        128,
+        248
+      ],
+      "left_foot": {
+        "sole_xy": [
+          98.553,
+          246
+        ],
+        "state": "grounded",
+        "confidence": 0.95,
+        "component_bbox": [
+          80,
+          210,
+          125,
+          247
+        ],
+        "measurement_roi": [
+          40,
+          210,
+          125,
+          252
+        ]
+      },
+      "right_foot": {
+        "sole_xy": [
+          168.822,
+          240
+        ],
+        "state": "lifted",
+        "confidence": 0.95,
+        "component_bbox": [
+          125,
+          210,
+          180,
+          241
+        ],
+        "measurement_roi": [
+          125,
+          210,
+          190,
+          252
+        ]
+      },
+      "support_foot": "left",
+      "existing_png256_bottom_silhouette": {
+        "x": 99.34594222833563,
+        "y": 246,
+        "definition": "alpha>=128 lowest five silhouette rows, not anatomical foot identification; impact glow can contribute"
+      },
+      "existing_spear_tip_png256_xy": null,
+      "notes": null,
+      "planted_support_sole_xy": [
+        98.553,
+        246
+      ],
+      "raw_offset_from_nominal_root_xy": [
+        -29.447,
+        -2
+      ],
+      "registration": {
+        "index": 2,
+        "planted_foot": "left",
+        "planted_sole_xy": [
+          98.553,
+          246
+        ],
+        "stretch_start_sole_xy": [
+          95.812,
+          247
+        ],
+        "recommended_root_offset_xy_to_hold_planted_foot": [
+          -2.741,
+          1
+        ],
+        "planted_sole_minus_nominal_root_xy": [
+          -29.447,
+          -2
+        ],
+        "source_slide_flag": true,
+        "reason": "planted left translates in source (2.74,-1.00) vs stretch start; offset holds plant"
+      }
+    },
+    {
+      "segment": "light2_recover",
+      "group": "branches",
+      "index": 3,
+      "file": "png256/branches/hero_zhaoyun_atk_light2_recover_003.png",
+      "source_frame": 66,
+      "source_time_s": 2.75,
+      "nominal_root_xy": [
+        128,
+        248
+      ],
+      "left_foot": {
+        "sole_xy": [
+          103.666,
+          244
+        ],
+        "state": "grounded",
+        "confidence": 0.95,
+        "component_bbox": [
+          95,
+          210,
+          125,
+          245
+        ],
+        "measurement_roi": [
+          40,
+          210,
+          125,
+          252
+        ]
+      },
+      "right_foot": {
+        "sole_xy": [
+          168.645,
+          240
+        ],
+        "state": "lifted",
+        "confidence": 0.95,
+        "component_bbox": [
+          125,
+          210,
+          180,
+          241
+        ],
+        "measurement_roi": [
+          125,
+          210,
+          190,
+          252
+        ]
+      },
+      "support_foot": "left",
+      "existing_png256_bottom_silhouette": {
+        "x": 111.22571797353986,
+        "y": 244,
+        "definition": "alpha>=128 lowest five silhouette rows, not anatomical foot identification; impact glow can contribute"
+      },
+      "existing_spear_tip_png256_xy": null,
+      "notes": null,
+      "planted_support_sole_xy": [
+        103.666,
+        244
+      ],
+      "raw_offset_from_nominal_root_xy": [
+        -24.334,
+        -4
+      ],
+      "registration": {
+        "index": 3,
+        "planted_foot": "left",
+        "planted_sole_xy": [
+          103.666,
+          244
+        ],
+        "stretch_start_sole_xy": [
+          95.812,
+          247
+        ],
+        "recommended_root_offset_xy_to_hold_planted_foot": [
+          -7.854,
+          3
+        ],
+        "planted_sole_minus_nominal_root_xy": [
+          -24.334,
+          -4
+        ],
+        "source_slide_flag": true,
+        "reason": "planted left translates in source (7.85,-3.00) vs stretch start; offset holds plant"
+      }
+    },
+    {
+      "segment": "light2_recover",
+      "group": "branches",
+      "index": 4,
+      "file": "png256/branches/hero_zhaoyun_atk_light2_recover_004.png",
+      "source_frame": 68,
+      "source_time_s": 2.8333333333333335,
+      "nominal_root_xy": [
+        128,
+        248
+      ],
+      "left_foot": {
+        "sole_xy": [
+          106.864,
+          243
+        ],
+        "state": "grounded",
+        "confidence": 0.95,
+        "component_bbox": [
+          98,
+          210,
+          125,
+          244
+        ],
+        "measurement_roi": [
+          40,
+          210,
+          125,
+          252
+        ]
+      },
+      "right_foot": {
+        "sole_xy": [
+          166.706,
+          239
+        ],
+        "state": "lifted",
+        "confidence": 0.95,
+        "component_bbox": [
+          125,
+          210,
+          179,
+          240
+        ],
+        "measurement_roi": [
+          125,
+          210,
+          190,
+          252
+        ]
+      },
+      "support_foot": "left",
+      "existing_png256_bottom_silhouette": {
+        "x": 119.75101840490798,
+        "y": 243,
+        "definition": "alpha>=128 lowest five silhouette rows, not anatomical foot identification; impact glow can contribute"
+      },
+      "existing_spear_tip_png256_xy": null,
+      "notes": null,
+      "planted_support_sole_xy": [
+        106.864,
+        243
+      ],
+      "raw_offset_from_nominal_root_xy": [
+        -21.136,
+        -5
+      ],
+      "registration": {
+        "index": 4,
+        "planted_foot": "left",
+        "planted_sole_xy": [
+          106.864,
+          243
+        ],
+        "stretch_start_sole_xy": [
+          95.812,
+          247
+        ],
+        "recommended_root_offset_xy_to_hold_planted_foot": [
+          -11.052,
+          4
+        ],
+        "planted_sole_minus_nominal_root_xy": [
+          -21.136,
+          -5
+        ],
+        "source_slide_flag": true,
+        "reason": "planted left translates in source (11.05,-4.00) vs stretch start; offset holds plant"
+      }
+    },
+    {
+      "segment": "light2_recover",
+      "group": "branches",
+      "index": 5,
+      "file": "png256/branches/hero_zhaoyun_atk_light2_recover_005.png",
+      "source_frame": 70,
+      "source_time_s": 2.9166666666666665,
+      "nominal_root_xy": [
+        128,
+        248
+      ],
+      "left_foot": {
+        "sole_xy": [
+          108.28,
+          242
+        ],
+        "state": "grounded",
+        "confidence": 0.95,
+        "component_bbox": [
+          100,
+          210,
+          125,
+          243
+        ],
+        "measurement_roi": [
+          40,
+          210,
+          125,
+          252
+        ]
+      },
+      "right_foot": {
+        "sole_xy": [
+          161.851,
+          238
+        ],
+        "state": "lifted",
+        "confidence": 0.95,
+        "component_bbox": [
+          125,
+          210,
+          173,
+          239
+        ],
+        "measurement_roi": [
+          125,
+          210,
+          190,
+          252
+        ]
+      },
+      "support_foot": "left",
+      "existing_png256_bottom_silhouette": {
+        "x": 112.7983060082223,
+        "y": 242,
+        "definition": "alpha>=128 lowest five silhouette rows, not anatomical foot identification; impact glow can contribute"
+      },
+      "existing_spear_tip_png256_xy": null,
+      "notes": null,
+      "planted_support_sole_xy": [
+        108.28,
+        242
+      ],
+      "raw_offset_from_nominal_root_xy": [
+        -19.72,
+        -6
+      ],
+      "registration": {
+        "index": 5,
+        "planted_foot": "left",
+        "planted_sole_xy": [
+          108.28,
+          242
+        ],
+        "stretch_start_sole_xy": [
+          95.812,
+          247
+        ],
+        "recommended_root_offset_xy_to_hold_planted_foot": [
+          -12.468,
+          5
+        ],
+        "planted_sole_minus_nominal_root_xy": [
+          -19.72,
+          -6
+        ],
+        "source_slide_flag": true,
+        "reason": "planted left translates in source (12.47,-5.00) vs stretch start; offset holds plant"
+      }
+    },
+    {
+      "segment": "light2_recover",
+      "group": "branches",
+      "index": 6,
+      "file": "png256/branches/hero_zhaoyun_atk_light2_recover_006.png",
+      "source_frame": 72,
+      "source_time_s": 3.0,
+      "nominal_root_xy": [
+        128,
+        248
+      ],
+      "left_foot": {
+        "sole_xy": [
+          108.396,
+          242
+        ],
+        "state": "grounded",
+        "confidence": 0.95,
+        "component_bbox": [
+          100,
+          210,
+          125,
+          243
+        ],
+        "measurement_roi": [
+          40,
+          210,
+          125,
+          252
+        ]
+      },
+      "right_foot": {
+        "sole_xy": [
+          159.064,
+          237
+        ],
+        "state": "lifted",
+        "confidence": 0.95,
+        "component_bbox": [
+          125,
+          210,
+          170,
+          238
+        ],
+        "measurement_roi": [
+          125,
+          210,
+          190,
+          252
+        ]
+      },
+      "support_foot": "left",
+      "existing_png256_bottom_silhouette": {
+        "x": 108.87193620892647,
+        "y": 242,
+        "definition": "alpha>=128 lowest five silhouette rows, not anatomical foot identification; impact glow can contribute"
+      },
+      "existing_spear_tip_png256_xy": null,
+      "notes": null,
+      "planted_support_sole_xy": [
+        108.396,
+        242
+      ],
+      "raw_offset_from_nominal_root_xy": [
+        -19.604,
+        -6
+      ],
+      "registration": {
+        "index": 6,
+        "planted_foot": "left",
+        "planted_sole_xy": [
+          108.396,
+          242
+        ],
+        "stretch_start_sole_xy": [
+          95.812,
+          247
+        ],
+        "recommended_root_offset_xy_to_hold_planted_foot": [
+          -12.584,
+          5
+        ],
+        "planted_sole_minus_nominal_root_xy": [
+          -19.604,
+          -6
+        ],
+        "source_slide_flag": true,
+        "reason": "planted left translates in source (12.58,-5.00) vs stretch start; offset holds plant"
+      }
+    },
+    {
+      "segment": "light2_recover",
+      "group": "branches",
+      "index": 7,
+      "file": "png256/branches/hero_zhaoyun_atk_light2_recover_007.png",
+      "source_frame": 74,
+      "source_time_s": 3.0833333333333335,
+      "nominal_root_xy": [
+        128,
+        248
+      ],
+      "left_foot": {
+        "sole_xy": [
+          108.295,
+          242
+        ],
+        "state": "grounded",
+        "confidence": 0.95,
+        "component_bbox": [
+          101,
+          210,
+          125,
+          243
+        ],
+        "measurement_roi": [
+          40,
+          210,
+          125,
+          252
+        ]
+      },
+      "right_foot": {
+        "sole_xy": [
+          156.924,
+          236
+        ],
+        "state": "lifted",
+        "confidence": 0.95,
+        "component_bbox": [
+          125,
+          210,
+          176,
+          237
+        ],
+        "measurement_roi": [
+          125,
+          210,
+          190,
+          252
+        ]
+      },
+      "support_foot": "left",
+      "existing_png256_bottom_silhouette": {
+        "x": 108.84177523109358,
+        "y": 242,
+        "definition": "alpha>=128 lowest five silhouette rows, not anatomical foot identification; impact glow can contribute"
+      },
+      "existing_spear_tip_png256_xy": null,
+      "notes": null,
+      "planted_support_sole_xy": [
+        108.295,
+        242
+      ],
+      "raw_offset_from_nominal_root_xy": [
+        -19.705,
+        -6
+      ],
+      "registration": {
+        "index": 7,
+        "planted_foot": "left",
+        "planted_sole_xy": [
+          108.295,
+          242
+        ],
+        "stretch_start_sole_xy": [
+          95.812,
+          247
+        ],
+        "recommended_root_offset_xy_to_hold_planted_foot": [
+          -12.483,
+          5
+        ],
+        "planted_sole_minus_nominal_root_xy": [
+          -19.705,
+          -6
+        ],
+        "source_slide_flag": true,
+        "reason": "planted left translates in source (12.48,-5.00) vs stretch start; offset holds plant"
+      }
+    },
+    {
+      "segment": "light2_recover",
+      "group": "branches",
+      "index": 8,
+      "file": "png256/branches/hero_zhaoyun_atk_light2_recover_008.png",
+      "source_frame": 76,
+      "source_time_s": 3.1666666666666665,
+      "nominal_root_xy": [
+        128,
+        248
+      ],
+      "left_foot": {
+        "sole_xy": [
+          108.284,
+          242
+        ],
+        "state": "grounded",
+        "confidence": 0.95,
+        "component_bbox": [
+          101,
+          210,
+          125,
+          243
+        ],
+        "measurement_roi": [
+          40,
+          210,
+          125,
+          252
+        ]
+      },
+      "right_foot": {
+        "sole_xy": [
+          156.77,
+          236
+        ],
+        "state": "lifted",
+        "confidence": 0.95,
+        "component_bbox": [
+          125,
+          210,
+          176,
+          237
+        ],
+        "measurement_roi": [
+          125,
+          210,
+          190,
+          252
+        ]
+      },
+      "support_foot": "left",
+      "existing_png256_bottom_silhouette": {
+        "x": 108.83718038812908,
+        "y": 242,
+        "definition": "alpha>=128 lowest five silhouette rows, not anatomical foot identification; impact glow can contribute"
+      },
+      "existing_spear_tip_png256_xy": null,
+      "notes": null,
+      "planted_support_sole_xy": [
+        108.284,
+        242
+      ],
+      "raw_offset_from_nominal_root_xy": [
+        -19.716,
+        -6
+      ],
+      "registration": {
+        "index": 8,
+        "planted_foot": "left",
+        "planted_sole_xy": [
+          108.284,
+          242
+        ],
+        "stretch_start_sole_xy": [
+          95.812,
+          247
+        ],
+        "recommended_root_offset_xy_to_hold_planted_foot": [
+          -12.472,
+          5
+        ],
+        "planted_sole_minus_nominal_root_xy": [
+          -19.716,
+          -6
+        ],
+        "source_slide_flag": true,
+        "reason": "planted left translates in source (12.47,-5.00) vs stretch start; offset holds plant"
+      }
+    },
+    {
+      "segment": "light2_recover",
+      "group": "branches",
+      "index": 9,
+      "file": "png256/branches/hero_zhaoyun_atk_light2_recover_009.png",
+      "source_frame": 78,
+      "source_time_s": 3.25,
+      "nominal_root_xy": [
+        128,
+        248
+      ],
+      "left_foot": {
+        "sole_xy": [
+          108.277,
+          242
+        ],
+        "state": "grounded",
+        "confidence": 0.95,
+        "component_bbox": [
+          101,
+          210,
+          125,
+          243
+        ],
+        "measurement_roi": [
+          40,
+          210,
+          125,
+          252
+        ]
+      },
+      "right_foot": {
+        "sole_xy": [
+          156.774,
+          236
+        ],
+        "state": "lifted",
+        "confidence": 0.95,
+        "component_bbox": [
+          125,
+          210,
+          171,
+          237
+        ],
+        "measurement_roi": [
+          125,
+          210,
+          190,
+          252
+        ]
+      },
+      "support_foot": "left",
+      "existing_png256_bottom_silhouette": {
+        "x": 108.83267599546167,
+        "y": 242,
+        "definition": "alpha>=128 lowest five silhouette rows, not anatomical foot identification; impact glow can contribute"
+      },
+      "existing_spear_tip_png256_xy": null,
+      "notes": null,
+      "planted_support_sole_xy": [
+        108.277,
+        242
+      ],
+      "raw_offset_from_nominal_root_xy": [
+        -19.723,
+        -6
+      ],
+      "registration": {
+        "index": 9,
+        "planted_foot": "left",
+        "planted_sole_xy": [
+          108.277,
+          242
+        ],
+        "stretch_start_sole_xy": [
+          95.812,
+          247
+        ],
+        "recommended_root_offset_xy_to_hold_planted_foot": [
+          -12.465,
+          5
+        ],
+        "planted_sole_minus_nominal_root_xy": [
+          -19.723,
+          -6
+        ],
+        "source_slide_flag": true,
+        "reason": "planted left translates in source (12.46,-5.00) vs stretch start; offset holds plant"
+      }
+    },
+    {
+      "segment": "light2_recover",
+      "group": "branches",
+      "index": 10,
+      "file": "png256/branches/hero_zhaoyun_atk_light2_recover_010.png",
+      "source_frame": 80,
+      "source_time_s": 3.3333333333333335,
+      "nominal_root_xy": [
+        128,
+        248
+      ],
+      "left_foot": {
+        "sole_xy": [
+          108.275,
+          242
+        ],
+        "state": "grounded",
+        "confidence": 0.95,
+        "component_bbox": [
+          101,
+          210,
+          125,
+          243
+        ],
+        "measurement_roi": [
+          40,
+          210,
+          125,
+          252
+        ]
+      },
+      "right_foot": {
+        "sole_xy": [
+          156.776,
+          236
+        ],
+        "state": "lifted",
+        "confidence": 0.95,
+        "component_bbox": [
+          125,
+          210,
+          171,
+          237
+        ],
+        "measurement_roi": [
+          125,
+          210,
+          190,
+          252
+        ]
+      },
+      "support_foot": "left",
+      "existing_png256_bottom_silhouette": {
+        "x": 108.83121724566428,
+        "y": 242,
+        "definition": "alpha>=128 lowest five silhouette rows, not anatomical foot identification; impact glow can contribute"
+      },
+      "existing_spear_tip_png256_xy": [
+        195.6444,
+        53.1
+      ],
+      "notes": null,
+      "planted_support_sole_xy": [
+        108.275,
+        242
+      ],
+      "raw_offset_from_nominal_root_xy": [
+        -19.725,
+        -6
+      ],
+      "registration": {
+        "index": 10,
+        "planted_foot": "left",
+        "planted_sole_xy": [
+          108.275,
+          242
+        ],
+        "stretch_start_sole_xy": [
+          95.812,
+          247
+        ],
+        "recommended_root_offset_xy_to_hold_planted_foot": [
+          -12.463,
+          5
+        ],
+        "planted_sole_minus_nominal_root_xy": [
+          -19.725,
+          -6
+        ],
+        "source_slide_flag": true,
+        "reason": "planted left translates in source (12.46,-5.00) vs stretch start; offset holds plant"
+      }
+    },
+    {
+      "segment": "light3_recover",
+      "group": "branches",
+      "index": 0,
+      "file": "png256/branches/hero_zhaoyun_atk_light3_recover_000.png",
+      "source_frame": 52,
+      "source_time_s": 2.1666666666666665,
+      "nominal_root_xy": [
+        128,
+        248
+      ],
+      "left_foot": {
+        "sole_xy": [
+          69.386,
+          233
+        ],
+        "state": "grounded",
+        "confidence": 0.95,
+        "component_bbox": [
+          62,
+          210,
+          92,
+          234
+        ],
+        "measurement_roi": [
+          40,
+          210,
+          125,
+          252
+        ]
+      },
+      "right_foot": {
+        "sole_xy": [
+          155.083,
+          227
+        ],
+        "state": "lifted",
+        "confidence": 0.95,
+        "component_bbox": [
+          142,
+          210,
+          166,
+          228
+        ],
+        "measurement_roi": [
+          125,
+          210,
+          190,
+          252
+        ]
+      },
+      "support_foot": "left",
+      "existing_png256_bottom_silhouette": {
+        "x": 156.13665458471505,
+        "y": 236,
+        "definition": "alpha>=128 lowest five silhouette rows, not anatomical foot identification; impact glow can contribute"
+      },
+      "existing_spear_tip_png256_xy": [
+        242.4889,
+        244.2667
+      ],
+      "notes": null,
+      "planted_support_sole_xy": [
+        69.386,
+        233
+      ],
+      "raw_offset_from_nominal_root_xy": [
+        -58.614,
+        -15
+      ],
+      "registration": {
+        "index": 0,
+        "planted_foot": "left",
+        "planted_sole_xy": [
+          69.386,
+          233
+        ],
+        "stretch_start_sole_xy": [
+          69.386,
+          233
+        ],
+        "recommended_root_offset_xy_to_hold_planted_foot": [
+          -0.0,
+          0
+        ],
+        "planted_sole_minus_nominal_root_xy": [
+          -58.614,
+          -15
+        ],
+        "source_slide_flag": false,
+        "reason": "planted left stable within stretch; offset ~0 preserves natural pose, no lowest-point snap"
+      }
+    },
+    {
+      "segment": "light3_recover",
+      "group": "branches",
+      "index": 1,
+      "file": "png256/branches/hero_zhaoyun_atk_light3_recover_001.png",
+      "source_frame": 54,
+      "source_time_s": 2.25,
+      "nominal_root_xy": [
+        128,
+        248
+      ],
+      "left_foot": {
+        "sole_xy": [
+          69.388,
+          233
+        ],
+        "state": "grounded",
+        "confidence": 0.95,
+        "component_bbox": [
+          62,
+          210,
+          92,
+          234
+        ],
+        "measurement_roi": [
+          40,
+          210,
+          125,
+          252
+        ]
+      },
+      "right_foot": {
+        "sole_xy": [
+          154.829,
+          227
+        ],
+        "state": "lifted",
+        "confidence": 0.95,
+        "component_bbox": [
+          141,
+          210,
+          166,
+          228
+        ],
+        "measurement_roi": [
+          125,
+          210,
+          190,
+          252
+        ]
+      },
+      "support_foot": "left",
+      "existing_png256_bottom_silhouette": {
+        "x": 122.56737142580677,
+        "y": 234,
+        "definition": "alpha>=128 lowest five silhouette rows, not anatomical foot identification; impact glow can contribute"
+      },
+      "existing_spear_tip_png256_xy": null,
+      "notes": null,
+      "planted_support_sole_xy": [
+        69.388,
+        233
+      ],
+      "raw_offset_from_nominal_root_xy": [
+        -58.612,
+        -15
+      ],
+      "registration": {
+        "index": 1,
+        "planted_foot": "left",
+        "planted_sole_xy": [
+          69.388,
+          233
+        ],
+        "stretch_start_sole_xy": [
+          69.386,
+          233
+        ],
+        "recommended_root_offset_xy_to_hold_planted_foot": [
+          -0.002,
+          0
+        ],
+        "planted_sole_minus_nominal_root_xy": [
+          -58.612,
+          -15
+        ],
+        "source_slide_flag": false,
+        "reason": "planted left stable within stretch; offset ~0 preserves natural pose, no lowest-point snap"
+      }
+    },
+    {
+      "segment": "light3_recover",
+      "group": "branches",
+      "index": 2,
+      "file": "png256/branches/hero_zhaoyun_atk_light3_recover_002.png",
+      "source_frame": 56,
+      "source_time_s": 2.3333333333333335,
+      "nominal_root_xy": [
+        128,
+        248
+      ],
+      "left_foot": {
+        "sole_xy": [
+          69.233,
+          234
+        ],
+        "state": "grounded",
+        "confidence": 0.95,
+        "component_bbox": [
+          62,
+          210,
+          92,
+          235
+        ],
+        "measurement_roi": [
+          40,
+          210,
+          125,
+          252
+        ]
+      },
+      "right_foot": {
+        "sole_xy": [
+          154.492,
+          227
+        ],
+        "state": "lifted",
+        "confidence": 0.95,
+        "component_bbox": [
+          141,
+          210,
+          166,
+          228
+        ],
+        "measurement_roi": [
+          125,
+          210,
+          190,
+          252
+        ]
+      },
+      "support_foot": "left",
+      "existing_png256_bottom_silhouette": {
+        "x": 71.31949406888667,
+        "y": 234,
+        "definition": "alpha>=128 lowest five silhouette rows, not anatomical foot identification; impact glow can contribute"
+      },
+      "existing_spear_tip_png256_xy": null,
+      "notes": null,
+      "planted_support_sole_xy": [
+        69.233,
+        234
+      ],
+      "raw_offset_from_nominal_root_xy": [
+        -58.767,
+        -14
+      ],
+      "registration": {
+        "index": 2,
+        "planted_foot": "left",
+        "planted_sole_xy": [
+          69.233,
+          234
+        ],
+        "stretch_start_sole_xy": [
+          69.386,
+          233
+        ],
+        "recommended_root_offset_xy_to_hold_planted_foot": [
+          0.153,
+          -1
+        ],
+        "planted_sole_minus_nominal_root_xy": [
+          -58.767,
+          -14
+        ],
+        "source_slide_flag": false,
+        "reason": "planted left stable within stretch; offset ~0 preserves natural pose, no lowest-point snap"
+      }
+    },
+    {
+      "segment": "light3_recover",
+      "group": "branches",
+      "index": 3,
+      "file": "png256/branches/hero_zhaoyun_atk_light3_recover_003.png",
+      "source_frame": 58,
+      "source_time_s": 2.4166666666666665,
+      "nominal_root_xy": [
+        128,
+        248
+      ],
+      "left_foot": {
+        "sole_xy": [
+          70.24,
+          234
+        ],
+        "state": "grounded",
+        "confidence": 0.95,
+        "component_bbox": [
+          63,
+          210,
+          94,
+          235
+        ],
+        "measurement_roi": [
+          40,
+          210,
+          125,
+          252
+        ]
+      },
+      "right_foot": {
+        "sole_xy": [
+          155.129,
+          228
+        ],
+        "state": "lifted",
+        "confidence": 0.95,
+        "component_bbox": [
+          141,
+          210,
+          166,
+          229
+        ],
+        "measurement_roi": [
+          125,
+          210,
+          190,
+          252
+        ]
+      },
+      "support_foot": "left",
+      "existing_png256_bottom_silhouette": {
+        "x": 70.65089266508927,
+        "y": 234,
+        "definition": "alpha>=128 lowest five silhouette rows, not anatomical foot identification; impact glow can contribute"
+      },
+      "existing_spear_tip_png256_xy": null,
+      "notes": null,
+      "planted_support_sole_xy": [
+        70.24,
+        234
+      ],
+      "raw_offset_from_nominal_root_xy": [
+        -57.76,
+        -14
+      ],
+      "registration": {
+        "index": 3,
+        "planted_foot": "left",
+        "planted_sole_xy": [
+          70.24,
+          234
+        ],
+        "stretch_start_sole_xy": [
+          69.386,
+          233
+        ],
+        "recommended_root_offset_xy_to_hold_planted_foot": [
+          -0.854,
+          -1
+        ],
+        "planted_sole_minus_nominal_root_xy": [
+          -57.76,
+          -14
+        ],
+        "source_slide_flag": false,
+        "reason": "planted left stable within stretch; offset ~0 preserves natural pose, no lowest-point snap"
+      }
+    },
+    {
+      "segment": "light3_recover",
+      "group": "branches",
+      "index": 4,
+      "file": "png256/branches/hero_zhaoyun_atk_light3_recover_004.png",
+      "source_frame": 60,
+      "source_time_s": 2.5,
+      "nominal_root_xy": [
+        128,
+        248
+      ],
+      "left_foot": {
+        "sole_xy": [
+          75.003,
+          233
+        ],
+        "state": "grounded",
+        "confidence": 0.95,
+        "component_bbox": [
+          68,
+          210,
+          98,
+          234
+        ],
+        "measurement_roi": [
+          40,
+          210,
+          125,
+          252
+        ]
+      },
+      "right_foot": {
+        "sole_xy": [
+          154.228,
+          228
+        ],
+        "state": "lifted",
+        "confidence": 0.95,
+        "component_bbox": [
+          141,
+          210,
+          165,
+          229
+        ],
+        "measurement_roi": [
+          125,
+          210,
+          190,
+          252
+        ]
+      },
+      "support_foot": "left",
+      "existing_png256_bottom_silhouette": {
+        "x": 75.2725822287678,
+        "y": 233,
+        "definition": "alpha>=128 lowest five silhouette rows, not anatomical foot identification; impact glow can contribute"
+      },
+      "existing_spear_tip_png256_xy": null,
+      "notes": null,
+      "planted_support_sole_xy": [
+        75.003,
+        233
+      ],
+      "raw_offset_from_nominal_root_xy": [
+        -52.997,
+        -15
+      ],
+      "registration": {
+        "index": 4,
+        "planted_foot": "left",
+        "planted_sole_xy": [
+          75.003,
+          233
+        ],
+        "stretch_start_sole_xy": [
+          69.386,
+          233
+        ],
+        "recommended_root_offset_xy_to_hold_planted_foot": [
+          -5.617,
+          0
+        ],
+        "planted_sole_minus_nominal_root_xy": [
+          -52.997,
+          -15
+        ],
+        "source_slide_flag": true,
+        "reason": "planted left translates in source (5.62,0.00) vs stretch start; offset holds plant"
+      }
+    },
+    {
+      "segment": "light3_recover",
+      "group": "branches",
+      "index": 5,
+      "file": "png256/branches/hero_zhaoyun_atk_light3_recover_005.png",
+      "source_frame": 62,
+      "source_time_s": 2.5833333333333335,
+      "nominal_root_xy": [
+        128,
+        248
+      ],
+      "left_foot": {
+        "sole_xy": [
+          84.776,
+          234
+        ],
+        "state": "grounded",
+        "confidence": 0.95,
+        "component_bbox": [
+          78,
+          210,
+          105,
+          235
+        ],
+        "measurement_roi": [
+          40,
+          210,
+          125,
+          252
+        ]
+      },
+      "right_foot": {
+        "sole_xy": [
+          154.524,
+          229
+        ],
+        "state": "lifted",
+        "confidence": 0.95,
+        "component_bbox": [
+          141,
+          210,
+          165,
+          230
+        ],
+        "measurement_roi": [
+          125,
+          210,
+          190,
+          252
+        ]
+      },
+      "support_foot": "left",
+      "existing_png256_bottom_silhouette": {
+        "x": 85.13966198604221,
+        "y": 234,
+        "definition": "alpha>=128 lowest five silhouette rows, not anatomical foot identification; impact glow can contribute"
+      },
+      "existing_spear_tip_png256_xy": null,
+      "notes": null,
+      "planted_support_sole_xy": [
+        84.776,
+        234
+      ],
+      "raw_offset_from_nominal_root_xy": [
+        -43.224,
+        -14
+      ],
+      "registration": {
+        "index": 5,
+        "planted_foot": "left",
+        "planted_sole_xy": [
+          84.776,
+          234
+        ],
+        "stretch_start_sole_xy": [
+          69.386,
+          233
+        ],
+        "recommended_root_offset_xy_to_hold_planted_foot": [
+          -15.39,
+          -1
+        ],
+        "planted_sole_minus_nominal_root_xy": [
+          -43.224,
+          -14
+        ],
+        "source_slide_flag": true,
+        "reason": "planted left translates in source (15.39,1.00) vs stretch start; offset holds plant"
+      }
+    },
+    {
+      "segment": "light3_recover",
+      "group": "branches",
+      "index": 6,
+      "file": "png256/branches/hero_zhaoyun_atk_light3_recover_006.png",
+      "source_frame": 64,
+      "source_time_s": 2.6666666666666665,
+      "nominal_root_xy": [
+        128,
+        248
+      ],
+      "left_foot": {
+        "sole_xy": [
+          96.414,
+          234
+        ],
+        "state": "grounded",
+        "confidence": 0.95,
+        "component_bbox": [
+          90,
+          210,
+          113,
+          235
+        ],
+        "measurement_roi": [
+          40,
+          210,
+          125,
+          252
+        ]
+      },
+      "right_foot": {
+        "sole_xy": [
+          154.434,
+          230
+        ],
+        "state": "lifted",
+        "confidence": 0.95,
+        "component_bbox": [
+          140,
+          210,
+          165,
+          231
+        ],
+        "measurement_roi": [
+          125,
+          210,
+          190,
+          252
+        ]
+      },
+      "support_foot": "left",
+      "existing_png256_bottom_silhouette": {
+        "x": 100.69239373601789,
+        "y": 234,
+        "definition": "alpha>=128 lowest five silhouette rows, not anatomical foot identification; impact glow can contribute"
+      },
+      "existing_spear_tip_png256_xy": null,
+      "notes": null,
+      "planted_support_sole_xy": [
+        96.414,
+        234
+      ],
+      "raw_offset_from_nominal_root_xy": [
+        -31.586,
+        -14
+      ],
+      "registration": {
+        "index": 6,
+        "planted_foot": "left",
+        "planted_sole_xy": [
+          96.414,
+          234
+        ],
+        "stretch_start_sole_xy": [
+          69.386,
+          233
+        ],
+        "recommended_root_offset_xy_to_hold_planted_foot": [
+          -27.028,
+          -1
+        ],
+        "planted_sole_minus_nominal_root_xy": [
+          -31.586,
+          -14
+        ],
+        "source_slide_flag": true,
+        "reason": "planted left translates in source (27.03,1.00) vs stretch start; offset holds plant"
+      }
+    },
+    {
+      "segment": "light3_recover",
+      "group": "branches",
+      "index": 7,
+      "file": "png256/branches/hero_zhaoyun_atk_light3_recover_007.png",
+      "source_frame": 66,
+      "source_time_s": 2.75,
+      "nominal_root_xy": [
+        128,
+        248
+      ],
+      "left_foot": {
+        "sole_xy": [
+          104.303,
+          236
+        ],
+        "state": "grounded",
+        "confidence": 0.95,
+        "component_bbox": [
+          99,
+          210,
+          119,
+          237
+        ],
+        "measurement_roi": [
+          40,
+          210,
+          125,
+          252
+        ]
+      },
+      "right_foot": {
+        "sole_xy": [
+          152.906,
+          230
+        ],
+        "state": "lifted",
+        "confidence": 0.95,
+        "component_bbox": [
+          140,
+          210,
+          165,
+          231
+        ],
+        "measurement_roi": [
+          125,
+          210,
+          190,
+          252
+        ]
+      },
+      "support_foot": "left",
+      "existing_png256_bottom_silhouette": {
+        "x": 105.35580326881073,
+        "y": 236,
+        "definition": "alpha>=128 lowest five silhouette rows, not anatomical foot identification; impact glow can contribute"
+      },
+      "existing_spear_tip_png256_xy": null,
+      "notes": null,
+      "planted_support_sole_xy": [
+        104.303,
+        236
+      ],
+      "raw_offset_from_nominal_root_xy": [
+        -23.697,
+        -12
+      ],
+      "registration": {
+        "index": 7,
+        "planted_foot": "left",
+        "planted_sole_xy": [
+          104.303,
+          236
+        ],
+        "stretch_start_sole_xy": [
+          69.386,
+          233
+        ],
+        "recommended_root_offset_xy_to_hold_planted_foot": [
+          -34.917,
+          -3
+        ],
+        "planted_sole_minus_nominal_root_xy": [
+          -23.697,
+          -12
+        ],
+        "source_slide_flag": true,
+        "reason": "planted left translates in source (34.92,3.00) vs stretch start; offset holds plant"
+      }
+    },
+    {
+      "segment": "light3_recover",
+      "group": "branches",
+      "index": 8,
+      "file": "png256/branches/hero_zhaoyun_atk_light3_recover_008.png",
+      "source_frame": 68,
+      "source_time_s": 2.8333333333333335,
+      "nominal_root_xy": [
+        128,
+        248
+      ],
+      "left_foot": {
+        "sole_xy": [
+          106.292,
+          237
+        ],
+        "state": "grounded",
+        "confidence": 0.95,
+        "component_bbox": [
+          100,
+          210,
+          123,
+          238
+        ],
+        "measurement_roi": [
+          40,
+          210,
+          125,
+          252
+        ]
+      },
+      "right_foot": {
+        "sole_xy": [
+          154.764,
+          232
+        ],
+        "state": "lifted",
+        "confidence": 0.95,
+        "component_bbox": [
+          138,
+          210,
+          166,
+          233
+        ],
+        "measurement_roi": [
+          125,
+          210,
+          190,
+          252
+        ]
+      },
+      "support_foot": "left",
+      "existing_png256_bottom_silhouette": {
+        "x": 107.34476439790576,
+        "y": 237,
+        "definition": "alpha>=128 lowest five silhouette rows, not anatomical foot identification; impact glow can contribute"
+      },
+      "existing_spear_tip_png256_xy": null,
+      "notes": null,
+      "planted_support_sole_xy": [
+        106.292,
+        237
+      ],
+      "raw_offset_from_nominal_root_xy": [
+        -21.708,
+        -11
+      ],
+      "registration": {
+        "index": 8,
+        "planted_foot": "left",
+        "planted_sole_xy": [
+          106.292,
+          237
+        ],
+        "stretch_start_sole_xy": [
+          69.386,
+          233
+        ],
+        "recommended_root_offset_xy_to_hold_planted_foot": [
+          -36.906,
+          -4
+        ],
+        "planted_sole_minus_nominal_root_xy": [
+          -21.708,
+          -11
+        ],
+        "source_slide_flag": true,
+        "reason": "planted left translates in source (36.91,4.00) vs stretch start; offset holds plant"
+      }
+    },
+    {
+      "segment": "light3_recover",
+      "group": "branches",
+      "index": 9,
+      "file": "png256/branches/hero_zhaoyun_atk_light3_recover_009.png",
+      "source_frame": 70,
+      "source_time_s": 2.9166666666666665,
+      "nominal_root_xy": [
+        128,
+        248
+      ],
+      "left_foot": {
+        "sole_xy": [
+          107.237,
+          238
+        ],
+        "state": "grounded",
+        "confidence": 0.95,
+        "component_bbox": [
+          100,
+          210,
+          125,
+          239
+        ],
+        "measurement_roi": [
+          40,
+          210,
+          125,
+          252
+        ]
+      },
+      "right_foot": {
+        "sole_xy": [
+          155.519,
+          233
+        ],
+        "state": "lifted",
+        "confidence": 0.95,
+        "component_bbox": [
+          141,
+          210,
+          167,
+          234
+        ],
+        "measurement_roi": [
+          125,
+          210,
+          190,
+          252
+        ]
+      },
+      "support_foot": "left",
+      "existing_png256_bottom_silhouette": {
+        "x": 108.0282043962318,
+        "y": 238,
+        "definition": "alpha>=128 lowest five silhouette rows, not anatomical foot identification; impact glow can contribute"
+      },
+      "existing_spear_tip_png256_xy": null,
+      "notes": null,
+      "planted_support_sole_xy": [
+        107.237,
+        238
+      ],
+      "raw_offset_from_nominal_root_xy": [
+        -20.763,
+        -10
+      ],
+      "registration": {
+        "index": 9,
+        "planted_foot": "left",
+        "planted_sole_xy": [
+          107.237,
+          238
+        ],
+        "stretch_start_sole_xy": [
+          69.386,
+          233
+        ],
+        "recommended_root_offset_xy_to_hold_planted_foot": [
+          -37.851,
+          -5
+        ],
+        "planted_sole_minus_nominal_root_xy": [
+          -20.763,
+          -10
+        ],
+        "source_slide_flag": true,
+        "reason": "planted left translates in source (37.85,5.00) vs stretch start; offset holds plant"
+      }
+    },
+    {
+      "segment": "light3_recover",
+      "group": "branches",
+      "index": 10,
+      "file": "png256/branches/hero_zhaoyun_atk_light3_recover_010.png",
+      "source_frame": 72,
+      "source_time_s": 3.0,
+      "nominal_root_xy": [
+        128,
+        248
+      ],
+      "left_foot": {
+        "sole_xy": [
+          107.417,
+          240
+        ],
+        "state": "grounded",
+        "confidence": 0.95,
+        "component_bbox": [
+          101,
+          210,
+          125,
+          241
+        ],
+        "measurement_roi": [
+          40,
+          210,
+          125,
+          252
+        ]
+      },
+      "right_foot": {
+        "sole_xy": [
+          156.249,
+          234
+        ],
+        "state": "lifted",
+        "confidence": 0.95,
+        "component_bbox": [
+          137,
+          210,
+          168,
+          235
+        ],
+        "measurement_roi": [
+          125,
+          210,
+          190,
+          252
+        ]
+      },
+      "support_foot": "left",
+      "existing_png256_bottom_silhouette": {
+        "x": 108.39869534327973,
+        "y": 240,
+        "definition": "alpha>=128 lowest five silhouette rows, not anatomical foot identification; impact glow can contribute"
+      },
+      "existing_spear_tip_png256_xy": null,
+      "notes": null,
+      "planted_support_sole_xy": [
+        107.417,
+        240
+      ],
+      "raw_offset_from_nominal_root_xy": [
+        -20.583,
+        -8
+      ],
+      "registration": {
+        "index": 10,
+        "planted_foot": "left",
+        "planted_sole_xy": [
+          107.417,
+          240
+        ],
+        "stretch_start_sole_xy": [
+          69.386,
+          233
+        ],
+        "recommended_root_offset_xy_to_hold_planted_foot": [
+          -38.031,
+          -7
+        ],
+        "planted_sole_minus_nominal_root_xy": [
+          -20.583,
+          -8
+        ],
+        "source_slide_flag": true,
+        "reason": "planted left translates in source (38.03,7.00) vs stretch start; offset holds plant"
+      }
+    },
+    {
+      "segment": "light3_recover",
+      "group": "branches",
+      "index": 11,
+      "file": "png256/branches/hero_zhaoyun_atk_light3_recover_011.png",
+      "source_frame": 74,
+      "source_time_s": 3.0833333333333335,
+      "nominal_root_xy": [
+        128,
+        248
+      ],
+      "left_foot": {
+        "sole_xy": [
+          107.831,
+          241
+        ],
+        "state": "grounded",
+        "confidence": 0.95,
+        "component_bbox": [
+          97,
+          210,
+          125,
+          242
+        ],
+        "measurement_roi": [
+          40,
+          210,
+          125,
+          252
+        ]
+      },
+      "right_foot": {
+        "sole_xy": [
+          156.651,
+          235
+        ],
+        "state": "lifted",
+        "confidence": 0.95,
+        "component_bbox": [
+          125,
+          210,
+          169,
+          236
+        ],
+        "measurement_roi": [
+          125,
+          210,
+          190,
+          252
+        ]
+      },
+      "support_foot": "left",
+      "existing_png256_bottom_silhouette": {
+        "x": 108.65241541827974,
+        "y": 241,
+        "definition": "alpha>=128 lowest five silhouette rows, not anatomical foot identification; impact glow can contribute"
+      },
+      "existing_spear_tip_png256_xy": null,
+      "notes": null,
+      "planted_support_sole_xy": [
+        107.831,
+        241
+      ],
+      "raw_offset_from_nominal_root_xy": [
+        -20.169,
+        -7
+      ],
+      "registration": {
+        "index": 11,
+        "planted_foot": "left",
+        "planted_sole_xy": [
+          107.831,
+          241
+        ],
+        "stretch_start_sole_xy": [
+          69.386,
+          233
+        ],
+        "recommended_root_offset_xy_to_hold_planted_foot": [
+          -38.445,
+          -8
+        ],
+        "planted_sole_minus_nominal_root_xy": [
+          -20.169,
+          -7
+        ],
+        "source_slide_flag": true,
+        "reason": "planted left translates in source (38.45,8.00) vs stretch start; offset holds plant"
+      }
+    },
+    {
+      "segment": "light3_recover",
+      "group": "branches",
+      "index": 12,
+      "file": "png256/branches/hero_zhaoyun_atk_light3_recover_012.png",
+      "source_frame": 76,
+      "source_time_s": 3.1666666666666665,
+      "nominal_root_xy": [
+        128,
+        248
+      ],
+      "left_foot": {
+        "sole_xy": [
+          107.899,
+          242
+        ],
+        "state": "grounded",
+        "confidence": 0.95,
+        "component_bbox": [
+          96,
+          210,
+          125,
+          243
+        ],
+        "measurement_roi": [
+          40,
+          210,
+          125,
+          252
+        ]
+      },
+      "right_foot": {
+        "sole_xy": [
+          157.27,
+          236
+        ],
+        "state": "lifted",
+        "confidence": 0.95,
+        "component_bbox": [
+          125,
+          210,
+          170,
+          237
+        ],
+        "measurement_roi": [
+          125,
+          210,
+          190,
+          252
+        ]
+      },
+      "support_foot": "left",
+      "existing_png256_bottom_silhouette": {
+        "x": 108.72736435410717,
+        "y": 242,
+        "definition": "alpha>=128 lowest five silhouette rows, not anatomical foot identification; impact glow can contribute"
+      },
+      "existing_spear_tip_png256_xy": null,
+      "notes": null,
+      "planted_support_sole_xy": [
+        107.899,
+        242
+      ],
+      "raw_offset_from_nominal_root_xy": [
+        -20.101,
+        -6
+      ],
+      "registration": {
+        "index": 12,
+        "planted_foot": "left",
+        "planted_sole_xy": [
+          107.899,
+          242
+        ],
+        "stretch_start_sole_xy": [
+          69.386,
+          233
+        ],
+        "recommended_root_offset_xy_to_hold_planted_foot": [
+          -38.513,
+          -9
+        ],
+        "planted_sole_minus_nominal_root_xy": [
+          -20.101,
+          -6
+        ],
+        "source_slide_flag": true,
+        "reason": "planted left translates in source (38.51,9.00) vs stretch start; offset holds plant"
+      }
+    },
+    {
+      "segment": "light3_recover",
+      "group": "branches",
+      "index": 13,
+      "file": "png256/branches/hero_zhaoyun_atk_light3_recover_013.png",
+      "source_frame": 78,
+      "source_time_s": 3.25,
+      "nominal_root_xy": [
+        128,
+        248
+      ],
+      "left_foot": {
+        "sole_xy": [
+          108.251,
+          242
+        ],
+        "state": "grounded",
+        "confidence": 0.95,
+        "component_bbox": [
+          98,
+          210,
+          125,
+          243
+        ],
+        "measurement_roi": [
+          40,
+          210,
+          125,
+          252
+        ]
+      },
+      "right_foot": {
+        "sole_xy": [
+          157.122,
+          236
+        ],
+        "state": "lifted",
+        "confidence": 0.95,
+        "component_bbox": [
+          125,
+          210,
+          171,
+          237
+        ],
+        "measurement_roi": [
+          125,
+          210,
+          190,
+          252
+        ]
+      },
+      "support_foot": "left",
+      "existing_png256_bottom_silhouette": {
+        "x": 108.82355485859514,
+        "y": 242,
+        "definition": "alpha>=128 lowest five silhouette rows, not anatomical foot identification; impact glow can contribute"
+      },
+      "existing_spear_tip_png256_xy": null,
+      "notes": null,
+      "planted_support_sole_xy": [
+        108.251,
+        242
+      ],
+      "raw_offset_from_nominal_root_xy": [
+        -19.749,
+        -6
+      ],
+      "registration": {
+        "index": 13,
+        "planted_foot": "left",
+        "planted_sole_xy": [
+          108.251,
+          242
+        ],
+        "stretch_start_sole_xy": [
+          69.386,
+          233
+        ],
+        "recommended_root_offset_xy_to_hold_planted_foot": [
+          -38.865,
+          -9
+        ],
+        "planted_sole_minus_nominal_root_xy": [
+          -19.749,
+          -6
+        ],
+        "source_slide_flag": true,
+        "reason": "planted left translates in source (38.87,9.00) vs stretch start; offset holds plant"
+      }
+    },
+    {
+      "segment": "light3_recover",
+      "group": "branches",
+      "index": 14,
+      "file": "png256/branches/hero_zhaoyun_atk_light3_recover_014.png",
+      "source_frame": 80,
+      "source_time_s": 3.3333333333333335,
+      "nominal_root_xy": [
+        128,
+        248
+      ],
+      "left_foot": {
+        "sole_xy": [
+          108.243,
+          242
+        ],
+        "state": "grounded",
+        "confidence": 0.95,
+        "component_bbox": [
+          98,
+          210,
+          125,
+          243
+        ],
+        "measurement_roi": [
+          40,
+          210,
+          125,
+          252
+        ]
+      },
+      "right_foot": {
+        "sole_xy": [
+          157.122,
+          236
+        ],
+        "state": "lifted",
+        "confidence": 0.95,
+        "component_bbox": [
+          125,
+          210,
+          171,
+          237
+        ],
+        "measurement_roi": [
+          125,
+          210,
+          190,
+          252
+        ]
+      },
+      "support_foot": "left",
+      "existing_png256_bottom_silhouette": {
+        "x": 108.81920415224913,
+        "y": 242,
+        "definition": "alpha>=128 lowest five silhouette rows, not anatomical foot identification; impact glow can contribute"
+      },
+      "existing_spear_tip_png256_xy": [
+        194.9556,
+        53.1
+      ],
+      "notes": null,
+      "planted_support_sole_xy": [
+        108.243,
+        242
+      ],
+      "raw_offset_from_nominal_root_xy": [
+        -19.757,
+        -6
+      ],
+      "registration": {
+        "index": 14,
+        "planted_foot": "left",
+        "planted_sole_xy": [
+          108.243,
+          242
+        ],
+        "stretch_start_sole_xy": [
+          69.386,
+          233
+        ],
+        "recommended_root_offset_xy_to_hold_planted_foot": [
+          -38.857,
+          -9
+        ],
+        "planted_sole_minus_nominal_root_xy": [
+          -19.757,
+          -6
+        ],
+        "source_slide_flag": true,
+        "reason": "planted left translates in source (38.86,9.00) vs stretch start; offset holds plant"
+      }
+    }
+  ]
+}
