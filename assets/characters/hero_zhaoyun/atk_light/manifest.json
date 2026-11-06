@@ -1,0 +1,5509 @@
+{
+  "version": 1,
+  "frame_indexing": "all indices zero-based; source timestamps are video-relative, NOT wallclock",
+  "only_integration_directory": "/workspace/sg-art/deliver/hero_zhaoyun_atk_light_v1/png256",
+  "sources_original_unmodified": true,
+  "no_video_generation_or_regeneration": true,
+  "transform": {
+    "uniform_scale": 0.34444444444444444,
+    "full_source_resize_px": [
+      248,
+      248
+    ],
+    "offset_xy": [
+      0,
+      19
+    ],
+    "canvas_px": [
+      256,
+      256
+    ],
+    "nominal_root": [
+      128,
+      248
+    ],
+    "source_union_bbox_xyxy_exclusive": [
+      26,
+      0,
+      720,
+      666
+    ],
+    "source_registration_union_mid_x_lowest_y": [
+      373.0,
+      665
+    ],
+    "mapped_root": [
+      128.4777777777778,
+      248.05555555555554
+    ],
+    "method": "single full-image premultiplied-alpha LANCZOS resize, same integer placement for ALL six sequences; no foot snapping or local changes",
+    "root_semantics": "union center/lowest whole-package silhouette, Idle/Run registration convention; not a claim every heel is at root; all natural and generated source drift retained",
+    "relative_scale_to_idle_960_equivalent": 0.7965875218419161,
+    "relative_scale_to_run_960_equivalent": 0.8266666666666667
+  },
+  "keying": {
+    "method": "Run color-difference matte/unmix/despill, single identical algorithm for all frames",
+    "formula": "C=min(R-G,B-G); S=min(screenR-screenG,screenB-screenG); a=clip(1-(C-10)/(S-10),0,1); a<0.16=>0; a>0.99=>1",
+    "screen_sample": "median top60,bottom40,left40,right40 RGB per frame",
+    "cutoff_note": "Run .10 cutoff left .12-.14-alpha magenta compression specks at attack frame-zero corners; use uniform .16 for every frame. No spatial cleanup, morphology or hand editing. No claim exact Idle key algorithm (not recorded).",
+    "unmix_and_despill": "foreground=(rgb-(1-a)*screen)/max(a,1e-5); D=max(0,min(R,B)-G) subtracted from R/B, repeated after resizing; alpha-zero RGB=0",
+    "known_limit": "original purple/white impact graphic remains; magenta key alters its transparent edges/color like all source pixels, not a clean VFX-separated pass"
+  },
+  "mainline_order": [
+    "light1",
+    "light2",
+    "light3"
+  ],
+  "mainline_frame_count": 47,
+  "engine_target_chain_duration_s": 1.48,
+  "branch_rule": "1/2 recover independently only on interruption. Normal chain 1->2->3, then append light3_recover exactly once to return Idle. No 1/2 recovery or intervening Idle baked into continuous mainline. No recovery repeated in third mainline.",
+  "segments": {
+    "light1": {
+      "group": "mainline",
+      "source_video": "/workspace/sg-art/review/atk_chain_v3/seg1_idle_to_thrust/raw.mp4",
+      "source_sha256": "d2405a060db866610fd2c84de2f88c165dfb62082d5f66bff3fed0a9c4ac2ab2",
+      "source_indices": [
+        101,
+        103,
+        105,
+        107,
+        109,
+        111,
+        112,
+        114,
+        116,
+        118,
+        120
+      ],
+      "frame_count": 11,
+      "source_size": [
+        720,
+        720
+      ],
+      "source_fps": 24,
+      "source_video_total_s": 5.041666666666667,
+      "selected_source_timestamp_span_s": 0.7916666666666666,
+      "retained_source_ranges_inclusive": [
+        [
+          101,
+          120
+        ]
+      ],
+      "retained_source_duration_s_including_last_frame_support": 0.8333333333333334,
+      "trimmed_source_ranges_inclusive": [
+        [
+          0,
+          100
+        ]
+      ],
+      "trimmed_source_ranges_times_s_inclusive": [
+        [
+          0.0,
+          4.166666666666667
+        ]
+      ],
+      "sampled_out_inside_retained_ranges_inclusive": [
+        [
+          102,
+          102
+        ],
+        [
+          104,
+          104
+        ],
+        [
+          106,
+          106
+        ],
+        [
+          108,
+          108
+        ],
+        [
+          110,
+          110
+        ],
+        [
+          113,
+          113
+        ],
+        [
+          115,
+          115
+        ],
+        [
+          117,
+          117
+        ],
+        [
+          119,
+          119
+        ]
+      ],
+      "engine_target_mainline_s": 0.4,
+      "suggested_uniform_fps": 27.5,
+      "suggested_uniform_duration_s": 0.4,
+      "mean_fps_for_source_retained_duration": 13.2,
+      "engine_speed_vs_retained_source": 2.0833333333333335,
+      "impact_frame_index": 7,
+      "impact_source_frame": 114,
+      "impact_spear_tip_png256_xy": [
+        243.1778,
+        132.3222
+      ],
+      "impact_tip_note": "visible tip manual ±3 source px",
+      "last_frame_index": 10,
+      "cancel_next_segment_frame_index": 10,
+      "next": "light2",
+      "next_join_status": "UNVERIFIED pose/pixel continuity; do not claim seamless",
+      "recover_branch": "light1_recover",
+      "recover_range": {
+        "branch": "light1_recover",
+        "indices": [
+          0,
+          12
+        ]
+      },
+      "notes": "Idle anchor 101 immediately precedes onset 102. First clear near-full thrust at 112; impact event chosen 114, settling continues to A at 120. No invented contact target.",
+      "frames": [
+        {
+          "index": 0,
+          "file": "png256/mainline/hero_zhaoyun_atk_light1_000.png",
+          "raw_selected": "raw_selected/light1/source_101.png",
+          "source_frame": 101,
+          "source_time_s": 4.208333333333333,
+          "retained_source_display_s": 0.08333333333333333,
+          "native_remapped_time_s": 0.0,
+          "suggested_uniform_time_s": 0.0,
+          "impact": false,
+          "spear_tip_source_xy": [
+            566,
+            100
+          ],
+          "spear_tip_png256_xy": [
+            194.9556,
+            53.4444
+          ],
+          "tip_annotation_status": "visible tip manual ±3 source px",
+          "source_solid_foreground_at_border": {
+            "top": false,
+            "bottom": false,
+            "left": false,
+            "right": false
+          },
+          "source_bbox": [
+            142,
+            98,
+            580,
+            652
+          ],
+          "png256_bbox": [
+            46,
+            50,
+            202,
+            246
+          ],
+          "source_bottom_silhouette": {
+            "x": 314.75300551010184,
+            "y": 651,
+            "definition": "alpha>=128 lowest five silhouette rows, not anatomical foot identification; impact glow can contribute"
+          },
+          "png256_bottom_silhouette": {
+            "x": 108.82656628125841,
+            "y": 242,
+            "definition": "alpha>=128 lowest five silhouette rows, not anatomical foot identification; impact glow can contribute"
+          },
+          "sha256_png256": "a9d5da4d7d75593d4c36fca88bc78f9ed6bad834255e2c11e1ac5401a69e74ec",
+          "crc32_png256": "4a79bf99"
+        },
+        {
+          "index": 1,
+          "file": "png256/mainline/hero_zhaoyun_atk_light1_001.png",
+          "raw_selected": "raw_selected/light1/source_103.png",
+          "source_frame": 103,
+          "source_time_s": 4.291666666666667,
+          "retained_source_display_s": 0.08333333333333333,
+          "native_remapped_time_s": 0.08333333333333333,
+          "suggested_uniform_time_s": 0.03636363636363636,
+          "impact": false,
+          "spear_tip_source_xy": null,
+          "spear_tip_png256_xy": null,
+          "tip_annotation_status": "not annotated",
+          "source_solid_foreground_at_border": {
+            "top": false,
+            "bottom": false,
+            "left": false,
+            "right": false
+          },
+          "source_bbox": [
+            140,
+            96,
+            580,
+            650
+          ],
+          "png256_bbox": [
+            46,
+            50,
+            202,
+            245
+          ],
+          "source_bottom_silhouette": {
+            "x": 313.8325125578647,
+            "y": 647,
+            "definition": "alpha>=128 lowest five silhouette rows, not anatomical foot identification; impact glow can contribute"
+          },
+          "png256_bottom_silhouette": {
+            "x": 108.4392260883133,
+            "y": 241,
+            "definition": "alpha>=128 lowest five silhouette rows, not anatomical foot identification; impact glow can contribute"
+          },
+          "sha256_png256": "ec30292e338e253b5d8c4e92c2a4c51df3461cad14cad1d5d8b3159226bf3e91",
+          "crc32_png256": "ceccd1d9"
+        },
+        {
+          "index": 2,
+          "file": "png256/mainline/hero_zhaoyun_atk_light1_002.png",
+          "raw_selected": "raw_selected/light1/source_105.png",
+          "source_frame": 105,
+          "source_time_s": 4.375,
+          "retained_source_display_s": 0.08333333333333333,
+          "native_remapped_time_s": 0.16666666666666666,
+          "suggested_uniform_time_s": 0.07272727272727272,
+          "impact": false,
+          "spear_tip_source_xy": null,
+          "spear_tip_png256_xy": null,
+          "tip_annotation_status": "not annotated",
+          "source_solid_foreground_at_border": {
+            "top": false,
+            "bottom": false,
+            "left": false,
+            "right": false
+          },
+          "source_bbox": [
+            132,
+            100,
+            584,
+            644
+          ],
+          "png256_bbox": [
+            43,
+            51,
+            204,
+            243
+          ],
+          "source_bottom_silhouette": {
+            "x": 303.4256712672522,
+            "y": 641,
+            "definition": "alpha>=128 lowest five silhouette rows, not anatomical foot identification; impact glow can contribute"
+          },
+          "png256_bottom_silhouette": {
+            "x": 104.86808944179313,
+            "y": 239,
+            "definition": "alpha>=128 lowest five silhouette rows, not anatomical foot identification; impact glow can contribute"
+          },
+          "sha256_png256": "44c08e25242642f5b67a543fcd2af4e40d8b377778e81327127bc44e1cd7c42d",
+          "crc32_png256": "64475427"
+        },
+        {
+          "index": 3,
+          "file": "png256/mainline/hero_zhaoyun_atk_light1_003.png",
+          "raw_selected": "raw_selected/light1/source_107.png",
+          "source_frame": 107,
+          "source_time_s": 4.458333333333333,
+          "retained_source_display_s": 0.08333333333333333,
+          "native_remapped_time_s": 0.25,
+          "suggested_uniform_time_s": 0.10909090909090909,
+          "impact": false,
+          "spear_tip_source_xy": null,
+          "spear_tip_png256_xy": null,
+          "tip_annotation_status": "not annotated",
+          "source_solid_foreground_at_border": {
+            "top": false,
+            "bottom": false,
+            "left": false,
+            "right": false
+          },
+          "source_bbox": [
+            106,
+            96,
+            646,
+            636
+          ],
+          "png256_bbox": [
+            34,
+            50,
+            224,
+            241
+          ],
+          "source_bottom_silhouette": {
+            "x": 274.16102510277267,
+            "y": 635,
+            "definition": "alpha>=128 lowest five silhouette rows, not anatomical foot identification; impact glow can contribute"
+          },
+          "png256_bottom_silhouette": {
+            "x": 95.39334449021626,
+            "y": 237,
+            "definition": "alpha>=128 lowest five silhouette rows, not anatomical foot identification; impact glow can contribute"
+          },
+          "sha256_png256": "58fa5ad32e2c4201128fb30bbcd4f6b5503f22a99bb311a6b3e0c0668752716d",
+          "crc32_png256": "a39583b6"
+        },
+        {
+          "index": 4,
+          "file": "png256/mainline/hero_zhaoyun_atk_light1_004.png",
+          "raw_selected": "raw_selected/light1/source_109.png",
+          "source_frame": 109,
+          "source_time_s": 4.541666666666667,
+          "retained_source_display_s": 0.08333333333333333,
+          "native_remapped_time_s": 0.3333333333333333,
+          "suggested_uniform_time_s": 0.14545454545454545,
+          "impact": false,
+          "spear_tip_source_xy": null,
+          "spear_tip_png256_xy": null,
+          "tip_annotation_status": "not annotated",
+          "source_solid_foreground_at_border": {
+            "top": false,
+            "bottom": false,
+            "left": false,
+            "right": false
+          },
+          "source_bbox": [
+            72,
+            96,
+            710,
+            630
+          ],
+          "png256_bbox": [
+            22,
+            50,
+            247,
+            239
+          ],
+          "source_bottom_silhouette": {
+            "x": 225.83751125570046,
+            "y": 627,
+            "definition": "alpha>=128 lowest five silhouette rows, not anatomical foot identification; impact glow can contribute"
+          },
+          "png256_bottom_silhouette": {
+            "x": 78.58014931927976,
+            "y": 235,
+            "definition": "alpha>=128 lowest five silhouette rows, not anatomical foot identification; impact glow can contribute"
+          },
+          "sha256_png256": "b01f16575abd83afbf2f108aafc47f6ca80617603e7e20109c15760e5e562857",
+          "crc32_png256": "93731bf9"
+        },
+        {
+          "index": 5,
+          "file": "png256/mainline/hero_zhaoyun_atk_light1_005.png",
+          "raw_selected": "raw_selected/light1/source_111.png",
+          "source_frame": 111,
+          "source_time_s": 4.625,
+          "retained_source_display_s": 0.041666666666666664,
+          "native_remapped_time_s": 0.41666666666666663,
+          "suggested_uniform_time_s": 0.18181818181818182,
+          "impact": false,
+          "spear_tip_source_xy": null,
+          "spear_tip_png256_xy": null,
+          "tip_annotation_status": "not annotated",
+          "source_solid_foreground_at_border": {
+            "top": false,
+            "bottom": false,
+            "left": false,
+            "right": false
+          },
+          "source_bbox": [
+            48,
+            102,
+            716,
+            624
+          ],
+          "png256_bbox": [
+            14,
+            52,
+            247,
+            236
+          ],
+          "source_bottom_silhouette": {
+            "x": 184.00844207875457,
+            "y": 621,
+            "definition": "alpha>=128 lowest five silhouette rows, not anatomical foot identification; impact glow can contribute"
+          },
+          "png256_bottom_silhouette": {
+            "x": 63.95962113659023,
+            "y": 232,
+            "definition": "alpha>=128 lowest five silhouette rows, not anatomical foot identification; impact glow can contribute"
+          },
+          "sha256_png256": "8b8819d61b7c92924b2c59b529f9dd05b5f5dbe5b3cb9bcff3b94aafa880b4ad",
+          "crc32_png256": "8af68d0d"
+        },
+        {
+          "index": 6,
+          "file": "png256/mainline/hero_zhaoyun_atk_light1_006.png",
+          "raw_selected": "raw_selected/light1/source_112.png",
+          "source_frame": 112,
+          "source_time_s": 4.666666666666667,
+          "retained_source_display_s": 0.08333333333333333,
+          "native_remapped_time_s": 0.4583333333333333,
+          "suggested_uniform_time_s": 0.21818181818181817,
+          "impact": false,
+          "spear_tip_source_xy": null,
+          "spear_tip_png256_xy": null,
+          "tip_annotation_status": "not annotated",
+          "source_solid_foreground_at_border": {
+            "top": false,
+            "bottom": false,
+            "left": false,
+            "right": false
+          },
+          "source_bbox": [
+            44,
+            104,
+            712,
+            622
+          ],
+          "png256_bbox": [
+            13,
+            52,
+            248,
+            236
+          ],
+          "source_bottom_silhouette": {
+            "x": 179.1217721310123,
+            "y": 621,
+            "definition": "alpha>=128 lowest five silhouette rows, not anatomical foot identification; impact glow can contribute"
+          },
+          "png256_bottom_silhouette": {
+            "x": 61.930518754048165,
+            "y": 232,
+            "definition": "alpha>=128 lowest five silhouette rows, not anatomical foot identification; impact glow can contribute"
+          },
+          "sha256_png256": "326be69b49f3f0e221007dd0c93c1edee4bf0f565842a5ddaf055b5892bcdd06",
+          "crc32_png256": "01049f4b"
+        },
+        {
+          "index": 7,
+          "file": "png256/mainline/hero_zhaoyun_atk_light1_007.png",
+          "raw_selected": "raw_selected/light1/source_114.png",
+          "source_frame": 114,
+          "source_time_s": 4.75,
+          "retained_source_display_s": 0.08333333333333333,
+          "native_remapped_time_s": 0.5416666666666666,
+          "suggested_uniform_time_s": 0.2545454545454545,
+          "impact": true,
+          "spear_tip_source_xy": [
+            706,
+            329
+          ],
+          "spear_tip_png256_xy": [
+            243.1778,
+            132.3222
+          ],
+          "tip_annotation_status": "visible tip manual ±3 source px",
+          "source_solid_foreground_at_border": {
+            "top": false,
+            "bottom": false,
+            "left": false,
+            "right": false
+          },
+          "source_bbox": [
+            50,
+            106,
+            710,
+            622
+          ],
+          "png256_bbox": [
+            15,
+            53,
+            247,
+            236
+          ],
+          "source_bottom_silhouette": {
+            "x": 178.178138626575,
+            "y": 619,
+            "definition": "alpha>=128 lowest five silhouette rows, not anatomical foot identification; impact glow can contribute"
+          },
+          "png256_bottom_silhouette": {
+            "x": 61.64334043352963,
+            "y": 232,
+            "definition": "alpha>=128 lowest five silhouette rows, not anatomical foot identification; impact glow can contribute"
+          },
+          "sha256_png256": "2f61b169eb9dded785f13462d0f65caaadd1ca8c4ebcf5210d5d1a205bbe329a",
+          "crc32_png256": "5effb6e6"
+        },
+        {
+          "index": 8,
+          "file": "png256/mainline/hero_zhaoyun_atk_light1_008.png",
+          "raw_selected": "raw_selected/light1/source_116.png",
+          "source_frame": 116,
+          "source_time_s": 4.833333333333333,
+          "retained_source_display_s": 0.08333333333333333,
+          "native_remapped_time_s": 0.625,
+          "suggested_uniform_time_s": 0.2909090909090909,
+          "impact": false,
+          "spear_tip_source_xy": null,
+          "spear_tip_png256_xy": null,
+          "tip_annotation_status": "not annotated",
+          "source_solid_foreground_at_border": {
+            "top": false,
+            "bottom": false,
+            "left": false,
+            "right": false
+          },
+          "source_bbox": [
+            60,
+            108,
+            710,
+            622
+          ],
+          "png256_bbox": [
+            18,
+            54,
+            247,
+            236
+          ],
+          "source_bottom_silhouette": {
+            "x": 178.1904033227675,
+            "y": 619,
+            "definition": "alpha>=128 lowest five silhouette rows, not anatomical foot identification; impact glow can contribute"
+          },
+          "png256_bottom_silhouette": {
+            "x": 61.67213634059807,
+            "y": 232,
+            "definition": "alpha>=128 lowest five silhouette rows, not anatomical foot identification; impact glow can contribute"
+          },
+          "sha256_png256": "22c967a90b640bf701b2fe117ca7ed4376e2fcd170666b2ffe3b62004d10e971",
+          "crc32_png256": "86f2c4eb"
+        },
+        {
+          "index": 9,
+          "file": "png256/mainline/hero_zhaoyun_atk_light1_009.png",
+          "raw_selected": "raw_selected/light1/source_118.png",
+          "source_frame": 118,
+          "source_time_s": 4.916666666666667,
+          "retained_source_display_s": 0.08333333333333333,
+          "native_remapped_time_s": 0.7083333333333334,
+          "suggested_uniform_time_s": 0.32727272727272727,
+          "impact": false,
+          "spear_tip_source_xy": null,
+          "spear_tip_png256_xy": null,
+          "tip_annotation_status": "not annotated",
+          "source_solid_foreground_at_border": {
+            "top": false,
+            "bottom": false,
+            "left": false,
+            "right": false
+          },
+          "source_bbox": [
+            64,
+            108,
+            710,
+            622
+          ],
+          "png256_bbox": [
+            19,
+            54,
+            247,
+            236
+          ],
+          "source_bottom_silhouette": {
+            "x": 178.17967317220047,
+            "y": 619,
+            "definition": "alpha>=128 lowest five silhouette rows, not anatomical foot identification; impact glow can contribute"
+          },
+          "png256_bottom_silhouette": {
+            "x": 61.67673542371799,
+            "y": 232,
+            "definition": "alpha>=128 lowest five silhouette rows, not anatomical foot identification; impact glow can contribute"
+          },
+          "sha256_png256": "1ddeda7473cb8c3cbbb2c14884b4ff9d427e9168391179e8aaac00553f02a995",
+          "crc32_png256": "eb9ef335"
+        },
+        {
+          "index": 10,
+          "file": "png256/mainline/hero_zhaoyun_atk_light1_010.png",
+          "raw_selected": "raw_selected/light1/source_120.png",
+          "source_frame": 120,
+          "source_time_s": 5.0,
+          "retained_source_display_s": 0.041666666666666664,
+          "native_remapped_time_s": 0.7916666666666667,
+          "suggested_uniform_time_s": 0.36363636363636365,
+          "impact": false,
+          "spear_tip_source_xy": [
+            708,
+            329
+          ],
+          "spear_tip_png256_xy": [
+            243.8667,
+            132.3222
+          ],
+          "tip_annotation_status": "visible tip manual ±3 source px",
+          "source_solid_foreground_at_border": {
+            "top": false,
+            "bottom": false,
+            "left": false,
+            "right": false
+          },
+          "source_bbox": [
+            66,
+            108,
+            710,
+            622
+          ],
+          "png256_bbox": [
+            20,
+            54,
+            247,
+            236
+          ],
+          "source_bottom_silhouette": {
+            "x": 178.17967317220047,
+            "y": 619,
+            "definition": "alpha>=128 lowest five silhouette rows, not anatomical foot identification; impact glow can contribute"
+          },
+          "png256_bottom_silhouette": {
+            "x": 61.67673542371799,
+            "y": 232,
+            "definition": "alpha>=128 lowest five silhouette rows, not anatomical foot identification; impact glow can contribute"
+          },
+          "sha256_png256": "7dc02bf571995579d9ce79a0e0770dd5c41da1f5541c58e040fe97de720ec5a0",
+          "crc32_png256": "457d37c0"
+        }
+      ],
+      "mouth_check": "No mouth, lip line, teeth, talking/open mouth visible in inspected selected frames. Some lower faces partially occluded by forearm/armor during overhead motion. No claim about occluded pixels or unselected source frames. No face edited."
+    },
+    "light2": {
+      "group": "mainline",
+      "source_video": "/workspace/sg-art/review/atk_chain_v3/seg2_thrust_to_upper/raw.mp4",
+      "source_sha256": "c1daf4bf3f102118271fbc7c3691037c4846157d232848825c0bc9d40db26cac",
+      "source_indices": [
+        0,
+        24,
+        27,
+        30,
+        33,
+        36,
+        39,
+        42,
+        50,
+        53,
+        56,
+        59,
+        62,
+        65,
+        68,
+        70,
+        72,
+        74,
+        76,
+        120
+      ],
+      "frame_count": 20,
+      "source_size": [
+        720,
+        720
+      ],
+      "source_fps": 24,
+      "source_video_total_s": 5.041666666666667,
+      "selected_source_timestamp_span_s": 5.0,
+      "retained_source_ranges_inclusive": [
+        [
+          0,
+          0
+        ],
+        [
+          24,
+          42
+        ],
+        [
+          50,
+          76
+        ],
+        [
+          120,
+          120
+        ]
+      ],
+      "retained_source_duration_s_including_last_frame_support": 2.0,
+      "trimmed_source_ranges_inclusive": [
+        [
+          1,
+          23
+        ],
+        [
+          43,
+          49
+        ],
+        [
+          77,
+          119
+        ]
+      ],
+      "trimmed_source_ranges_times_s_inclusive": [
+        [
+          0.041666666666666664,
+          0.9583333333333334
+        ],
+        [
+          1.7916666666666667,
+          2.0416666666666665
+        ],
+        [
+          3.2083333333333335,
+          4.958333333333333
+        ]
+      ],
+      "sampled_out_inside_retained_ranges_inclusive": [
+        [
+          25,
+          26
+        ],
+        [
+          28,
+          29
+        ],
+        [
+          31,
+          32
+        ],
+        [
+          34,
+          35
+        ],
+        [
+          37,
+          38
+        ],
+        [
+          40,
+          41
+        ],
+        [
+          51,
+          52
+        ],
+        [
+          54,
+          55
+        ],
+        [
+          57,
+          58
+        ],
+        [
+          60,
+          61
+        ],
+        [
+          63,
+          64
+        ],
+        [
+          66,
+          67
+        ],
+        [
+          69,
+          69
+        ],
+        [
+          71,
+          71
+        ],
+        [
+          73,
+          73
+        ],
+        [
+          75,
+          75
+        ]
+      ],
+      "engine_target_mainline_s": 0.46,
+      "suggested_uniform_fps": 43.47826086956522,
+      "suggested_uniform_duration_s": 0.45999999999999996,
+      "mean_fps_for_source_retained_duration": 10.0,
+      "engine_speed_vs_retained_source": 4.3478260869565215,
+      "impact_frame_index": 16,
+      "impact_source_frame": 72,
+      "impact_spear_tip_png256_xy": null,
+      "impact_tip_note": "true tip offscreen; no fabricated coordinate",
+      "last_frame_index": 19,
+      "cancel_next_segment_frame_index": 19,
+      "next": "light3",
+      "next_join_status": "UNVERIFIED pose/pixel continuity; do not claim seamless",
+      "recover_branch": "light2_recover",
+      "recover_range": {
+        "branch": "light2_recover",
+        "indices": [
+          0,
+          10
+        ]
+      },
+      "notes": "First anchor 0 preserves A side of join. Trim 1-23 initial held A; keep 24-42 downward preparation; trim 43-49 short low plateau; keep 50-76 rise/apex; trim 77-119 high-pose holding/settling, retain exact source final B 120. Endpoint jumps can remain. Apex 70/72 is clipped at original top edge.",
+      "frames": [
+        {
+          "index": 0,
+          "file": "png256/mainline/hero_zhaoyun_atk_light2_000.png",
+          "raw_selected": "raw_selected/light2/source_000.png",
+          "source_frame": 0,
+          "source_time_s": 0.0,
+          "retained_source_display_s": 0.041666666666666664,
+          "native_remapped_time_s": 0.0,
+          "suggested_uniform_time_s": 0.0,
+          "impact": false,
+          "spear_tip_source_xy": [
+            706,
+            329
+          ],
+          "spear_tip_png256_xy": [
+            243.1778,
+            132.3222
+          ],
+          "tip_annotation_status": "visible tip manual ±3 source px",
+          "source_solid_foreground_at_border": {
+            "top": false,
+            "bottom": false,
+            "left": false,
+            "right": false
+          },
+          "source_bbox": [
+            66,
+            110,
+            708,
+            622
+          ],
+          "png256_bbox": [
+            20,
+            54,
+            246,
+            236
+          ],
+          "source_bottom_silhouette": {
+            "x": 178.0074445660005,
+            "y": 619,
+            "definition": "alpha>=128 lowest five silhouette rows, not anatomical foot identification; impact glow can contribute"
+          },
+          "png256_bottom_silhouette": {
+            "x": 61.65147637180848,
+            "y": 232,
+            "definition": "alpha>=128 lowest five silhouette rows, not anatomical foot identification; impact glow can contribute"
+          },
+          "sha256_png256": "633aed034172baf6509a1a18abb9b7ccb2c8116a22b99508a1b0f6ab07b86923",
+          "crc32_png256": "9d3f4071"
+        },
+        {
+          "index": 1,
+          "file": "png256/mainline/hero_zhaoyun_atk_light2_001.png",
+          "raw_selected": "raw_selected/light2/source_024.png",
+          "source_frame": 24,
+          "source_time_s": 1.0,
+          "retained_source_display_s": 0.125,
+          "native_remapped_time_s": 0.041666666666666664,
+          "suggested_uniform_time_s": 0.023,
+          "impact": false,
+          "spear_tip_source_xy": null,
+          "spear_tip_png256_xy": null,
+          "tip_annotation_status": "not annotated",
+          "source_solid_foreground_at_border": {
+            "top": false,
+            "bottom": false,
+            "left": false,
+            "right": false
+          },
+          "source_bbox": [
+            62,
+            108,
+            710,
+            622
+          ],
+          "png256_bbox": [
+            19,
+            54,
+            247,
+            236
+          ],
+          "source_bottom_silhouette": {
+            "x": 177.97330282227307,
+            "y": 619,
+            "definition": "alpha>=128 lowest five silhouette rows, not anatomical foot identification; impact glow can contribute"
+          },
+          "png256_bottom_silhouette": {
+            "x": 61.68822752155037,
+            "y": 232,
+            "definition": "alpha>=128 lowest five silhouette rows, not anatomical foot identification; impact glow can contribute"
+          },
+          "sha256_png256": "9e375ac60521a0f63874ffbc4af1ca99ff6e360a7be44c905441a807fd57da0b",
+          "crc32_png256": "94788359"
+        },
+        {
+          "index": 2,
+          "file": "png256/mainline/hero_zhaoyun_atk_light2_002.png",
+          "raw_selected": "raw_selected/light2/source_027.png",
+          "source_frame": 27,
+          "source_time_s": 1.125,
+          "retained_source_display_s": 0.125,
+          "native_remapped_time_s": 0.16666666666666666,
+          "suggested_uniform_time_s": 0.046,
+          "impact": false,
+          "spear_tip_source_xy": null,
+          "spear_tip_png256_xy": null,
+          "tip_annotation_status": "not annotated",
+          "source_solid_foreground_at_border": {
+            "top": false,
+            "bottom": false,
+            "left": false,
+            "right": false
+          },
+          "source_bbox": [
+            58,
+            112,
+            710,
+            622
+          ],
+          "png256_bbox": [
+            18,
+            55,
+            247,
+            236
+          ],
+          "source_bottom_silhouette": {
+            "x": 178.0151974881929,
+            "y": 619,
+            "definition": "alpha>=128 lowest five silhouette rows, not anatomical foot identification; impact glow can contribute"
+          },
+          "png256_bottom_silhouette": {
+            "x": 61.69223026108839,
+            "y": 232,
+            "definition": "alpha>=128 lowest five silhouette rows, not anatomical foot identification; impact glow can contribute"
+          },
+          "sha256_png256": "d3b588f7df80cff770da9ca6cc3d40694a4d29d7a4d443144b08f683638835a6",
+          "crc32_png256": "5f640e6c"
+        },
+        {
+          "index": 3,
+          "file": "png256/mainline/hero_zhaoyun_atk_light2_003.png",
+          "raw_selected": "raw_selected/light2/source_030.png",
+          "source_frame": 30,
+          "source_time_s": 1.25,
+          "retained_source_display_s": 0.125,
+          "native_remapped_time_s": 0.29166666666666663,
+          "suggested_uniform_time_s": 0.06899999999999999,
+          "impact": false,
+          "spear_tip_source_xy": null,
+          "spear_tip_png256_xy": null,
+          "tip_annotation_status": "not annotated",
+          "source_solid_foreground_at_border": {
+            "top": false,
+            "bottom": false,
+            "left": false,
+            "right": false
+          },
+          "source_bbox": [
+            52,
+            116,
+            708,
+            622
+          ],
+          "png256_bbox": [
+            15,
+            56,
+            246,
+            236
+          ],
+          "source_bottom_silhouette": {
+            "x": 178.09901716681955,
+            "y": 619,
+            "definition": "alpha>=128 lowest five silhouette rows, not anatomical foot identification; impact glow can contribute"
+          },
+          "png256_bottom_silhouette": {
+            "x": 61.66942766394719,
+            "y": 232,
+            "definition": "alpha>=128 lowest five silhouette rows, not anatomical foot identification; impact glow can contribute"
+          },
+          "sha256_png256": "fcf3f2a8ed39b57c09c84cceba8d6cb374360dc1628fac9f7e9aba6dc2d54563",
+          "crc32_png256": "dc6669ef"
+        },
+        {
+          "index": 4,
+          "file": "png256/mainline/hero_zhaoyun_atk_light2_004.png",
+          "raw_selected": "raw_selected/light2/source_033.png",
+          "source_frame": 33,
+          "source_time_s": 1.375,
+          "retained_source_display_s": 0.125,
+          "native_remapped_time_s": 0.41666666666666663,
+          "suggested_uniform_time_s": 0.092,
+          "impact": false,
+          "spear_tip_source_xy": null,
+          "spear_tip_png256_xy": null,
+          "tip_annotation_status": "not annotated",
+          "source_solid_foreground_at_border": {
+            "top": false,
+            "bottom": false,
+            "left": false,
+            "right": false
+          },
+          "source_bbox": [
+            38,
+            124,
+            694,
+            622
+          ],
+          "png256_bbox": [
+            11,
+            59,
+            242,
+            236
+          ],
+          "source_bottom_silhouette": {
+            "x": 178.13031647910393,
+            "y": 619,
+            "definition": "alpha>=128 lowest five silhouette rows, not anatomical foot identification; impact glow can contribute"
+          },
+          "png256_bottom_silhouette": {
+            "x": 61.66922118380062,
+            "y": 232,
+            "definition": "alpha>=128 lowest five silhouette rows, not anatomical foot identification; impact glow can contribute"
+          },
+          "sha256_png256": "203ce62cbb3b83ce71abea31aff12ea765f40f91d121d54a845aa596d4e54422",
+          "crc32_png256": "c4f6f816"
+        },
+        {
+          "index": 5,
+          "file": "png256/mainline/hero_zhaoyun_atk_light2_005.png",
+          "raw_selected": "raw_selected/light2/source_036.png",
+          "source_frame": 36,
+          "source_time_s": 1.5,
+          "retained_source_display_s": 0.125,
+          "native_remapped_time_s": 0.5416666666666666,
+          "suggested_uniform_time_s": 0.11499999999999999,
+          "impact": false,
+          "spear_tip_source_xy": null,
+          "spear_tip_png256_xy": null,
+          "tip_annotation_status": "not annotated",
+          "source_solid_foreground_at_border": {
+            "top": false,
+            "bottom": false,
+            "left": false,
+            "right": false
+          },
+          "source_bbox": [
+            30,
+            130,
+            676,
+            622
+          ],
+          "png256_bbox": [
+            8,
+            61,
+            235,
+            236
+          ],
+          "source_bottom_silhouette": {
+            "x": 178.2160549011359,
+            "y": 619,
+            "definition": "alpha>=128 lowest five silhouette rows, not anatomical foot identification; impact glow can contribute"
+          },
+          "png256_bottom_silhouette": {
+            "x": 61.66988537253925,
+            "y": 232,
+            "definition": "alpha>=128 lowest five silhouette rows, not anatomical foot identification; impact glow can contribute"
+          },
+          "sha256_png256": "236b2e22a9f3ab1c9e602f191f46c20b639246f1ac704202977173a8368d8732",
+          "crc32_png256": "4493e71f"
+        },
+        {
+          "index": 6,
+          "file": "png256/mainline/hero_zhaoyun_atk_light2_006.png",
+          "raw_selected": "raw_selected/light2/source_039.png",
+          "source_frame": 39,
+          "source_time_s": 1.625,
+          "retained_source_display_s": 0.125,
+          "native_remapped_time_s": 0.6666666666666666,
+          "suggested_uniform_time_s": 0.13799999999999998,
+          "impact": false,
+          "spear_tip_source_xy": null,
+          "spear_tip_png256_xy": null,
+          "tip_annotation_status": "not annotated",
+          "source_solid_foreground_at_border": {
+            "top": false,
+            "bottom": false,
+            "left": false,
+            "right": false
+          },
+          "source_bbox": [
+            28,
+            134,
+            664,
+            622
+          ],
+          "png256_bbox": [
+            7,
+            63,
+            230,
+            236
+          ],
+          "source_bottom_silhouette": {
+            "x": 178.21903537315,
+            "y": 619,
+            "definition": "alpha>=128 lowest five silhouette rows, not anatomical foot identification; impact glow can contribute"
+          },
+          "png256_bottom_silhouette": {
+            "x": 61.67305538270068,
+            "y": 232,
+            "definition": "alpha>=128 lowest five silhouette rows, not anatomical foot identification; impact glow can contribute"
+          },
+          "sha256_png256": "215ff99e14f8f582c6eafe1b3efc4053a262573be2e3aa9d4418985ea70fa111",
+          "crc32_png256": "20053676"
+        },
+        {
+          "index": 7,
+          "file": "png256/mainline/hero_zhaoyun_atk_light2_007.png",
+          "raw_selected": "raw_selected/light2/source_042.png",
+          "source_frame": 42,
+          "source_time_s": 1.75,
+          "retained_source_display_s": 0.041666666666666664,
+          "native_remapped_time_s": 0.7916666666666666,
+          "suggested_uniform_time_s": 0.161,
+          "impact": false,
+          "spear_tip_source_xy": null,
+          "spear_tip_png256_xy": null,
+          "tip_annotation_status": "not annotated",
+          "source_solid_foreground_at_border": {
+            "top": false,
+            "bottom": false,
+            "left": false,
+            "right": false
+          },
+          "source_bbox": [
+            26,
+            134,
+            662,
+            622
+          ],
+          "png256_bbox": [
+            6,
+            63,
+            230,
+            236
+          ],
+          "source_bottom_silhouette": {
+            "x": 178.22911688243482,
+            "y": 619,
+            "definition": "alpha>=128 lowest five silhouette rows, not anatomical foot identification; impact glow can contribute"
+          },
+          "png256_bottom_silhouette": {
+            "x": 61.67200348866185,
+            "y": 232,
+            "definition": "alpha>=128 lowest five silhouette rows, not anatomical foot identification; impact glow can contribute"
+          },
+          "sha256_png256": "1eda5fcaae7068fe79a7e0e0a77e03a1a20a5034b1530b2bc1b4740f3cd77f34",
+          "crc32_png256": "a4cbeb3b"
+        },
+        {
+          "index": 8,
+          "file": "png256/mainline/hero_zhaoyun_atk_light2_008.png",
+          "raw_selected": "raw_selected/light2/source_050.png",
+          "source_frame": 50,
+          "source_time_s": 2.0833333333333335,
+          "retained_source_display_s": 0.125,
+          "native_remapped_time_s": 0.8333333333333333,
+          "suggested_uniform_time_s": 0.184,
+          "impact": false,
+          "spear_tip_source_xy": null,
+          "spear_tip_png256_xy": null,
+          "tip_annotation_status": "not annotated",
+          "source_solid_foreground_at_border": {
+            "top": false,
+            "bottom": false,
+            "left": false,
+            "right": false
+          },
+          "source_bbox": [
+            46,
+            134,
+            662,
+            622
+          ],
+          "png256_bbox": [
+            13,
+            63,
+            229,
+            236
+          ],
+          "source_bottom_silhouette": {
+            "x": 178.2485621996376,
+            "y": 619,
+            "definition": "alpha>=128 lowest five silhouette rows, not anatomical foot identification; impact glow can contribute"
+          },
+          "png256_bottom_silhouette": {
+            "x": 61.67249017283334,
+            "y": 232,
+            "definition": "alpha>=128 lowest five silhouette rows, not anatomical foot identification; impact glow can contribute"
+          },
+          "sha256_png256": "8f374599ec641e4e45cd0591daa93e750b5abd153b72ef152399431dbb9a5c8d",
+          "crc32_png256": "9e604cde"
+        },
+        {
+          "index": 9,
+          "file": "png256/mainline/hero_zhaoyun_atk_light2_009.png",
+          "raw_selected": "raw_selected/light2/source_053.png",
+          "source_frame": 53,
+          "source_time_s": 2.2083333333333335,
+          "retained_source_display_s": 0.125,
+          "native_remapped_time_s": 0.9583333333333333,
+          "suggested_uniform_time_s": 0.207,
+          "impact": false,
+          "spear_tip_source_xy": null,
+          "spear_tip_png256_xy": null,
+          "tip_annotation_status": "not annotated",
+          "source_solid_foreground_at_border": {
+            "top": false,
+            "bottom": false,
+            "left": false,
+            "right": false
+          },
+          "source_bbox": [
+            40,
+            134,
+            670,
+            622
+          ],
+          "png256_bbox": [
+            11,
+            63,
+            232,
+            236
+          ],
+          "source_bottom_silhouette": {
+            "x": 178.23887926054303,
+            "y": 619,
+            "definition": "alpha>=128 lowest five silhouette rows, not anatomical foot identification; impact glow can contribute"
+          },
+          "png256_bottom_silhouette": {
+            "x": 61.671991015161915,
+            "y": 232,
+            "definition": "alpha>=128 lowest five silhouette rows, not anatomical foot identification; impact glow can contribute"
+          },
+          "sha256_png256": "593cfd9168f6ef33bbc1228d086a57087c475684fe196979b2676fa330dd657c",
+          "crc32_png256": "b5c60b75"
+        },
+        {
+          "index": 10,
+          "file": "png256/mainline/hero_zhaoyun_atk_light2_010.png",
+          "raw_selected": "raw_selected/light2/source_056.png",
+          "source_frame": 56,
+          "source_time_s": 2.3333333333333335,
+          "retained_source_display_s": 0.125,
+          "native_remapped_time_s": 1.0833333333333333,
+          "suggested_uniform_time_s": 0.22999999999999998,
+          "impact": false,
+          "spear_tip_source_xy": null,
+          "spear_tip_png256_xy": null,
+          "tip_annotation_status": "not annotated",
+          "source_solid_foreground_at_border": {
+            "top": false,
+            "bottom": false,
+            "left": false,
+            "right": false
+          },
+          "source_bbox": [
+            34,
+            130,
+            684,
+            622
+          ],
+          "png256_bbox": [
+            9,
+            61,
+            238,
+            236
+          ],
+          "source_bottom_silhouette": {
+            "x": 178.23838367946297,
+            "y": 619,
+            "definition": "alpha>=128 lowest five silhouette rows, not anatomical foot identification; impact glow can contribute"
+          },
+          "png256_bottom_silhouette": {
+            "x": 61.674334517798144,
+            "y": 232,
+            "definition": "alpha>=128 lowest five silhouette rows, not anatomical foot identification; impact glow can contribute"
+          },
+          "sha256_png256": "7edbc11d9e9153107eedb26a3fdbdfa222d0cfc6d0f788e96bb22a6189fee43a",
+          "crc32_png256": "d4c54bcc"
+        },
+        {
+          "index": 11,
+          "file": "png256/mainline/hero_zhaoyun_atk_light2_011.png",
+          "raw_selected": "raw_selected/light2/source_059.png",
+          "source_frame": 59,
+          "source_time_s": 2.4583333333333335,
+          "retained_source_display_s": 0.125,
+          "native_remapped_time_s": 1.2083333333333333,
+          "suggested_uniform_time_s": 0.253,
+          "impact": false,
+          "spear_tip_source_xy": null,
+          "spear_tip_png256_xy": null,
+          "tip_annotation_status": "not annotated",
+          "source_solid_foreground_at_border": {
+            "top": false,
+            "bottom": false,
+            "left": false,
+            "right": false
+          },
+          "source_bbox": [
+            30,
+            124,
+            700,
+            622
+          ],
+          "png256_bbox": [
+            8,
+            60,
+            244,
+            236
+          ],
+          "source_bottom_silhouette": {
+            "x": 178.24714559437257,
+            "y": 619,
+            "definition": "alpha>=128 lowest five silhouette rows, not anatomical foot identification; impact glow can contribute"
+          },
+          "png256_bottom_silhouette": {
+            "x": 61.618346125278535,
+            "y": 232,
+            "definition": "alpha>=128 lowest five silhouette rows, not anatomical foot identification; impact glow can contribute"
+          },
+          "sha256_png256": "98fbaadc4541608c3658118ff0c63253e96a32d8cd2a8bb158055b95e8cfe198",
+          "crc32_png256": "fb464d0b"
+        },
+        {
+          "index": 12,
+          "file": "png256/mainline/hero_zhaoyun_atk_light2_012.png",
+          "raw_selected": "raw_selected/light2/source_062.png",
+          "source_frame": 62,
+          "source_time_s": 2.5833333333333335,
+          "retained_source_display_s": 0.125,
+          "native_remapped_time_s": 1.3333333333333333,
+          "suggested_uniform_time_s": 0.27599999999999997,
+          "impact": false,
+          "spear_tip_source_xy": null,
+          "spear_tip_png256_xy": null,
+          "tip_annotation_status": "not annotated",
+          "source_solid_foreground_at_border": {
+            "top": false,
+            "bottom": false,
+            "left": false,
+            "right": false
+          },
+          "source_bbox": [
+            34,
+            118,
+            704,
+            622
+          ],
+          "png256_bbox": [
+            9,
+            57,
+            245,
+            236
+          ],
+          "source_bottom_silhouette": {
+            "x": 178.26410532678108,
+            "y": 619,
+            "definition": "alpha>=128 lowest five silhouette rows, not anatomical foot identification; impact glow can contribute"
+          },
+          "png256_bottom_silhouette": {
+            "x": 61.67226209048362,
+            "y": 232,
+            "definition": "alpha>=128 lowest five silhouette rows, not anatomical foot identification; impact glow can contribute"
+          },
+          "sha256_png256": "c067e9d7c4fbe05e1970377fc1f406027c25639ed9d86543ba4124293df3c827",
+          "crc32_png256": "dfd76313"
+        },
+        {
+          "index": 13,
+          "file": "png256/mainline/hero_zhaoyun_atk_light2_013.png",
+          "raw_selected": "raw_selected/light2/source_065.png",
+          "source_frame": 65,
+          "source_time_s": 2.7083333333333335,
+          "retained_source_display_s": 0.125,
+          "native_remapped_time_s": 1.4583333333333333,
+          "suggested_uniform_time_s": 0.299,
+          "impact": false,
+          "spear_tip_source_xy": null,
+          "spear_tip_png256_xy": null,
+          "tip_annotation_status": "not annotated",
+          "source_solid_foreground_at_border": {
+            "top": false,
+            "bottom": false,
+            "left": false,
+            "right": false
+          },
+          "source_bbox": [
+            60,
+            108,
+            682,
+            622
+          ],
+          "png256_bbox": [
+            18,
+            54,
+            237,
+            236
+          ],
+          "source_bottom_silhouette": {
+            "x": 179.03581524347965,
+            "y": 619,
+            "definition": "alpha>=128 lowest five silhouette rows, not anatomical foot identification; impact glow can contribute"
+          },
+          "png256_bottom_silhouette": {
+            "x": 61.76217240290496,
+            "y": 232,
+            "definition": "alpha>=128 lowest five silhouette rows, not anatomical foot identification; impact glow can contribute"
+          },
+          "sha256_png256": "a1345c35cf6501a3510b0e84519ef7437f9644373f0ed4c3711d6573582d80a7",
+          "crc32_png256": "596af8d3"
+        },
+        {
+          "index": 14,
+          "file": "png256/mainline/hero_zhaoyun_atk_light2_014.png",
+          "raw_selected": "raw_selected/light2/source_068.png",
+          "source_frame": 68,
+          "source_time_s": 2.8333333333333335,
+          "retained_source_display_s": 0.08333333333333333,
+          "native_remapped_time_s": 1.5833333333333333,
+          "suggested_uniform_time_s": 0.322,
+          "impact": false,
+          "spear_tip_source_xy": null,
+          "spear_tip_png256_xy": null,
+          "tip_annotation_status": "not annotated",
+          "source_solid_foreground_at_border": {
+            "top": false,
+            "bottom": false,
+            "left": false,
+            "right": false
+          },
+          "source_bbox": [
+            74,
+            22,
+            624,
+            620
+          ],
+          "png256_bbox": [
+            23,
+            24,
+            217,
+            235
+          ],
+          "source_bottom_silhouette": {
+            "x": 200.78155667091167,
+            "y": 619,
+            "definition": "alpha>=128 lowest five silhouette rows, not anatomical foot identification; impact glow can contribute"
+          },
+          "png256_bottom_silhouette": {
+            "x": 69.22178326474622,
+            "y": 231,
+            "definition": "alpha>=128 lowest five silhouette rows, not anatomical foot identification; impact glow can contribute"
+          },
+          "sha256_png256": "ef779243bb1c5510aafc47a2015c63241c6c071ba927e27fafbd965cc6d8b49c",
+          "crc32_png256": "90c6ce49"
+        },
+        {
+          "index": 15,
+          "file": "png256/mainline/hero_zhaoyun_atk_light2_015.png",
+          "raw_selected": "raw_selected/light2/source_070.png",
+          "source_frame": 70,
+          "source_time_s": 2.9166666666666665,
+          "retained_source_display_s": 0.08333333333333333,
+          "native_remapped_time_s": 1.6666666666666665,
+          "suggested_uniform_time_s": 0.345,
+          "impact": false,
+          "spear_tip_source_xy": null,
+          "spear_tip_png256_xy": null,
+          "tip_annotation_status": "not annotated",
+          "source_solid_foreground_at_border": {
+            "top": true,
+            "bottom": false,
+            "left": false,
+            "right": false
+          },
+          "source_bbox": [
+            96,
+            0,
+            582,
+            628
+          ],
+          "png256_bbox": [
+            30,
+            19,
+            203,
+            238
+          ],
+          "source_bottom_silhouette": {
+            "x": 234.8637099384914,
+            "y": 627,
+            "definition": "alpha>=128 lowest five silhouette rows, not anatomical foot identification; impact glow can contribute"
+          },
+          "png256_bottom_silhouette": {
+            "x": 81.07420034713613,
+            "y": 234,
+            "definition": "alpha>=128 lowest five silhouette rows, not anatomical foot identification; impact glow can contribute"
+          },
+          "sha256_png256": "2e8ab44535a917210905bd64a37150c1f0eb39aa96ad3f948ca70899f2027687",
+          "crc32_png256": "74c0aa02"
+        },
+        {
+          "index": 16,
+          "file": "png256/mainline/hero_zhaoyun_atk_light2_016.png",
+          "raw_selected": "raw_selected/light2/source_072.png",
+          "source_frame": 72,
+          "source_time_s": 3.0,
+          "retained_source_display_s": 0.08333333333333333,
+          "native_remapped_time_s": 1.7499999999999998,
+          "suggested_uniform_time_s": 0.368,
+          "impact": true,
+          "spear_tip_source_xy": null,
+          "spear_tip_png256_xy": null,
+          "tip_annotation_status": "true tip offscreen; no fabricated coordinate",
+          "source_solid_foreground_at_border": {
+            "top": true,
+            "bottom": false,
+            "left": false,
+            "right": false
+          },
+          "source_bbox": [
+            130,
+            0,
+            588,
+            650
+          ],
+          "png256_bbox": [
+            42,
+            19,
+            205,
+            245
+          ],
+          "source_bottom_silhouette": {
+            "x": 265.2051584894819,
+            "y": 647,
+            "definition": "alpha>=128 lowest five silhouette rows, not anatomical foot identification; impact glow can contribute"
+          },
+          "png256_bottom_silhouette": {
+            "x": 92.1195887129754,
+            "y": 241,
+            "definition": "alpha>=128 lowest five silhouette rows, not anatomical foot identification; impact glow can contribute"
+          },
+          "visible_blade_intersection_at_source_top": [
+            582,
+            0
+          ],
+          "visible_blade_intersection_png256": [
+            200.4667,
+            19
+          ],
+          "sha256_png256": "1872f3c832618d52830ff55107316feb6f9869768d9466687db8792d202069b3",
+          "crc32_png256": "e440f906"
+        },
+        {
+          "index": 17,
+          "file": "png256/mainline/hero_zhaoyun_atk_light2_017.png",
+          "raw_selected": "raw_selected/light2/source_074.png",
+          "source_frame": 74,
+          "source_time_s": 3.0833333333333335,
+          "retained_source_display_s": 0.08333333333333333,
+          "native_remapped_time_s": 1.833333333333333,
+          "suggested_uniform_time_s": 0.391,
+          "impact": false,
+          "spear_tip_source_xy": [
+            619,
+            28
+          ],
+          "spear_tip_png256_xy": [
+            213.2111,
+            28.6444
+          ],
+          "tip_annotation_status": "visible tip manual ±3 source px",
+          "source_solid_foreground_at_border": {
+            "top": false,
+            "bottom": false,
+            "left": false,
+            "right": false
+          },
+          "source_bbox": [
+            140,
+            24,
+            620,
+            664
+          ],
+          "png256_bbox": [
+            46,
+            25,
+            216,
+            250
+          ],
+          "source_bottom_silhouette": {
+            "x": 278.5619494807554,
+            "y": 663,
+            "definition": "alpha>=128 lowest five silhouette rows, not anatomical foot identification; impact glow can contribute"
+          },
+          "png256_bottom_silhouette": {
+            "x": 96.42893877267358,
+            "y": 247,
+            "definition": "alpha>=128 lowest five silhouette rows, not anatomical foot identification; impact glow can contribute"
+          },
+          "sha256_png256": "f55c2ca0a6e50db21dfb0655d70d16c3d285e2b98ec5f6ce20396f4f64e62ec7",
+          "crc32_png256": "3883618a"
+        },
+        {
+          "index": 18,
+          "file": "png256/mainline/hero_zhaoyun_atk_light2_018.png",
+          "raw_selected": "raw_selected/light2/source_076.png",
+          "source_frame": 76,
+          "source_time_s": 3.1666666666666665,
+          "retained_source_display_s": 0.041666666666666664,
+          "native_remapped_time_s": 1.9166666666666663,
+          "suggested_uniform_time_s": 0.414,
+          "impact": false,
+          "spear_tip_source_xy": [
+            622,
+            30
+          ],
+          "spear_tip_png256_xy": [
+            214.2444,
+            29.3333
+          ],
+          "tip_annotation_status": "visible tip manual ±3 source px",
+          "source_solid_foreground_at_border": {
+            "top": false,
+            "bottom": false,
+            "left": false,
+            "right": false
+          },
+          "source_bbox": [
+            131,
+            32,
+            630,
+            666
+          ],
+          "png256_bbox": [
+            43,
+            28,
+            220,
+            251
+          ],
+          "source_bottom_silhouette": {
+            "x": 278.41089153582385,
+            "y": 665,
+            "definition": "alpha>=128 lowest five silhouette rows, not anatomical foot identification; impact glow can contribute"
+          },
+          "png256_bottom_silhouette": {
+            "x": 96.71102199538218,
+            "y": 247,
+            "definition": "alpha>=128 lowest five silhouette rows, not anatomical foot identification; impact glow can contribute"
+          },
+          "sha256_png256": "dc135a44fbe5588143d89379046e4acdb43a9bd881eae4ae52abb46bebfb6810",
+          "crc32_png256": "70cfd2b7"
+        },
+        {
+          "index": 19,
+          "file": "png256/mainline/hero_zhaoyun_atk_light2_019.png",
+          "raw_selected": "raw_selected/light2/source_120.png",
+          "source_frame": 120,
+          "source_time_s": 5.0,
+          "retained_source_display_s": 0.041666666666666664,
+          "native_remapped_time_s": 1.958333333333333,
+          "suggested_uniform_time_s": 0.437,
+          "impact": false,
+          "spear_tip_source_xy": [
+            622,
+            31
+          ],
+          "spear_tip_png256_xy": [
+            214.2444,
+            29.6778
+          ],
+          "tip_annotation_status": "visible tip manual ±3 source px",
+          "source_solid_foreground_at_border": {
+            "top": false,
+            "bottom": false,
+            "left": false,
+            "right": false
+          },
+          "source_bbox": [
+            134,
+            30,
+            624,
+            666
+          ],
+          "png256_bbox": [
+            44,
+            27,
+            217,
+            251
+          ],
+          "source_bottom_silhouette": {
+            "x": 278.6786463681414,
+            "y": 665,
+            "definition": "alpha>=128 lowest five silhouette rows, not anatomical foot identification; impact glow can contribute"
+          },
+          "png256_bottom_silhouette": {
+            "x": 96.73770392749245,
+            "y": 247,
+            "definition": "alpha>=128 lowest five silhouette rows, not anatomical foot identification; impact glow can contribute"
+          },
+          "sha256_png256": "d76582b52c25be13a71785ec5ab174e60dfdc6b4e06f1f50170b87c3649bdef6",
+          "crc32_png256": "1e10614a"
+        }
+      ],
+      "mouth_check": "No mouth, lip line, teeth, talking/open mouth visible in inspected selected frames. Some lower faces partially occluded by forearm/armor during overhead motion. No claim about occluded pixels or unselected source frames. No face edited."
+    },
+    "light3": {
+      "group": "mainline",
+      "source_video": "/workspace/sg-art/review/atk_chain_v3/seg3_slam_v1/raw.mp4",
+      "source_sha256": "6e22fa67ac62d7bfd04ddbbc11dc4e22d02e3562102de909d8c012a36a92fbf5",
+      "source_indices": [
+        0,
+        2,
+        4,
+        6,
+        8,
+        10,
+        12,
+        14,
+        16,
+        18,
+        19,
+        20,
+        21,
+        22,
+        24,
+        26
+      ],
+      "frame_count": 16,
+      "source_size": [
+        720,
+        720
+      ],
+      "source_fps": 24,
+      "source_video_total_s": 5.041666666666667,
+      "selected_source_timestamp_span_s": 1.0833333333333333,
+      "retained_source_ranges_inclusive": [
+        [
+          0,
+          26
+        ]
+      ],
+      "retained_source_duration_s_including_last_frame_support": 1.125,
+      "trimmed_source_ranges_inclusive": [
+        [
+          27,
+          120
+        ]
+      ],
+      "trimmed_source_ranges_times_s_inclusive": [
+        [
+          1.125,
+          5.0
+        ]
+      ],
+      "sampled_out_inside_retained_ranges_inclusive": [
+        [
+          1,
+          1
+        ],
+        [
+          3,
+          3
+        ],
+        [
+          5,
+          5
+        ],
+        [
+          7,
+          7
+        ],
+        [
+          9,
+          9
+        ],
+        [
+          11,
+          11
+        ],
+        [
+          13,
+          13
+        ],
+        [
+          15,
+          15
+        ],
+        [
+          17,
+          17
+        ],
+        [
+          23,
+          23
+        ],
+        [
+          25,
+          25
+        ]
+      ],
+      "engine_target_mainline_s": 0.62,
+      "suggested_uniform_fps": 25.806451612903228,
+      "suggested_uniform_duration_s": 0.62,
+      "mean_fps_for_source_retained_duration": 14.222222222222221,
+      "engine_speed_vs_retained_source": 1.814516129032258,
+      "impact_frame_index": 11,
+      "impact_source_frame": 20,
+      "impact_spear_tip_png256_xy": [
+        236.6333,
+        238.0667
+      ],
+      "impact_tip_note": "visible tip manual ±3 source px",
+      "last_frame_index": 15,
+      "cancel_next_segment_frame_index": 15,
+      "next": "light3_recover",
+      "next_join_status": "UNVERIFIED pose/pixel continuity; do not claim seamless",
+      "recover_branch": "light3_recover",
+      "recover_range": {
+        "branch": "light3_recover",
+        "indices": [
+          0,
+          14
+        ]
+      },
+      "notes": "B 0 through downward impact 20 and short residual contact 21-26. Source actually contains visible white/purple impact graphic, not merely a tiny glow. Retained, not repainted. No recovery burned into mainline.",
+      "frames": [
+        {
+          "index": 0,
+          "file": "png256/mainline/hero_zhaoyun_atk_light3_000.png",
+          "raw_selected": "raw_selected/light3/source_000.png",
+          "source_frame": 0,
+          "source_time_s": 0.0,
+          "retained_source_display_s": 0.08333333333333333,
+          "native_remapped_time_s": 0.0,
+          "suggested_uniform_time_s": 0.0,
+          "impact": false,
+          "spear_tip_source_xy": [
+            621,
+            29
+          ],
+          "spear_tip_png256_xy": [
+            213.9,
+            28.9889
+          ],
+          "tip_annotation_status": "visible tip manual ±3 source px",
+          "source_solid_foreground_at_border": {
+            "top": false,
+            "bottom": false,
+            "left": false,
+            "right": false
+          },
+          "source_bbox": [
+            130,
+            30,
+            624,
+            666
+          ],
+          "png256_bbox": [
+            42,
+            27,
+            217,
+            251
+          ],
+          "source_bottom_silhouette": {
+            "x": 278.94900976790035,
+            "y": 665,
+            "definition": "alpha>=128 lowest five silhouette rows, not anatomical foot identification; impact glow can contribute"
+          },
+          "png256_bottom_silhouette": {
+            "x": 96.73273672753658,
+            "y": 247,
+            "definition": "alpha>=128 lowest five silhouette rows, not anatomical foot identification; impact glow can contribute"
+          },
+          "sha256_png256": "467faa148c729061b927a68a00239e21cf3c19e40c4b4b9e5715b326db9fb759",
+          "crc32_png256": "c5c8f773"
+        },
+        {
+          "index": 1,
+          "file": "png256/mainline/hero_zhaoyun_atk_light3_001.png",
+          "raw_selected": "raw_selected/light3/source_002.png",
+          "source_frame": 2,
+          "source_time_s": 0.08333333333333333,
+          "retained_source_display_s": 0.08333333333333333,
+          "native_remapped_time_s": 0.08333333333333333,
+          "suggested_uniform_time_s": 0.03875,
+          "impact": false,
+          "spear_tip_source_xy": null,
+          "spear_tip_png256_xy": null,
+          "tip_annotation_status": "not annotated",
+          "source_solid_foreground_at_border": {
+            "top": true,
+            "bottom": false,
+            "left": false,
+            "right": false
+          },
+          "source_bbox": [
+            128,
+            0,
+            554,
+            666
+          ],
+          "png256_bbox": [
+            42,
+            19,
+            193,
+            251
+          ],
+          "source_bottom_silhouette": {
+            "x": 278.7195798472172,
+            "y": 665,
+            "definition": "alpha>=128 lowest five silhouette rows, not anatomical foot identification; impact glow can contribute"
+          },
+          "png256_bottom_silhouette": {
+            "x": 96.734333413985,
+            "y": 247,
+            "definition": "alpha>=128 lowest five silhouette rows, not anatomical foot identification; impact glow can contribute"
+          },
+          "sha256_png256": "811fc17a9fa5314c6ec258fdc26988b5b6b42432480ce5d648d200f96b9825e7",
+          "crc32_png256": "9c124923"
+        },
+        {
+          "index": 2,
+          "file": "png256/mainline/hero_zhaoyun_atk_light3_002.png",
+          "raw_selected": "raw_selected/light3/source_004.png",
+          "source_frame": 4,
+          "source_time_s": 0.16666666666666666,
+          "retained_source_display_s": 0.08333333333333333,
+          "native_remapped_time_s": 0.16666666666666666,
+          "suggested_uniform_time_s": 0.0775,
+          "impact": false,
+          "spear_tip_source_xy": null,
+          "spear_tip_png256_xy": null,
+          "tip_annotation_status": "not annotated",
+          "source_solid_foreground_at_border": {
+            "top": true,
+            "bottom": false,
+            "left": false,
+            "right": false
+          },
+          "source_bbox": [
+            124,
+            0,
+            536,
+            666
+          ],
+          "png256_bbox": [
+            40,
+            19,
+            187,
+            251
+          ],
+          "source_bottom_silhouette": {
+            "x": 278.71307863535185,
+            "y": 665,
+            "definition": "alpha>=128 lowest five silhouette rows, not anatomical foot identification; impact glow can contribute"
+          },
+          "png256_bottom_silhouette": {
+            "x": 96.73161142027583,
+            "y": 247,
+            "definition": "alpha>=128 lowest five silhouette rows, not anatomical foot identification; impact glow can contribute"
+          },
+          "sha256_png256": "d0ac30c7c6775228c1fb71aa3d8e15d6bef5beb0db4d0f2e9373aceba80939fd",
+          "crc32_png256": "43f6c2a5"
+        },
+        {
+          "index": 3,
+          "file": "png256/mainline/hero_zhaoyun_atk_light3_003.png",
+          "raw_selected": "raw_selected/light3/source_006.png",
+          "source_frame": 6,
+          "source_time_s": 0.25,
+          "retained_source_display_s": 0.08333333333333333,
+          "native_remapped_time_s": 0.25,
+          "suggested_uniform_time_s": 0.11624999999999999,
+          "impact": false,
+          "spear_tip_source_xy": null,
+          "spear_tip_png256_xy": null,
+          "tip_annotation_status": "not annotated",
+          "source_solid_foreground_at_border": {
+            "top": true,
+            "bottom": false,
+            "left": false,
+            "right": false
+          },
+          "source_bbox": [
+            124,
+            0,
+            598,
+            666
+          ],
+          "png256_bbox": [
+            40,
+            19,
+            209,
+            251
+          ],
+          "source_bottom_silhouette": {
+            "x": 278.6780797264465,
+            "y": 665,
+            "definition": "alpha>=128 lowest five silhouette rows, not anatomical foot identification; impact glow can contribute"
+          },
+          "png256_bottom_silhouette": {
+            "x": 96.73205221174764,
+            "y": 247,
+            "definition": "alpha>=128 lowest five silhouette rows, not anatomical foot identification; impact glow can contribute"
+          },
+          "sha256_png256": "0f4b8ccbe1ec5e588abad2f08b44fb7f52614852b02b4d15806a2f2f7e5c1983",
+          "crc32_png256": "f2243e58"
+        },
+        {
+          "index": 4,
+          "file": "png256/mainline/hero_zhaoyun_atk_light3_004.png",
+          "raw_selected": "raw_selected/light3/source_008.png",
+          "source_frame": 8,
+          "source_time_s": 0.3333333333333333,
+          "retained_source_display_s": 0.08333333333333333,
+          "native_remapped_time_s": 0.3333333333333333,
+          "suggested_uniform_time_s": 0.155,
+          "impact": false,
+          "spear_tip_source_xy": null,
+          "spear_tip_png256_xy": null,
+          "tip_annotation_status": "not annotated",
+          "source_solid_foreground_at_border": {
+            "top": false,
+            "bottom": false,
+            "left": false,
+            "right": false
+          },
+          "source_bbox": [
+            126,
+            12,
+            642,
+            666
+          ],
+          "png256_bbox": [
+            41,
+            21,
+            224,
+            251
+          ],
+          "source_bottom_silhouette": {
+            "x": 278.6504424778761,
+            "y": 665,
+            "definition": "alpha>=128 lowest five silhouette rows, not anatomical foot identification; impact glow can contribute"
+          },
+          "png256_bottom_silhouette": {
+            "x": 96.73067406915696,
+            "y": 247,
+            "definition": "alpha>=128 lowest five silhouette rows, not anatomical foot identification; impact glow can contribute"
+          },
+          "sha256_png256": "bf01472efc08945f99c61cda2533b91960d8a7543b2e85eeab1040e3e49f08bc",
+          "crc32_png256": "f9d5343c"
+        },
+        {
+          "index": 5,
+          "file": "png256/mainline/hero_zhaoyun_atk_light3_005.png",
+          "raw_selected": "raw_selected/light3/source_010.png",
+          "source_frame": 10,
+          "source_time_s": 0.4166666666666667,
+          "retained_source_display_s": 0.08333333333333333,
+          "native_remapped_time_s": 0.41666666666666663,
+          "suggested_uniform_time_s": 0.19374999999999998,
+          "impact": false,
+          "spear_tip_source_xy": null,
+          "spear_tip_png256_xy": null,
+          "tip_annotation_status": "not annotated",
+          "source_solid_foreground_at_border": {
+            "top": false,
+            "bottom": false,
+            "left": false,
+            "right": false
+          },
+          "source_bbox": [
+            128,
+            52,
+            658,
+            666
+          ],
+          "png256_bbox": [
+            42,
+            35,
+            229,
+            251
+          ],
+          "source_bottom_silhouette": {
+            "x": 278.6208281277887,
+            "y": 665,
+            "definition": "alpha>=128 lowest five silhouette rows, not anatomical foot identification; impact glow can contribute"
+          },
+          "png256_bottom_silhouette": {
+            "x": 96.73043740573152,
+            "y": 247,
+            "definition": "alpha>=128 lowest five silhouette rows, not anatomical foot identification; impact glow can contribute"
+          },
+          "sha256_png256": "eb371f4ba64036919ff162f38a0850a2501d3e5f22d277abd8e586d501587573",
+          "crc32_png256": "2ce7a91d"
+        },
+        {
+          "index": 6,
+          "file": "png256/mainline/hero_zhaoyun_atk_light3_006.png",
+          "raw_selected": "raw_selected/light3/source_012.png",
+          "source_frame": 12,
+          "source_time_s": 0.5,
+          "retained_source_display_s": 0.08333333333333333,
+          "native_remapped_time_s": 0.49999999999999994,
+          "suggested_uniform_time_s": 0.23249999999999998,
+          "impact": false,
+          "spear_tip_source_xy": null,
+          "spear_tip_png256_xy": null,
+          "tip_annotation_status": "not annotated",
+          "source_solid_foreground_at_border": {
+            "top": false,
+            "bottom": false,
+            "left": false,
+            "right": false
+          },
+          "source_bbox": [
+            120,
+            72,
+            664,
+            666
+          ],
+          "png256_bbox": [
+            39,
+            41,
+            231,
+            251
+          ],
+          "source_bottom_silhouette": {
+            "x": 278.64385150812063,
+            "y": 665,
+            "definition": "alpha>=128 lowest five silhouette rows, not anatomical foot identification; impact glow can contribute"
+          },
+          "png256_bottom_silhouette": {
+            "x": 96.73524441762221,
+            "y": 247,
+            "definition": "alpha>=128 lowest five silhouette rows, not anatomical foot identification; impact glow can contribute"
+          },
+          "sha256_png256": "2d8bc12bec0394c6dbfa2870423d3ed904f8f5055ddddff4e5d29a122cd0308b",
+          "crc32_png256": "614d89b2"
+        },
+        {
+          "index": 7,
+          "file": "png256/mainline/hero_zhaoyun_atk_light3_007.png",
+          "raw_selected": "raw_selected/light3/source_014.png",
+          "source_frame": 14,
+          "source_time_s": 0.5833333333333334,
+          "retained_source_display_s": 0.08333333333333333,
+          "native_remapped_time_s": 0.5833333333333333,
+          "suggested_uniform_time_s": 0.27125,
+          "impact": false,
+          "spear_tip_source_xy": null,
+          "spear_tip_png256_xy": null,
+          "tip_annotation_status": "not annotated",
+          "source_solid_foreground_at_border": {
+            "top": false,
+            "bottom": false,
+            "left": false,
+            "right": false
+          },
+          "source_bbox": [
+            122,
+            70,
+            664,
+            666
+          ],
+          "png256_bbox": [
+            40,
+            41,
+            231,
+            251
+          ],
+          "source_bottom_silhouette": {
+            "x": 278.6899248120301,
+            "y": 663,
+            "definition": "alpha>=128 lowest five silhouette rows, not anatomical foot identification; impact glow can contribute"
+          },
+          "png256_bottom_silhouette": {
+            "x": 96.40359559007767,
+            "y": 247,
+            "definition": "alpha>=128 lowest five silhouette rows, not anatomical foot identification; impact glow can contribute"
+          },
+          "sha256_png256": "2ab4f082953168ede0a08267d95fa1161823644a9138d13a8e3114735fe2eb24",
+          "crc32_png256": "449b7162"
+        },
+        {
+          "index": 8,
+          "file": "png256/mainline/hero_zhaoyun_atk_light3_008.png",
+          "raw_selected": "raw_selected/light3/source_016.png",
+          "source_frame": 16,
+          "source_time_s": 0.6666666666666666,
+          "retained_source_display_s": 0.08333333333333333,
+          "native_remapped_time_s": 0.6666666666666666,
+          "suggested_uniform_time_s": 0.31,
+          "impact": false,
+          "spear_tip_source_xy": null,
+          "spear_tip_png256_xy": null,
+          "tip_annotation_status": "not annotated",
+          "source_solid_foreground_at_border": {
+            "top": false,
+            "bottom": false,
+            "left": false,
+            "right": false
+          },
+          "source_bbox": [
+            128,
+            32,
+            656,
+            662
+          ],
+          "png256_bbox": [
+            42,
+            27,
+            228,
+            249
+          ],
+          "source_bottom_silhouette": {
+            "x": 273.596338160225,
+            "y": 659,
+            "definition": "alpha>=128 lowest five silhouette rows, not anatomical foot identification; impact glow can contribute"
+          },
+          "png256_bottom_silhouette": {
+            "x": 94.58650190114068,
+            "y": 246,
+            "definition": "alpha>=128 lowest five silhouette rows, not anatomical foot identification; impact glow can contribute"
+          },
+          "sha256_png256": "e1442baef54ba7d0f206735477fc0f522edf31bd9f5ea48810d2d4a276c6e2d7",
+          "crc32_png256": "273023bd"
+        },
+        {
+          "index": 9,
+          "file": "png256/mainline/hero_zhaoyun_atk_light3_009.png",
+          "raw_selected": "raw_selected/light3/source_018.png",
+          "source_frame": 18,
+          "source_time_s": 0.75,
+          "retained_source_display_s": 0.041666666666666664,
+          "native_remapped_time_s": 0.75,
+          "suggested_uniform_time_s": 0.34874999999999995,
+          "impact": false,
+          "spear_tip_source_xy": null,
+          "spear_tip_png256_xy": null,
+          "tip_annotation_status": "not annotated",
+          "source_solid_foreground_at_border": {
+            "top": false,
+            "bottom": false,
+            "left": false,
+            "right": false
+          },
+          "source_bbox": [
+            122,
+            18,
+            600,
+            650
+          ],
+          "png256_bbox": [
+            40,
+            23,
+            209,
+            245
+          ],
+          "source_bottom_silhouette": {
+            "x": 251.42238440695743,
+            "y": 649,
+            "definition": "alpha>=128 lowest five silhouette rows, not anatomical foot identification; impact glow can contribute"
+          },
+          "png256_bottom_silhouette": {
+            "x": 87.0966738123228,
+            "y": 242,
+            "definition": "alpha>=128 lowest five silhouette rows, not anatomical foot identification; impact glow can contribute"
+          },
+          "sha256_png256": "2075f8242129f0bdf569c6eb70de6637a567f36805526399bcf51e134daa2739",
+          "crc32_png256": "9337128f"
+        },
+        {
+          "index": 10,
+          "file": "png256/mainline/hero_zhaoyun_atk_light3_010.png",
+          "raw_selected": "raw_selected/light3/source_019.png",
+          "source_frame": 19,
+          "source_time_s": 0.7916666666666666,
+          "retained_source_display_s": 0.041666666666666664,
+          "native_remapped_time_s": 0.7916666666666666,
+          "suggested_uniform_time_s": 0.38749999999999996,
+          "impact": false,
+          "spear_tip_source_xy": null,
+          "spear_tip_png256_xy": null,
+          "tip_annotation_status": "not annotated",
+          "source_solid_foreground_at_border": {
+            "top": false,
+            "bottom": false,
+            "left": false,
+            "right": true
+          },
+          "source_bbox": [
+            120,
+            140,
+            720,
+            644
+          ],
+          "png256_bbox": [
+            39,
+            65,
+            248,
+            243
+          ],
+          "source_bottom_silhouette": {
+            "x": 239.1806748737933,
+            "y": 643,
+            "definition": "alpha>=128 lowest five silhouette rows, not anatomical foot identification; impact glow can contribute"
+          },
+          "png256_bottom_silhouette": {
+            "x": 82.91597301951779,
+            "y": 240,
+            "definition": "alpha>=128 lowest five silhouette rows, not anatomical foot identification; impact glow can contribute"
+          },
+          "sha256_png256": "c9a76375a53846b50f0f80e0f11562590fe3033d936d5f184d4e2f920a6140bb",
+          "crc32_png256": "baec2d16"
+        },
+        {
+          "index": 11,
+          "file": "png256/mainline/hero_zhaoyun_atk_light3_011.png",
+          "raw_selected": "raw_selected/light3/source_020.png",
+          "source_frame": 20,
+          "source_time_s": 0.8333333333333334,
+          "retained_source_display_s": 0.041666666666666664,
+          "native_remapped_time_s": 0.8333333333333333,
+          "suggested_uniform_time_s": 0.42624999999999996,
+          "impact": true,
+          "spear_tip_source_xy": [
+            687,
+            636
+          ],
+          "spear_tip_png256_xy": [
+            236.6333,
+            238.0667
+          ],
+          "tip_annotation_status": "visible tip manual ±3 source px",
+          "source_solid_foreground_at_border": {
+            "top": false,
+            "bottom": false,
+            "left": false,
+            "right": false
+          },
+          "source_bbox": [
+            114,
+            136,
+            692,
+            648
+          ],
+          "png256_bbox": [
+            37,
+            63,
+            241,
+            245
+          ],
+          "source_bottom_silhouette": {
+            "x": 639.1853806916562,
+            "y": 645,
+            "definition": "alpha>=128 lowest five silhouette rows, not anatomical foot identification; impact glow can contribute"
+          },
+          "png256_bottom_silhouette": {
+            "x": 215.29165674996693,
+            "y": 241,
+            "definition": "alpha>=128 lowest five silhouette rows, not anatomical foot identification; impact glow can contribute"
+          },
+          "sha256_png256": "dca5e73390c2645a6b9a36f87361cc6e3ec1691a31e6c31cb6855fdb66840a1b",
+          "crc32_png256": "39c5d4af"
+        },
+        {
+          "index": 12,
+          "file": "png256/mainline/hero_zhaoyun_atk_light3_012.png",
+          "raw_selected": "raw_selected/light3/source_021.png",
+          "source_frame": 21,
+          "source_time_s": 0.875,
+          "retained_source_display_s": 0.041666666666666664,
+          "native_remapped_time_s": 0.8749999999999999,
+          "suggested_uniform_time_s": 0.46499999999999997,
+          "impact": false,
+          "spear_tip_source_xy": [
+            673,
+            632
+          ],
+          "spear_tip_png256_xy": [
+            231.8111,
+            236.6889
+          ],
+          "tip_annotation_status": "visible tip manual ±3 source px",
+          "source_solid_foreground_at_border": {
+            "top": false,
+            "bottom": false,
+            "left": false,
+            "right": true
+          },
+          "source_bbox": [
+            108,
+            136,
+            720,
+            652
+          ],
+          "png256_bbox": [
+            35,
+            63,
+            248,
+            246
+          ],
+          "source_bottom_silhouette": {
+            "x": 616.9955590031999,
+            "y": 651,
+            "definition": "alpha>=128 lowest five silhouette rows, not anatomical foot identification; impact glow can contribute"
+          },
+          "png256_bottom_silhouette": {
+            "x": 208.5406944305355,
+            "y": 242,
+            "definition": "alpha>=128 lowest five silhouette rows, not anatomical foot identification; impact glow can contribute"
+          },
+          "sha256_png256": "bd6089b9f2ac145c9b2c32574727d47cdc6c5fbb19540d4cd000331a579c4bed",
+          "crc32_png256": "b3a039d4"
+        },
+        {
+          "index": 13,
+          "file": "png256/mainline/hero_zhaoyun_atk_light3_013.png",
+          "raw_selected": "raw_selected/light3/source_022.png",
+          "source_frame": 22,
+          "source_time_s": 0.9166666666666666,
+          "retained_source_display_s": 0.08333333333333333,
+          "native_remapped_time_s": 0.9166666666666665,
+          "suggested_uniform_time_s": 0.5037499999999999,
+          "impact": false,
+          "spear_tip_source_xy": null,
+          "spear_tip_png256_xy": null,
+          "tip_annotation_status": "not annotated",
+          "source_solid_foreground_at_border": {
+            "top": false,
+            "bottom": false,
+            "left": false,
+            "right": true
+          },
+          "source_bbox": [
+            102,
+            132,
+            720,
+            658
+          ],
+          "png256_bbox": [
+            33,
+            62,
+            248,
+            248
+          ],
+          "source_bottom_silhouette": {
+            "x": 611.918043665804,
+            "y": 655,
+            "definition": "alpha>=128 lowest five silhouette rows, not anatomical foot identification; impact glow can contribute"
+          },
+          "png256_bottom_silhouette": {
+            "x": 209.7527293900723,
+            "y": 244,
+            "definition": "alpha>=128 lowest five silhouette rows, not anatomical foot identification; impact glow can contribute"
+          },
+          "sha256_png256": "76ba8df3fd1af98b56907c8b9636830ac5304f68137dd1e54997e24e7e20b09b",
+          "crc32_png256": "c9157d95"
+        },
+        {
+          "index": 14,
+          "file": "png256/mainline/hero_zhaoyun_atk_light3_014.png",
+          "raw_selected": "raw_selected/light3/source_024.png",
+          "source_frame": 24,
+          "source_time_s": 1.0,
+          "retained_source_display_s": 0.08333333333333333,
+          "native_remapped_time_s": 0.9999999999999999,
+          "suggested_uniform_time_s": 0.5425,
+          "impact": false,
+          "spear_tip_source_xy": null,
+          "spear_tip_png256_xy": null,
+          "tip_annotation_status": "not annotated",
+          "source_solid_foreground_at_border": {
+            "top": false,
+            "bottom": false,
+            "left": false,
+            "right": true
+          },
+          "source_bbox": [
+            92,
+            130,
+            720,
+            662
+          ],
+          "png256_bbox": [
+            29,
+            61,
+            248,
+            250
+          ],
+          "source_bottom_silhouette": {
+            "x": 623.1123968398484,
+            "y": 653,
+            "definition": "alpha>=128 lowest five silhouette rows, not anatomical foot identification; impact glow can contribute"
+          },
+          "png256_bottom_silhouette": {
+            "x": 173.58174904942965,
+            "y": 243,
+            "definition": "alpha>=128 lowest five silhouette rows, not anatomical foot identification; impact glow can contribute"
+          },
+          "sha256_png256": "a023466d07e95a101d1083566f9b30605b6c8dd6d6861e5125048cf80aed4242",
+          "crc32_png256": "92a03242"
+        },
+        {
+          "index": 15,
+          "file": "png256/mainline/hero_zhaoyun_atk_light3_015.png",
+          "raw_selected": "raw_selected/light3/source_026.png",
+          "source_frame": 26,
+          "source_time_s": 1.0833333333333333,
+          "retained_source_display_s": 0.041666666666666664,
+          "native_remapped_time_s": 1.0833333333333333,
+          "suggested_uniform_time_s": 0.5812499999999999,
+          "impact": false,
+          "spear_tip_source_xy": [
+            704,
+            651
+          ],
+          "spear_tip_png256_xy": [
+            242.4889,
+            243.2333
+          ],
+          "tip_annotation_status": "visible tip manual ±3 source px",
+          "source_solid_foreground_at_border": {
+            "top": false,
+            "bottom": false,
+            "left": false,
+            "right": false
+          },
+          "source_bbox": [
+            84,
+            130,
+            672,
+            638
+          ],
+          "png256_bbox": [
+            26,
+            61,
+            234,
+            241
+          ],
+          "source_bottom_silhouette": {
+            "x": 664.0438717787555,
+            "y": 635,
+            "definition": "alpha>=128 lowest five silhouette rows, not anatomical foot identification; impact glow can contribute"
+          },
+          "png256_bottom_silhouette": {
+            "x": 182.41990376716348,
+            "y": 237,
+            "definition": "alpha>=128 lowest five silhouette rows, not anatomical foot identification; impact glow can contribute"
+          },
+          "sha256_png256": "f72fde12bced32283f26b5755376791743eb3add3a35c55d2170e4523bba15d1",
+          "crc32_png256": "f0e3cec7"
+        }
+      ],
+      "mouth_check": "No mouth, lip line, teeth, talking/open mouth visible in inspected selected frames. Some lower faces partially occluded by forearm/armor during overhead motion. No claim about occluded pixels or unselected source frames. No face edited."
+    },
+    "light1_recover": {
+      "group": "branches",
+      "source_video": "/workspace/sg-art/review/atk_thrust_idle_video_v2/raw.mp4",
+      "source_sha256": "d267b3908f5f27af100592de8c849052d354dacb227cef373458311a9da5a9b2",
+      "source_indices": [
+        58,
+        60,
+        62,
+        64,
+        66,
+        68,
+        70,
+        72,
+        74,
+        76,
+        78,
+        80,
+        82
+      ],
+      "frame_count": 13,
+      "source_size": [
+        720,
+        720
+      ],
+      "source_fps": 24,
+      "source_video_total_s": 5.041666666666667,
+      "selected_source_timestamp_span_s": 1.0,
+      "retained_source_ranges_inclusive": [
+        [
+          58,
+          82
+        ]
+      ],
+      "retained_source_duration_s_including_last_frame_support": 1.0416666666666667,
+      "trimmed_source_ranges_inclusive": [
+        [
+          0,
+          57
+        ],
+        [
+          83,
+          120
+        ]
+      ],
+      "trimmed_source_ranges_times_s_inclusive": [
+        [
+          0.0,
+          2.375
+        ],
+        [
+          3.4583333333333335,
+          5.0
+        ]
+      ],
+      "sampled_out_inside_retained_ranges_inclusive": [
+        [
+          59,
+          59
+        ],
+        [
+          61,
+          61
+        ],
+        [
+          63,
+          63
+        ],
+        [
+          65,
+          65
+        ],
+        [
+          67,
+          67
+        ],
+        [
+          69,
+          69
+        ],
+        [
+          71,
+          71
+        ],
+        [
+          73,
+          73
+        ],
+        [
+          75,
+          75
+        ],
+        [
+          77,
+          77
+        ],
+        [
+          79,
+          79
+        ],
+        [
+          81,
+          81
+        ]
+      ],
+      "engine_target_mainline_s": null,
+      "suggested_uniform_fps": 12.479999999999999,
+      "suggested_uniform_duration_s": 1.0416666666666667,
+      "mean_fps_for_source_retained_duration": 12.479999999999999,
+      "engine_speed_vs_retained_source": 1,
+      "impact_frame_index": null,
+      "impact_source_frame": null,
+      "impact_spear_tip_png256_xy": null,
+      "impact_tip_note": "recovery branch; no impact",
+      "last_frame_index": 12,
+      "cancel_next_segment_frame_index": null,
+      "next": "Idle",
+      "next_join_status": "UNVERIFIED pose/pixel continuity; do not claim seamless",
+      "recover_branch": null,
+      "recover_range": {
+        "indices": [
+          0,
+          12
+        ]
+      },
+      "notes": "True v2 recovery starts about 58, broad movement 62-74, settles by 82. Previous rough 2.2-2.5s was inaccurate. Candidate start resembles A, not pixel-identical.",
+      "frames": [
+        {
+          "index": 0,
+          "file": "png256/branches/hero_zhaoyun_atk_light1_recover_000.png",
+          "raw_selected": "raw_selected/light1_recover/source_058.png",
+          "source_frame": 58,
+          "source_time_s": 2.4166666666666665,
+          "retained_source_display_s": 0.08333333333333333,
+          "native_remapped_time_s": 0.0,
+          "suggested_uniform_time_s": 0.0,
+          "impact": false,
+          "spear_tip_source_xy": [
+            706,
+            329
+          ],
+          "spear_tip_png256_xy": [
+            243.1778,
+            132.3222
+          ],
+          "tip_annotation_status": "visible tip manual ±3 source px",
+          "source_solid_foreground_at_border": {
+            "top": false,
+            "bottom": false,
+            "left": false,
+            "right": false
+          },
+          "source_bbox": [
+            66,
+            108,
+            710,
+            622
+          ],
+          "png256_bbox": [
+            20,
+            54,
+            246,
+            236
+          ],
+          "source_bottom_silhouette": {
+            "x": 177.98977592915605,
+            "y": 619,
+            "definition": "alpha>=128 lowest five silhouette rows, not anatomical foot identification; impact glow can contribute"
+          },
+          "png256_bottom_silhouette": {
+            "x": 61.63985707121364,
+            "y": 232,
+            "definition": "alpha>=128 lowest five silhouette rows, not anatomical foot identification; impact glow can contribute"
+          },
+          "sha256_png256": "9dccce9b26651d6aeae8e99779cab2c5f9bda376bfb5fb064971c58f48d700b8",
+          "crc32_png256": "66b0d2dd"
+        },
+        {
+          "index": 1,
+          "file": "png256/branches/hero_zhaoyun_atk_light1_recover_001.png",
+          "raw_selected": "raw_selected/light1_recover/source_060.png",
+          "source_frame": 60,
+          "source_time_s": 2.5,
+          "retained_source_display_s": 0.08333333333333333,
+          "native_remapped_time_s": 0.08333333333333333,
+          "suggested_uniform_time_s": 0.08012820512820513,
+          "impact": false,
+          "spear_tip_source_xy": null,
+          "spear_tip_png256_xy": null,
+          "tip_annotation_status": "not annotated",
+          "source_solid_foreground_at_border": {
+            "top": false,
+            "bottom": false,
+            "left": false,
+            "right": false
+          },
+          "source_bbox": [
+            66,
+            108,
+            710,
+            622
+          ],
+          "png256_bbox": [
+            20,
+            54,
+            247,
+            236
+          ],
+          "source_bottom_silhouette": {
+            "x": 177.9914431330472,
+            "y": 619,
+            "definition": "alpha>=128 lowest five silhouette rows, not anatomical foot identification; impact glow can contribute"
+          },
+          "png256_bottom_silhouette": {
+            "x": 61.63869390824768,
+            "y": 232,
+            "definition": "alpha>=128 lowest five silhouette rows, not anatomical foot identification; impact glow can contribute"
+          },
+          "sha256_png256": "110c27b4232b52e7eeca58021bb72ecb8fcee0f8a5b13dcfc9fd407af47cff9b",
+          "crc32_png256": "420a7cb5"
+        },
+        {
+          "index": 2,
+          "file": "png256/branches/hero_zhaoyun_atk_light1_recover_002.png",
+          "raw_selected": "raw_selected/light1_recover/source_062.png",
+          "source_frame": 62,
+          "source_time_s": 2.5833333333333335,
+          "retained_source_display_s": 0.08333333333333333,
+          "native_remapped_time_s": 0.16666666666666666,
+          "suggested_uniform_time_s": 0.16025641025641027,
+          "impact": false,
+          "spear_tip_source_xy": null,
+          "spear_tip_png256_xy": null,
+          "tip_annotation_status": "not annotated",
+          "source_solid_foreground_at_border": {
+            "top": false,
+            "bottom": false,
+            "left": false,
+            "right": false
+          },
+          "source_bbox": [
+            68,
+            110,
+            714,
+            622
+          ],
+          "png256_bbox": [
+            21,
+            54,
+            248,
+            236
+          ],
+          "source_bottom_silhouette": {
+            "x": 178.04758250191864,
+            "y": 619,
+            "definition": "alpha>=128 lowest five silhouette rows, not anatomical foot identification; impact glow can contribute"
+          },
+          "png256_bottom_silhouette": {
+            "x": 61.66135980520697,
+            "y": 232,
+            "definition": "alpha>=128 lowest five silhouette rows, not anatomical foot identification; impact glow can contribute"
+          },
+          "sha256_png256": "1b3f40e200bab640f15e53e9dcde9b4f9b4ec1f1484ab3b39fe090598a13e46f",
+          "crc32_png256": "1256ebbd"
+        },
+        {
+          "index": 3,
+          "file": "png256/branches/hero_zhaoyun_atk_light1_recover_003.png",
+          "raw_selected": "raw_selected/light1_recover/source_064.png",
+          "source_frame": 64,
+          "source_time_s": 2.6666666666666665,
+          "retained_source_display_s": 0.08333333333333333,
+          "native_remapped_time_s": 0.25,
+          "suggested_uniform_time_s": 0.24038461538461542,
+          "impact": false,
+          "spear_tip_source_xy": null,
+          "spear_tip_png256_xy": null,
+          "tip_annotation_status": "not annotated",
+          "source_solid_foreground_at_border": {
+            "top": false,
+            "bottom": false,
+            "left": false,
+            "right": false
+          },
+          "source_bbox": [
+            70,
+            108,
+            718,
+            622
+          ],
+          "png256_bbox": [
+            22,
+            54,
+            248,
+            236
+          ],
+          "source_bottom_silhouette": {
+            "x": 179.27988050465444,
+            "y": 619,
+            "definition": "alpha>=128 lowest five silhouette rows, not anatomical foot identification; impact glow can contribute"
+          },
+          "png256_bottom_silhouette": {
+            "x": 61.9211517589223,
+            "y": 232,
+            "definition": "alpha>=128 lowest five silhouette rows, not anatomical foot identification; impact glow can contribute"
+          },
+          "sha256_png256": "389fa81ee928cf77dc758a12ab7fa286845422f7f7c701e93e00617dfedbf5d0",
+          "crc32_png256": "b4314665"
+        },
+        {
+          "index": 4,
+          "file": "png256/branches/hero_zhaoyun_atk_light1_recover_004.png",
+          "raw_selected": "raw_selected/light1_recover/source_066.png",
+          "source_frame": 66,
+          "source_time_s": 2.75,
+          "retained_source_display_s": 0.08333333333333333,
+          "native_remapped_time_s": 0.3333333333333333,
+          "suggested_uniform_time_s": 0.32051282051282054,
+          "impact": false,
+          "spear_tip_source_xy": null,
+          "spear_tip_png256_xy": null,
+          "tip_annotation_status": "not annotated",
+          "source_solid_foreground_at_border": {
+            "top": false,
+            "bottom": false,
+            "left": false,
+            "right": false
+          },
+          "source_bbox": [
+            80,
+            106,
+            716,
+            622
+          ],
+          "png256_bbox": [
+            25,
+            53,
+            247,
+            236
+          ],
+          "source_bottom_silhouette": {
+            "x": 195.01308632242805,
+            "y": 619,
+            "definition": "alpha>=128 lowest five silhouette rows, not anatomical foot identification; impact glow can contribute"
+          },
+          "png256_bottom_silhouette": {
+            "x": 72.70287784823357,
+            "y": 232,
+            "definition": "alpha>=128 lowest five silhouette rows, not anatomical foot identification; impact glow can contribute"
+          },
+          "sha256_png256": "6cd64099187ce4755032d0a459317be48a55fd5749e748dacc5a97c538a5ca8e",
+          "crc32_png256": "e1bc77e4"
+        },
+        {
+          "index": 5,
+          "file": "png256/branches/hero_zhaoyun_atk_light1_recover_005.png",
+          "raw_selected": "raw_selected/light1_recover/source_068.png",
+          "source_frame": 68,
+          "source_time_s": 2.8333333333333335,
+          "retained_source_display_s": 0.08333333333333333,
+          "native_remapped_time_s": 0.41666666666666663,
+          "suggested_uniform_time_s": 0.40064102564102566,
+          "impact": false,
+          "spear_tip_source_xy": null,
+          "spear_tip_png256_xy": null,
+          "tip_annotation_status": "not annotated",
+          "source_solid_foreground_at_border": {
+            "top": false,
+            "bottom": false,
+            "left": false,
+            "right": false
+          },
+          "source_bbox": [
+            90,
+            104,
+            700,
+            622
+          ],
+          "png256_bbox": [
+            29,
+            52,
+            244,
+            236
+          ],
+          "source_bottom_silhouette": {
+            "x": 227.80677648210062,
+            "y": 619,
+            "definition": "alpha>=128 lowest five silhouette rows, not anatomical foot identification; impact glow can contribute"
+          },
+          "png256_bottom_silhouette": {
+            "x": 108.77736046401066,
+            "y": 232,
+            "definition": "alpha>=128 lowest five silhouette rows, not anatomical foot identification; impact glow can contribute"
+          },
+          "sha256_png256": "81f1fb9c566b1c63e10d77151872138ebae863b12def14dbf02ad5f28aec2cb5",
+          "crc32_png256": "c29fd70a"
+        },
+        {
+          "index": 6,
+          "file": "png256/branches/hero_zhaoyun_atk_light1_recover_006.png",
+          "raw_selected": "raw_selected/light1_recover/source_070.png",
+          "source_frame": 70,
+          "source_time_s": 2.9166666666666665,
+          "retained_source_display_s": 0.08333333333333333,
+          "native_remapped_time_s": 0.49999999999999994,
+          "suggested_uniform_time_s": 0.48076923076923084,
+          "impact": false,
+          "spear_tip_source_xy": null,
+          "spear_tip_png256_xy": null,
+          "tip_annotation_status": "not annotated",
+          "source_solid_foreground_at_border": {
+            "top": false,
+            "bottom": false,
+            "left": false,
+            "right": false
+          },
+          "source_bbox": [
+            110,
+            102,
+            648,
+            636
+          ],
+          "png256_bbox": [
+            35,
+            52,
+            226,
+            240
+          ],
+          "source_bottom_silhouette": {
+            "x": 287.61332570411344,
+            "y": 633,
+            "definition": "alpha>=128 lowest five silhouette rows, not anatomical foot identification; impact glow can contribute"
+          },
+          "png256_bottom_silhouette": {
+            "x": 105.10036301516122,
+            "y": 236,
+            "definition": "alpha>=128 lowest five silhouette rows, not anatomical foot identification; impact glow can contribute"
+          },
+          "sha256_png256": "5657d333c16c389c04f4c2ad2833ba56a59bbf9df24e881bea4ec79297eb5e40",
+          "crc32_png256": "db506069"
+        },
+        {
+          "index": 7,
+          "file": "png256/branches/hero_zhaoyun_atk_light1_recover_007.png",
+          "raw_selected": "raw_selected/light1_recover/source_072.png",
+          "source_frame": 72,
+          "source_time_s": 3.0,
+          "retained_source_display_s": 0.08333333333333333,
+          "native_remapped_time_s": 0.5833333333333333,
+          "suggested_uniform_time_s": 0.5608974358974359,
+          "impact": false,
+          "spear_tip_source_xy": null,
+          "spear_tip_png256_xy": null,
+          "tip_annotation_status": "not annotated",
+          "source_solid_foreground_at_border": {
+            "top": false,
+            "bottom": false,
+            "left": false,
+            "right": false
+          },
+          "source_bbox": [
+            124,
+            102,
+            612,
+            644
+          ],
+          "png256_bbox": [
+            40,
+            52,
+            213,
+            243
+          ],
+          "source_bottom_silhouette": {
+            "x": 307.2241786308579,
+            "y": 643,
+            "definition": "alpha>=128 lowest five silhouette rows, not anatomical foot identification; impact glow can contribute"
+          },
+          "png256_bottom_silhouette": {
+            "x": 106.15275167785235,
+            "y": 240,
+            "definition": "alpha>=128 lowest five silhouette rows, not anatomical foot identification; impact glow can contribute"
+          },
+          "sha256_png256": "3de7b2d7689fa1771ec91079a6f9637c72064887a06cd1ef909b4a5019d580c5",
+          "crc32_png256": "44121e3b"
+        },
+        {
+          "index": 8,
+          "file": "png256/branches/hero_zhaoyun_atk_light1_recover_008.png",
+          "raw_selected": "raw_selected/light1_recover/source_074.png",
+          "source_frame": 74,
+          "source_time_s": 3.0833333333333335,
+          "retained_source_display_s": 0.08333333333333333,
+          "native_remapped_time_s": 0.6666666666666666,
+          "suggested_uniform_time_s": 0.6410256410256411,
+          "impact": false,
+          "spear_tip_source_xy": null,
+          "spear_tip_png256_xy": null,
+          "tip_annotation_status": "not annotated",
+          "source_solid_foreground_at_border": {
+            "top": false,
+            "bottom": false,
+            "left": false,
+            "right": false
+          },
+          "source_bbox": [
+            144,
+            100,
+            584,
+            652
+          ],
+          "png256_bbox": [
+            47,
+            51,
+            204,
+            246
+          ],
+          "source_bottom_silhouette": {
+            "x": 314.50393016400875,
+            "y": 649,
+            "definition": "alpha>=128 lowest five silhouette rows, not anatomical foot identification; impact glow can contribute"
+          },
+          "png256_bottom_silhouette": {
+            "x": 108.67656890570798,
+            "y": 242,
+            "definition": "alpha>=128 lowest five silhouette rows, not anatomical foot identification; impact glow can contribute"
+          },
+          "sha256_png256": "fc7bbfcdf91ad0d6eb163b3fcb07e58ac6533a8801f8f789e446bcae6b62a6aa",
+          "crc32_png256": "1f22ea65"
+        },
+        {
+          "index": 9,
+          "file": "png256/branches/hero_zhaoyun_atk_light1_recover_009.png",
+          "raw_selected": "raw_selected/light1_recover/source_076.png",
+          "source_frame": 76,
+          "source_time_s": 3.1666666666666665,
+          "retained_source_display_s": 0.08333333333333333,
+          "native_remapped_time_s": 0.75,
+          "suggested_uniform_time_s": 0.7211538461538463,
+          "impact": false,
+          "spear_tip_source_xy": null,
+          "spear_tip_png256_xy": null,
+          "tip_annotation_status": "not annotated",
+          "source_solid_foreground_at_border": {
+            "top": false,
+            "bottom": false,
+            "left": false,
+            "right": false
+          },
+          "source_bbox": [
+            152,
+            98,
+            582,
+            652
+          ],
+          "png256_bbox": [
+            50,
+            50,
+            203,
+            246
+          ],
+          "source_bottom_silhouette": {
+            "x": 315.3074564822032,
+            "y": 649,
+            "definition": "alpha>=128 lowest five silhouette rows, not anatomical foot identification; impact glow can contribute"
+          },
+          "png256_bottom_silhouette": {
+            "x": 108.83251478959706,
+            "y": 242,
+            "definition": "alpha>=128 lowest five silhouette rows, not anatomical foot identification; impact glow can contribute"
+          },
+          "sha256_png256": "4994486f91c6eb87e86a236f4061efc48e0f1bf580bb55ebbd9c2b8ad1256a99",
+          "crc32_png256": "fe9ace9a"
+        },
+        {
+          "index": 10,
+          "file": "png256/branches/hero_zhaoyun_atk_light1_recover_010.png",
+          "raw_selected": "raw_selected/light1_recover/source_078.png",
+          "source_frame": 78,
+          "source_time_s": 3.25,
+          "retained_source_display_s": 0.08333333333333333,
+          "native_remapped_time_s": 0.8333333333333334,
+          "suggested_uniform_time_s": 0.8012820512820513,
+          "impact": false,
+          "spear_tip_source_xy": null,
+          "spear_tip_png256_xy": null,
+          "tip_annotation_status": "not annotated",
+          "source_solid_foreground_at_border": {
+            "top": false,
+            "bottom": false,
+            "left": false,
+            "right": false
+          },
+          "source_bbox": [
+            146,
+            98,
+            580,
+            652
+          ],
+          "png256_bbox": [
+            48,
+            50,
+            202,
+            246
+          ],
+          "source_bottom_silhouette": {
+            "x": 314.6066894197952,
+            "y": 651,
+            "definition": "alpha>=128 lowest five silhouette rows, not anatomical foot identification; impact glow can contribute"
+          },
+          "png256_bottom_silhouette": {
+            "x": 108.8189262472885,
+            "y": 242,
+            "definition": "alpha>=128 lowest five silhouette rows, not anatomical foot identification; impact glow can contribute"
+          },
+          "sha256_png256": "859ba5e5bcb3b438bd8e4bea8994414013b7947533fb7ad47a7814388e2f7693",
+          "crc32_png256": "2b0f931c"
+        },
+        {
+          "index": 11,
+          "file": "png256/branches/hero_zhaoyun_atk_light1_recover_011.png",
+          "raw_selected": "raw_selected/light1_recover/source_080.png",
+          "source_frame": 80,
+          "source_time_s": 3.3333333333333335,
+          "retained_source_display_s": 0.08333333333333333,
+          "native_remapped_time_s": 0.9166666666666667,
+          "suggested_uniform_time_s": 0.8814102564102565,
+          "impact": false,
+          "spear_tip_source_xy": null,
+          "spear_tip_png256_xy": null,
+          "tip_annotation_status": "not annotated",
+          "source_solid_foreground_at_border": {
+            "top": false,
+            "bottom": false,
+            "left": false,
+            "right": false
+          },
+          "source_bbox": [
+            140,
+            98,
+            580,
+            652
+          ],
+          "png256_bbox": [
+            46,
+            50,
+            202,
+            246
+          ],
+          "source_bottom_silhouette": {
+            "x": 314.6378960652634,
+            "y": 651,
+            "definition": "alpha>=128 lowest five silhouette rows, not anatomical foot identification; impact glow can contribute"
+          },
+          "png256_bottom_silhouette": {
+            "x": 108.81973342002601,
+            "y": 242,
+            "definition": "alpha>=128 lowest five silhouette rows, not anatomical foot identification; impact glow can contribute"
+          },
+          "sha256_png256": "2a43ab3921bdf3acfecb127999ca33c13461d370b27b2f02a538c815ac2769f8",
+          "crc32_png256": "38821228"
+        },
+        {
+          "index": 12,
+          "file": "png256/branches/hero_zhaoyun_atk_light1_recover_012.png",
+          "raw_selected": "raw_selected/light1_recover/source_082.png",
+          "source_frame": 82,
+          "source_time_s": 3.4166666666666665,
+          "retained_source_display_s": 0.041666666666666664,
+          "native_remapped_time_s": 1.0,
+          "suggested_uniform_time_s": 0.9615384615384617,
+          "impact": false,
+          "spear_tip_source_xy": [
+            568,
+            99
+          ],
+          "spear_tip_png256_xy": [
+            195.6444,
+            53.1
+          ],
+          "tip_annotation_status": "visible tip manual ±3 source px",
+          "source_solid_foreground_at_border": {
+            "top": false,
+            "bottom": false,
+            "left": false,
+            "right": false
+          },
+          "source_bbox": [
+            138,
+            98,
+            580,
+            652
+          ],
+          "png256_bbox": [
+            45,
+            50,
+            202,
+            246
+          ],
+          "source_bottom_silhouette": {
+            "x": 314.91471936758893,
+            "y": 650,
+            "definition": "alpha>=128 lowest five silhouette rows, not anatomical foot identification; impact glow can contribute"
+          },
+          "png256_bottom_silhouette": {
+            "x": 108.8235166738848,
+            "y": 242,
+            "definition": "alpha>=128 lowest five silhouette rows, not anatomical foot identification; impact glow can contribute"
+          },
+          "sha256_png256": "562f436e71274d405b86013dce31abb04d9dc386517c6bff232934e55f33c110",
+          "crc32_png256": "6ffa4e0f"
+        }
+      ],
+      "mouth_check": "No mouth, lip line, teeth, talking/open mouth visible in inspected selected frames. Some lower faces partially occluded by forearm/armor during overhead motion. No claim about occluded pixels or unselected source frames. No face edited."
+    },
+    "light2_recover": {
+      "group": "branches",
+      "source_video": "/workspace/sg-art/review/atk_upper_idle_video_v2/raw.mp4",
+      "source_sha256": "fb2c81d9a1fc5b95fccc47ca3acf18dcf6eb3a14ad628a897c33f8fd06d5060d",
+      "source_indices": [
+        60,
+        62,
+        64,
+        66,
+        68,
+        70,
+        72,
+        74,
+        76,
+        78,
+        80
+      ],
+      "frame_count": 11,
+      "source_size": [
+        720,
+        720
+      ],
+      "source_fps": 24,
+      "source_video_total_s": 5.041666666666667,
+      "selected_source_timestamp_span_s": 0.8333333333333334,
+      "retained_source_ranges_inclusive": [
+        [
+          60,
+          80
+        ]
+      ],
+      "retained_source_duration_s_including_last_frame_support": 0.875,
+      "trimmed_source_ranges_inclusive": [
+        [
+          0,
+          59
+        ],
+        [
+          81,
+          120
+        ]
+      ],
+      "trimmed_source_ranges_times_s_inclusive": [
+        [
+          0.0,
+          2.4583333333333335
+        ],
+        [
+          3.375,
+          5.0
+        ]
+      ],
+      "sampled_out_inside_retained_ranges_inclusive": [
+        [
+          61,
+          61
+        ],
+        [
+          63,
+          63
+        ],
+        [
+          65,
+          65
+        ],
+        [
+          67,
+          67
+        ],
+        [
+          69,
+          69
+        ],
+        [
+          71,
+          71
+        ],
+        [
+          73,
+          73
+        ],
+        [
+          75,
+          75
+        ],
+        [
+          77,
+          77
+        ],
+        [
+          79,
+          79
+        ]
+      ],
+      "engine_target_mainline_s": null,
+      "suggested_uniform_fps": 12.571428571428571,
+      "suggested_uniform_duration_s": 0.875,
+      "mean_fps_for_source_retained_duration": 12.571428571428571,
+      "engine_speed_vs_retained_source": 1,
+      "impact_frame_index": null,
+      "impact_source_frame": null,
+      "impact_spear_tip_png256_xy": null,
+      "impact_tip_note": "recovery branch; no impact",
+      "last_frame_index": 10,
+      "cancel_next_segment_frame_index": null,
+      "next": "Idle",
+      "next_join_status": "UNVERIFIED pose/pixel continuity; do not claim seamless",
+      "recover_branch": null,
+      "recover_range": {
+        "indices": [
+          0,
+          10
+        ]
+      },
+      "notes": "True v2 recovery 60-80, broad movement 62-74. Previous rough 1.5-1.67s was attack/upswing, NOT recovery. Candidate B start not pixel-identical.",
+      "frames": [
+        {
+          "index": 0,
+          "file": "png256/branches/hero_zhaoyun_atk_light2_recover_000.png",
+          "raw_selected": "raw_selected/light2_recover/source_060.png",
+          "source_frame": 60,
+          "source_time_s": 2.5,
+          "retained_source_display_s": 0.08333333333333333,
+          "native_remapped_time_s": 0.0,
+          "suggested_uniform_time_s": 0.0,
+          "impact": false,
+          "spear_tip_source_xy": [
+            621,
+            29
+          ],
+          "spear_tip_png256_xy": [
+            213.9,
+            28.9889
+          ],
+          "tip_annotation_status": "visible tip manual ±3 source px",
+          "source_solid_foreground_at_border": {
+            "top": false,
+            "bottom": false,
+            "left": false,
+            "right": false
+          },
+          "source_bbox": [
+            130,
+            30,
+            624,
+            666
+          ],
+          "png256_bbox": [
+            42,
+            27,
+            217,
+            251
+          ],
+          "source_bottom_silhouette": {
+            "x": 278.800435952138,
+            "y": 665,
+            "definition": "alpha>=128 lowest five silhouette rows, not anatomical foot identification; impact glow can contribute"
+          },
+          "png256_bottom_silhouette": {
+            "x": 96.73344651952462,
+            "y": 247,
+            "definition": "alpha>=128 lowest five silhouette rows, not anatomical foot identification; impact glow can contribute"
+          },
+          "sha256_png256": "7d36eebc86220e45c3501d7abf4577422becfc1c603f1f040fb3676b08ba1ae2",
+          "crc32_png256": "3082bd7d"
+        },
+        {
+          "index": 1,
+          "file": "png256/branches/hero_zhaoyun_atk_light2_recover_001.png",
+          "raw_selected": "raw_selected/light2_recover/source_062.png",
+          "source_frame": 62,
+          "source_time_s": 2.5833333333333335,
+          "retained_source_display_s": 0.08333333333333333,
+          "native_remapped_time_s": 0.08333333333333333,
+          "suggested_uniform_time_s": 0.07954545454545454,
+          "impact": false,
+          "spear_tip_source_xy": null,
+          "spear_tip_png256_xy": null,
+          "tip_annotation_status": "not annotated",
+          "source_solid_foreground_at_border": {
+            "top": false,
+            "bottom": false,
+            "left": false,
+            "right": false
+          },
+          "source_bbox": [
+            130,
+            26,
+            618,
+            666
+          ],
+          "png256_bbox": [
+            42,
+            27,
+            215,
+            251
+          ],
+          "source_bottom_silhouette": {
+            "x": 281.6586640851888,
+            "y": 663,
+            "definition": "alpha>=128 lowest five silhouette rows, not anatomical foot identification; impact glow can contribute"
+          },
+          "png256_bottom_silhouette": {
+            "x": 97.40889212827989,
+            "y": 247,
+            "definition": "alpha>=128 lowest five silhouette rows, not anatomical foot identification; impact glow can contribute"
+          },
+          "sha256_png256": "582f3e0ade43da53098e3445108aa63896ec0c53a5e4edd6a247f083feaf108a",
+          "crc32_png256": "d0c6a6ff"
+        },
+        {
+          "index": 2,
+          "file": "png256/branches/hero_zhaoyun_atk_light2_recover_002.png",
+          "raw_selected": "raw_selected/light2_recover/source_064.png",
+          "source_frame": 64,
+          "source_time_s": 2.6666666666666665,
+          "retained_source_display_s": 0.08333333333333333,
+          "native_remapped_time_s": 0.16666666666666666,
+          "suggested_uniform_time_s": 0.1590909090909091,
+          "impact": false,
+          "spear_tip_source_xy": null,
+          "spear_tip_png256_xy": null,
+          "tip_annotation_status": "not annotated",
+          "source_solid_foreground_at_border": {
+            "top": false,
+            "bottom": false,
+            "left": false,
+            "right": false
+          },
+          "source_bbox": [
+            132,
+            22,
+            608,
+            664
+          ],
+          "png256_bbox": [
+            43,
+            26,
+            212,
+            250
+          ],
+          "source_bottom_silhouette": {
+            "x": 286.49964541521877,
+            "y": 661,
+            "definition": "alpha>=128 lowest five silhouette rows, not anatomical foot identification; impact glow can contribute"
+          },
+          "png256_bottom_silhouette": {
+            "x": 99.34594222833563,
+            "y": 246,
+            "definition": "alpha>=128 lowest five silhouette rows, not anatomical foot identification; impact glow can contribute"
+          },
+          "sha256_png256": "cdd60f8eaaf9f0ba49f1060b4d1c82e59c8b7009b1e2c9f7137f43595f5413ac",
+          "crc32_png256": "9d090258"
+        },
+        {
+          "index": 3,
+          "file": "png256/branches/hero_zhaoyun_atk_light2_recover_003.png",
+          "raw_selected": "raw_selected/light2_recover/source_066.png",
+          "source_frame": 66,
+          "source_time_s": 2.75,
+          "retained_source_display_s": 0.08333333333333333,
+          "native_remapped_time_s": 0.25,
+          "suggested_uniform_time_s": 0.23863636363636365,
+          "impact": false,
+          "spear_tip_source_xy": null,
+          "spear_tip_png256_xy": null,
+          "tip_annotation_status": "not annotated",
+          "source_solid_foreground_at_border": {
+            "top": false,
+            "bottom": false,
+            "left": false,
+            "right": false
+          },
+          "source_bbox": [
+            136,
+            22,
+            588,
+            658
+          ],
+          "png256_bbox": [
+            44,
+            24,
+            205,
+            248
+          ],
+          "source_bottom_silhouette": {
+            "x": 301.3969846280943,
+            "y": 655,
+            "definition": "alpha>=128 lowest five silhouette rows, not anatomical foot identification; impact glow can contribute"
+          },
+          "png256_bottom_silhouette": {
+            "x": 111.22571797353986,
+            "y": 244,
+            "definition": "alpha>=128 lowest five silhouette rows, not anatomical foot identification; impact glow can contribute"
+          },
+          "sha256_png256": "45e4cbc7937ccbd2be201d17a0edda10b84521a5af3fb479ef499f0417b41e98",
+          "crc32_png256": "d03b71ab"
+        },
+        {
+          "index": 4,
+          "file": "png256/branches/hero_zhaoyun_atk_light2_recover_004.png",
+          "raw_selected": "raw_selected/light2_recover/source_068.png",
+          "source_frame": 68,
+          "source_time_s": 2.8333333333333335,
+          "retained_source_display_s": 0.08333333333333333,
+          "native_remapped_time_s": 0.3333333333333333,
+          "suggested_uniform_time_s": 0.3181818181818182,
+          "impact": false,
+          "spear_tip_source_xy": null,
+          "spear_tip_png256_xy": null,
+          "tip_annotation_status": "not annotated",
+          "source_solid_foreground_at_border": {
+            "top": false,
+            "bottom": false,
+            "left": false,
+            "right": false
+          },
+          "source_bbox": [
+            140,
+            28,
+            580,
+            654
+          ],
+          "png256_bbox": [
+            46,
+            26,
+            202,
+            247
+          ],
+          "source_bottom_silhouette": {
+            "x": 311.5447948457104,
+            "y": 652,
+            "definition": "alpha>=128 lowest five silhouette rows, not anatomical foot identification; impact glow can contribute"
+          },
+          "png256_bottom_silhouette": {
+            "x": 119.75101840490798,
+            "y": 243,
+            "definition": "alpha>=128 lowest five silhouette rows, not anatomical foot identification; impact glow can contribute"
+          },
+          "sha256_png256": "9a2f0f84c9af63f8b15f78f91126d7c4b2002c261d0224a0608057444440aca4",
+          "crc32_png256": "e01205b1"
+        },
+        {
+          "index": 5,
+          "file": "png256/branches/hero_zhaoyun_atk_light2_recover_005.png",
+          "raw_selected": "raw_selected/light2_recover/source_070.png",
+          "source_frame": 70,
+          "source_time_s": 2.9166666666666665,
+          "retained_source_display_s": 0.08333333333333333,
+          "native_remapped_time_s": 0.41666666666666663,
+          "suggested_uniform_time_s": 0.39772727272727276,
+          "impact": false,
+          "spear_tip_source_xy": null,
+          "spear_tip_png256_xy": null,
+          "tip_annotation_status": "not annotated",
+          "source_solid_foreground_at_border": {
+            "top": false,
+            "bottom": false,
+            "left": false,
+            "right": false
+          },
+          "source_bbox": [
+            140,
+            48,
+            578,
+            652
+          ],
+          "png256_bbox": [
+            46,
+            33,
+            202,
+            246
+          ],
+          "source_bottom_silhouette": {
+            "x": 314.64223597906994,
+            "y": 651,
+            "definition": "alpha>=128 lowest five silhouette rows, not anatomical foot identification; impact glow can contribute"
+          },
+          "png256_bottom_silhouette": {
+            "x": 112.7983060082223,
+            "y": 242,
+            "definition": "alpha>=128 lowest five silhouette rows, not anatomical foot identification; impact glow can contribute"
+          },
+          "sha256_png256": "de84ab4890a857810cdcd5d9fabd1dd4ac8918a9722f1519e29ecae321c49eac",
+          "crc32_png256": "828a28e4"
+        },
+        {
+          "index": 6,
+          "file": "png256/branches/hero_zhaoyun_atk_light2_recover_006.png",
+          "raw_selected": "raw_selected/light2_recover/source_072.png",
+          "source_frame": 72,
+          "source_time_s": 3.0,
+          "retained_source_display_s": 0.08333333333333333,
+          "native_remapped_time_s": 0.49999999999999994,
+          "suggested_uniform_time_s": 0.4772727272727273,
+          "impact": false,
+          "spear_tip_source_xy": null,
+          "spear_tip_png256_xy": null,
+          "tip_annotation_status": "not annotated",
+          "source_solid_foreground_at_border": {
+            "top": false,
+            "bottom": false,
+            "left": false,
+            "right": false
+          },
+          "source_bbox": [
+            140,
+            64,
+            578,
+            652
+          ],
+          "png256_bbox": [
+            46,
+            41,
+            202,
+            246
+          ],
+          "source_bottom_silhouette": {
+            "x": 314.8613306038895,
+            "y": 651,
+            "definition": "alpha>=128 lowest five silhouette rows, not anatomical foot identification; impact glow can contribute"
+          },
+          "png256_bottom_silhouette": {
+            "x": 108.87193620892647,
+            "y": 242,
+            "definition": "alpha>=128 lowest five silhouette rows, not anatomical foot identification; impact glow can contribute"
+          },
+          "sha256_png256": "442431c6bafd7b83e9ec7bba78672ffd179123aaeee8f9e75bfa6d8bb47fa460",
+          "crc32_png256": "e691ebc8"
+        },
+        {
+          "index": 7,
+          "file": "png256/branches/hero_zhaoyun_atk_light2_recover_007.png",
+          "raw_selected": "raw_selected/light2_recover/source_074.png",
+          "source_frame": 74,
+          "source_time_s": 3.0833333333333335,
+          "retained_source_display_s": 0.08333333333333333,
+          "native_remapped_time_s": 0.5833333333333333,
+          "suggested_uniform_time_s": 0.5568181818181819,
+          "impact": false,
+          "spear_tip_source_xy": null,
+          "spear_tip_png256_xy": null,
+          "tip_annotation_status": "not annotated",
+          "source_solid_foreground_at_border": {
+            "top": false,
+            "bottom": false,
+            "left": false,
+            "right": false
+          },
+          "source_bbox": [
+            140,
+            86,
+            580,
+            652
+          ],
+          "png256_bbox": [
+            46,
+            46,
+            202,
+            246
+          ],
+          "source_bottom_silhouette": {
+            "x": 314.7431738774102,
+            "y": 651,
+            "definition": "alpha>=128 lowest five silhouette rows, not anatomical foot identification; impact glow can contribute"
+          },
+          "png256_bottom_silhouette": {
+            "x": 108.84177523109358,
+            "y": 242,
+            "definition": "alpha>=128 lowest five silhouette rows, not anatomical foot identification; impact glow can contribute"
+          },
+          "sha256_png256": "2e149f13198be8ed1b5376f4e2ed7c72dc5ab1b5aef51cf440dcd4cfc30d896c",
+          "crc32_png256": "83fdf0a7"
+        },
+        {
+          "index": 8,
+          "file": "png256/branches/hero_zhaoyun_atk_light2_recover_008.png",
+          "raw_selected": "raw_selected/light2_recover/source_076.png",
+          "source_frame": 76,
+          "source_time_s": 3.1666666666666665,
+          "retained_source_display_s": 0.08333333333333333,
+          "native_remapped_time_s": 0.6666666666666666,
+          "suggested_uniform_time_s": 0.6363636363636364,
+          "impact": false,
+          "spear_tip_source_xy": null,
+          "spear_tip_png256_xy": null,
+          "tip_annotation_status": "not annotated",
+          "source_solid_foreground_at_border": {
+            "top": false,
+            "bottom": false,
+            "left": false,
+            "right": false
+          },
+          "source_bbox": [
+            140,
+            94,
+            580,
+            652
+          ],
+          "png256_bbox": [
+            46,
+            49,
+            202,
+            246
+          ],
+          "source_bottom_silhouette": {
+            "x": 314.7301779236483,
+            "y": 651,
+            "definition": "alpha>=128 lowest five silhouette rows, not anatomical foot identification; impact glow can contribute"
+          },
+          "png256_bottom_silhouette": {
+            "x": 108.83718038812908,
+            "y": 242,
+            "definition": "alpha>=128 lowest five silhouette rows, not anatomical foot identification; impact glow can contribute"
+          },
+          "sha256_png256": "4f986036d9197ef80dc687b3812953370c32b96d1fccc166ad351e37c89ff65e",
+          "crc32_png256": "99b2b4dc"
+        },
+        {
+          "index": 9,
+          "file": "png256/branches/hero_zhaoyun_atk_light2_recover_009.png",
+          "raw_selected": "raw_selected/light2_recover/source_078.png",
+          "source_frame": 78,
+          "source_time_s": 3.25,
+          "retained_source_display_s": 0.08333333333333333,
+          "native_remapped_time_s": 0.75,
+          "suggested_uniform_time_s": 0.7159090909090909,
+          "impact": false,
+          "spear_tip_source_xy": null,
+          "spear_tip_png256_xy": null,
+          "tip_annotation_status": "not annotated",
+          "source_solid_foreground_at_border": {
+            "top": false,
+            "bottom": false,
+            "left": false,
+            "right": false
+          },
+          "source_bbox": [
+            140,
+            98,
+            580,
+            652
+          ],
+          "png256_bbox": [
+            46,
+            50,
+            202,
+            246
+          ],
+          "source_bottom_silhouette": {
+            "x": 314.7253378232526,
+            "y": 651,
+            "definition": "alpha>=128 lowest five silhouette rows, not anatomical foot identification; impact glow can contribute"
+          },
+          "png256_bottom_silhouette": {
+            "x": 108.83267599546167,
+            "y": 242,
+            "definition": "alpha>=128 lowest five silhouette rows, not anatomical foot identification; impact glow can contribute"
+          },
+          "sha256_png256": "7fac2ce938e3db546949f2d1135e3d8f086392dbf1dd8db2e13a807035921d37",
+          "crc32_png256": "129bc169"
+        },
+        {
+          "index": 10,
+          "file": "png256/branches/hero_zhaoyun_atk_light2_recover_010.png",
+          "raw_selected": "raw_selected/light2_recover/source_080.png",
+          "source_frame": 80,
+          "source_time_s": 3.3333333333333335,
+          "retained_source_display_s": 0.041666666666666664,
+          "native_remapped_time_s": 0.8333333333333334,
+          "suggested_uniform_time_s": 0.7954545454545455,
+          "impact": false,
+          "spear_tip_source_xy": [
+            568,
+            99
+          ],
+          "spear_tip_png256_xy": [
+            195.6444,
+            53.1
+          ],
+          "tip_annotation_status": "visible tip manual ±3 source px",
+          "source_solid_foreground_at_border": {
+            "top": false,
+            "bottom": false,
+            "left": false,
+            "right": false
+          },
+          "source_bbox": [
+            140,
+            98,
+            580,
+            652
+          ],
+          "png256_bbox": [
+            46,
+            50,
+            202,
+            246
+          ],
+          "source_bottom_silhouette": {
+            "x": 314.7081680179403,
+            "y": 651,
+            "definition": "alpha>=128 lowest five silhouette rows, not anatomical foot identification; impact glow can contribute"
+          },
+          "png256_bottom_silhouette": {
+            "x": 108.83121724566428,
+            "y": 242,
+            "definition": "alpha>=128 lowest five silhouette rows, not anatomical foot identification; impact glow can contribute"
+          },
+          "sha256_png256": "d45c17be83a0beb45c70eee7b4536e80ea08d74cc2b9d542424197240ca693b9",
+          "crc32_png256": "eb4b5463"
+        }
+      ],
+      "mouth_check": "No mouth, lip line, teeth, talking/open mouth visible in inspected selected frames. Some lower faces partially occluded by forearm/armor during overhead motion. No claim about occluded pixels or unselected source frames. No face edited."
+    },
+    "light3_recover": {
+      "group": "branches",
+      "source_video": "/workspace/sg-art/review/atk_chain_v3/seg3_slam_v1/raw.mp4",
+      "source_sha256": "6e22fa67ac62d7bfd04ddbbc11dc4e22d02e3562102de909d8c012a36a92fbf5",
+      "source_indices": [
+        52,
+        54,
+        56,
+        58,
+        60,
+        62,
+        64,
+        66,
+        68,
+        70,
+        72,
+        74,
+        76,
+        78,
+        80
+      ],
+      "frame_count": 15,
+      "source_size": [
+        720,
+        720
+      ],
+      "source_fps": 24,
+      "source_video_total_s": 5.041666666666667,
+      "selected_source_timestamp_span_s": 1.1666666666666667,
+      "retained_source_ranges_inclusive": [
+        [
+          52,
+          80
+        ]
+      ],
+      "retained_source_duration_s_including_last_frame_support": 1.2083333333333333,
+      "trimmed_source_ranges_inclusive": [
+        [
+          0,
+          51
+        ],
+        [
+          81,
+          120
+        ]
+      ],
+      "trimmed_source_ranges_times_s_inclusive": [
+        [
+          0.0,
+          2.125
+        ],
+        [
+          3.375,
+          5.0
+        ]
+      ],
+      "sampled_out_inside_retained_ranges_inclusive": [
+        [
+          53,
+          53
+        ],
+        [
+          55,
+          55
+        ],
+        [
+          57,
+          57
+        ],
+        [
+          59,
+          59
+        ],
+        [
+          61,
+          61
+        ],
+        [
+          63,
+          63
+        ],
+        [
+          65,
+          65
+        ],
+        [
+          67,
+          67
+        ],
+        [
+          69,
+          69
+        ],
+        [
+          71,
+          71
+        ],
+        [
+          73,
+          73
+        ],
+        [
+          75,
+          75
+        ],
+        [
+          77,
+          77
+        ],
+        [
+          79,
+          79
+        ]
+      ],
+      "engine_target_mainline_s": null,
+      "suggested_uniform_fps": 12.413793103448276,
+      "suggested_uniform_duration_s": 1.2083333333333333,
+      "mean_fps_for_source_retained_duration": 12.413793103448276,
+      "engine_speed_vs_retained_source": 1,
+      "impact_frame_index": null,
+      "impact_source_frame": null,
+      "impact_spear_tip_png256_xy": null,
+      "impact_tip_note": "recovery branch; no impact",
+      "last_frame_index": 14,
+      "cancel_next_segment_frame_index": null,
+      "next": "Idle",
+      "next_join_status": "UNVERIFIED pose/pixel continuity; do not claim seamless",
+      "recover_branch": null,
+      "recover_range": {
+        "indices": [
+          0,
+          14
+        ]
+      },
+      "notes": "Own source 52-80 after trimming long low hold 27-51. Append once after mainline light3 26; never append old sweep or replay recovery. Some lateral spear motion hits source right border.",
+      "frames": [
+        {
+          "index": 0,
+          "file": "png256/branches/hero_zhaoyun_atk_light3_recover_000.png",
+          "raw_selected": "raw_selected/light3_recover/source_052.png",
+          "source_frame": 52,
+          "source_time_s": 2.1666666666666665,
+          "retained_source_display_s": 0.08333333333333333,
+          "native_remapped_time_s": 0.0,
+          "suggested_uniform_time_s": 0.0,
+          "impact": false,
+          "spear_tip_source_xy": [
+            704,
+            654
+          ],
+          "spear_tip_png256_xy": [
+            242.4889,
+            244.2667
+          ],
+          "tip_annotation_status": "visible tip manual ±3 source px",
+          "source_solid_foreground_at_border": {
+            "top": false,
+            "bottom": false,
+            "left": false,
+            "right": false
+          },
+          "source_bbox": [
+            96,
+            130,
+            672,
+            636
+          ],
+          "png256_bbox": [
+            31,
+            61,
+            234,
+            240
+          ],
+          "source_bottom_silhouette": {
+            "x": 665.0671476783428,
+            "y": 633,
+            "definition": "alpha>=128 lowest five silhouette rows, not anatomical foot identification; impact glow can contribute"
+          },
+          "png256_bottom_silhouette": {
+            "x": 156.13665458471505,
+            "y": 236,
+            "definition": "alpha>=128 lowest five silhouette rows, not anatomical foot identification; impact glow can contribute"
+          },
+          "sha256_png256": "a1aef87bf87525e83a4527f83cbf9d5eeb8cb2570ec5fca494f52acb37914433",
+          "crc32_png256": "00044b94"
+        },
+        {
+          "index": 1,
+          "file": "png256/branches/hero_zhaoyun_atk_light3_recover_001.png",
+          "raw_selected": "raw_selected/light3_recover/source_054.png",
+          "source_frame": 54,
+          "source_time_s": 2.25,
+          "retained_source_display_s": 0.08333333333333333,
+          "native_remapped_time_s": 0.08333333333333333,
+          "suggested_uniform_time_s": 0.08055555555555556,
+          "impact": false,
+          "spear_tip_source_xy": null,
+          "spear_tip_png256_xy": null,
+          "tip_annotation_status": "not annotated",
+          "source_solid_foreground_at_border": {
+            "top": false,
+            "bottom": false,
+            "left": false,
+            "right": false
+          },
+          "source_bbox": [
+            96,
+            128,
+            678,
+            630
+          ],
+          "png256_bbox": [
+            31,
+            61,
+            236,
+            238
+          ],
+          "source_bottom_silhouette": {
+            "x": 394.84426843626244,
+            "y": 627,
+            "definition": "alpha>=128 lowest five silhouette rows, not anatomical foot identification; impact glow can contribute"
+          },
+          "png256_bottom_silhouette": {
+            "x": 122.56737142580677,
+            "y": 234,
+            "definition": "alpha>=128 lowest five silhouette rows, not anatomical foot identification; impact glow can contribute"
+          },
+          "sha256_png256": "60ed8a18ae3d6292e9ec496e8932321543ceebbc1663c8aad81044653e15a4eb",
+          "crc32_png256": "3b54fe67"
+        },
+        {
+          "index": 2,
+          "file": "png256/branches/hero_zhaoyun_atk_light3_recover_002.png",
+          "raw_selected": "raw_selected/light3_recover/source_056.png",
+          "source_frame": 56,
+          "source_time_s": 2.3333333333333335,
+          "retained_source_display_s": 0.08333333333333333,
+          "native_remapped_time_s": 0.16666666666666666,
+          "suggested_uniform_time_s": 0.16111111111111112,
+          "impact": false,
+          "spear_tip_source_xy": null,
+          "spear_tip_png256_xy": null,
+          "tip_annotation_status": "not annotated",
+          "source_solid_foreground_at_border": {
+            "top": false,
+            "bottom": false,
+            "left": false,
+            "right": false
+          },
+          "source_bbox": [
+            96,
+            128,
+            688,
+            626
+          ],
+          "png256_bbox": [
+            31,
+            61,
+            239,
+            237
+          ],
+          "source_bottom_silhouette": {
+            "x": 201.49834479246243,
+            "y": 625,
+            "definition": "alpha>=128 lowest five silhouette rows, not anatomical foot identification; impact glow can contribute"
+          },
+          "png256_bottom_silhouette": {
+            "x": 71.31949406888667,
+            "y": 234,
+            "definition": "alpha>=128 lowest five silhouette rows, not anatomical foot identification; impact glow can contribute"
+          },
+          "sha256_png256": "a73eeb441578648be18478b93fd628947cf7adc53a73336e078ec4c9931c4c94",
+          "crc32_png256": "7263c6cb"
+        },
+        {
+          "index": 3,
+          "file": "png256/branches/hero_zhaoyun_atk_light3_recover_003.png",
+          "raw_selected": "raw_selected/light3_recover/source_058.png",
+          "source_frame": 58,
+          "source_time_s": 2.4166666666666665,
+          "retained_source_display_s": 0.08333333333333333,
+          "native_remapped_time_s": 0.25,
+          "suggested_uniform_time_s": 0.24166666666666667,
+          "impact": false,
+          "spear_tip_source_xy": null,
+          "spear_tip_png256_xy": null,
+          "tip_annotation_status": "not annotated",
+          "source_solid_foreground_at_border": {
+            "top": false,
+            "bottom": false,
+            "left": false,
+            "right": false
+          },
+          "source_bbox": [
+            96,
+            126,
+            700,
+            628
+          ],
+          "png256_bbox": [
+            31,
+            60,
+            244,
+            237
+          ],
+          "source_bottom_silhouette": {
+            "x": 204.73192121887774,
+            "y": 625,
+            "definition": "alpha>=128 lowest five silhouette rows, not anatomical foot identification; impact glow can contribute"
+          },
+          "png256_bottom_silhouette": {
+            "x": 70.65089266508927,
+            "y": 234,
+            "definition": "alpha>=128 lowest five silhouette rows, not anatomical foot identification; impact glow can contribute"
+          },
+          "sha256_png256": "3307098442769388b6547f827e17cb5d6422bd85429e53dda199c93d70cf1907",
+          "crc32_png256": "0c840cca"
+        },
+        {
+          "index": 4,
+          "file": "png256/branches/hero_zhaoyun_atk_light3_recover_004.png",
+          "raw_selected": "raw_selected/light3_recover/source_060.png",
+          "source_frame": 60,
+          "source_time_s": 2.5,
+          "retained_source_display_s": 0.08333333333333333,
+          "native_remapped_time_s": 0.3333333333333333,
+          "suggested_uniform_time_s": 0.32222222222222224,
+          "impact": false,
+          "spear_tip_source_xy": null,
+          "spear_tip_png256_xy": null,
+          "tip_annotation_status": "not annotated",
+          "source_solid_foreground_at_border": {
+            "top": false,
+            "bottom": false,
+            "left": false,
+            "right": true
+          },
+          "source_bbox": [
+            94,
+            124,
+            720,
+            626
+          ],
+          "png256_bbox": [
+            30,
+            59,
+            248,
+            237
+          ],
+          "source_bottom_silhouette": {
+            "x": 217.75274149997244,
+            "y": 625,
+            "definition": "alpha>=128 lowest five silhouette rows, not anatomical foot identification; impact glow can contribute"
+          },
+          "png256_bottom_silhouette": {
+            "x": 75.2725822287678,
+            "y": 233,
+            "definition": "alpha>=128 lowest five silhouette rows, not anatomical foot identification; impact glow can contribute"
+          },
+          "sha256_png256": "4671432389eeae2e15adf3506d6bd9df64543eaaa62d615fecdfb6682f9ccdb5",
+          "crc32_png256": "b36813bf"
+        },
+        {
+          "index": 5,
+          "file": "png256/branches/hero_zhaoyun_atk_light3_recover_005.png",
+          "raw_selected": "raw_selected/light3_recover/source_062.png",
+          "source_frame": 62,
+          "source_time_s": 2.5833333333333335,
+          "retained_source_display_s": 0.08333333333333333,
+          "native_remapped_time_s": 0.41666666666666663,
+          "suggested_uniform_time_s": 0.4027777777777778,
+          "impact": false,
+          "spear_tip_source_xy": null,
+          "spear_tip_png256_xy": null,
+          "tip_annotation_status": "not annotated",
+          "source_solid_foreground_at_border": {
+            "top": false,
+            "bottom": false,
+            "left": false,
+            "right": true
+          },
+          "source_bbox": [
+            92,
+            122,
+            720,
+            626
+          ],
+          "png256_bbox": [
+            29,
+            58,
+            248,
+            237
+          ],
+          "source_bottom_silhouette": {
+            "x": 246.98787911149083,
+            "y": 625,
+            "definition": "alpha>=128 lowest five silhouette rows, not anatomical foot identification; impact glow can contribute"
+          },
+          "png256_bottom_silhouette": {
+            "x": 85.13966198604221,
+            "y": 234,
+            "definition": "alpha>=128 lowest five silhouette rows, not anatomical foot identification; impact glow can contribute"
+          },
+          "sha256_png256": "86687f188bb000996ce57d94ba795bb9b343fe4e21387ca16d0ed86220c2339b",
+          "crc32_png256": "c0688c3b"
+        },
+        {
+          "index": 6,
+          "file": "png256/branches/hero_zhaoyun_atk_light3_recover_006.png",
+          "raw_selected": "raw_selected/light3_recover/source_064.png",
+          "source_frame": 64,
+          "source_time_s": 2.6666666666666665,
+          "retained_source_display_s": 0.08333333333333333,
+          "native_remapped_time_s": 0.49999999999999994,
+          "suggested_uniform_time_s": 0.48333333333333334,
+          "impact": false,
+          "spear_tip_source_xy": null,
+          "spear_tip_png256_xy": null,
+          "tip_annotation_status": "not annotated",
+          "source_solid_foreground_at_border": {
+            "top": false,
+            "bottom": false,
+            "left": false,
+            "right": true
+          },
+          "source_bbox": [
+            90,
+            118,
+            720,
+            630
+          ],
+          "png256_bbox": [
+            29,
+            57,
+            248,
+            238
+          ],
+          "source_bottom_silhouette": {
+            "x": 280.48930505014647,
+            "y": 627,
+            "definition": "alpha>=128 lowest five silhouette rows, not anatomical foot identification; impact glow can contribute"
+          },
+          "png256_bottom_silhouette": {
+            "x": 100.69239373601789,
+            "y": 234,
+            "definition": "alpha>=128 lowest five silhouette rows, not anatomical foot identification; impact glow can contribute"
+          },
+          "sha256_png256": "f9faf39456f4ba40c119ed0e9a16bd966556f9adddfb6cc2cd9d879d7196924a",
+          "crc32_png256": "867e0719"
+        },
+        {
+          "index": 7,
+          "file": "png256/branches/hero_zhaoyun_atk_light3_recover_007.png",
+          "raw_selected": "raw_selected/light3_recover/source_066.png",
+          "source_frame": 66,
+          "source_time_s": 2.75,
+          "retained_source_display_s": 0.08333333333333333,
+          "native_remapped_time_s": 0.5833333333333333,
+          "suggested_uniform_time_s": 0.5638888888888889,
+          "impact": false,
+          "spear_tip_source_xy": null,
+          "spear_tip_png256_xy": null,
+          "tip_annotation_status": "not annotated",
+          "source_solid_foreground_at_border": {
+            "top": false,
+            "bottom": false,
+            "left": false,
+            "right": true
+          },
+          "source_bbox": [
+            92,
+            116,
+            720,
+            634
+          ],
+          "png256_bbox": [
+            29,
+            56,
+            248,
+            240
+          ],
+          "source_bottom_silhouette": {
+            "x": 303.6396214461075,
+            "y": 631,
+            "definition": "alpha>=128 lowest five silhouette rows, not anatomical foot identification; impact glow can contribute"
+          },
+          "png256_bottom_silhouette": {
+            "x": 105.35580326881073,
+            "y": 236,
+            "definition": "alpha>=128 lowest five silhouette rows, not anatomical foot identification; impact glow can contribute"
+          },
+          "sha256_png256": "f7633403965eb4225e86424b55d07027e7a1610146c2ad8d1136a375cf0283e6",
+          "crc32_png256": "2a1c6ffe"
+        },
+        {
+          "index": 8,
+          "file": "png256/branches/hero_zhaoyun_atk_light3_recover_008.png",
+          "raw_selected": "raw_selected/light3_recover/source_068.png",
+          "source_frame": 68,
+          "source_time_s": 2.8333333333333335,
+          "retained_source_display_s": 0.08333333333333333,
+          "native_remapped_time_s": 0.6666666666666666,
+          "suggested_uniform_time_s": 0.6444444444444445,
+          "impact": false,
+          "spear_tip_source_xy": null,
+          "spear_tip_png256_xy": null,
+          "tip_annotation_status": "not annotated",
+          "source_solid_foreground_at_border": {
+            "top": false,
+            "bottom": false,
+            "left": false,
+            "right": true
+          },
+          "source_bbox": [
+            98,
+            114,
+            720,
+            636
+          ],
+          "png256_bbox": [
+            32,
+            56,
+            248,
+            241
+          ],
+          "source_bottom_silhouette": {
+            "x": 309.26645210468365,
+            "y": 635,
+            "definition": "alpha>=128 lowest five silhouette rows, not anatomical foot identification; impact glow can contribute"
+          },
+          "png256_bottom_silhouette": {
+            "x": 107.34476439790576,
+            "y": 237,
+            "definition": "alpha>=128 lowest five silhouette rows, not anatomical foot identification; impact glow can contribute"
+          },
+          "sha256_png256": "71d7bfce0398ece03c4ff7739e4a72f4a3724d7f6c5ea547b753a56026313f66",
+          "crc32_png256": "87e84de9"
+        },
+        {
+          "index": 9,
+          "file": "png256/branches/hero_zhaoyun_atk_light3_recover_009.png",
+          "raw_selected": "raw_selected/light3_recover/source_070.png",
+          "source_frame": 70,
+          "source_time_s": 2.9166666666666665,
+          "retained_source_display_s": 0.08333333333333333,
+          "native_remapped_time_s": 0.75,
+          "suggested_uniform_time_s": 0.725,
+          "impact": false,
+          "spear_tip_source_xy": null,
+          "spear_tip_png256_xy": null,
+          "tip_annotation_status": "not annotated",
+          "source_solid_foreground_at_border": {
+            "top": false,
+            "bottom": false,
+            "left": false,
+            "right": false
+          },
+          "source_bbox": [
+            108,
+            112,
+            710,
+            640
+          ],
+          "png256_bbox": [
+            35,
+            55,
+            247,
+            242
+          ],
+          "source_bottom_silhouette": {
+            "x": 311.6614063124251,
+            "y": 639,
+            "definition": "alpha>=128 lowest five silhouette rows, not anatomical foot identification; impact glow can contribute"
+          },
+          "png256_bottom_silhouette": {
+            "x": 108.0282043962318,
+            "y": 238,
+            "definition": "alpha>=128 lowest five silhouette rows, not anatomical foot identification; impact glow can contribute"
+          },
+          "sha256_png256": "4a5eee494d1414c981da210dcdee57141ce804eece42931fe6a6b90c37509a7c",
+          "crc32_png256": "4a920a44"
+        },
+        {
+          "index": 10,
+          "file": "png256/branches/hero_zhaoyun_atk_light3_recover_010.png",
+          "raw_selected": "raw_selected/light3_recover/source_072.png",
+          "source_frame": 72,
+          "source_time_s": 3.0,
+          "retained_source_display_s": 0.08333333333333333,
+          "native_remapped_time_s": 0.8333333333333334,
+          "suggested_uniform_time_s": 0.8055555555555556,
+          "impact": false,
+          "spear_tip_source_xy": null,
+          "spear_tip_png256_xy": null,
+          "tip_annotation_status": "not annotated",
+          "source_solid_foreground_at_border": {
+            "top": false,
+            "bottom": false,
+            "left": false,
+            "right": false
+          },
+          "source_bbox": [
+            118,
+            108,
+            662,
+            644
+          ],
+          "png256_bbox": [
+            38,
+            54,
+            231,
+            243
+          ],
+          "source_bottom_silhouette": {
+            "x": 312.9973546973018,
+            "y": 643,
+            "definition": "alpha>=128 lowest five silhouette rows, not anatomical foot identification; impact glow can contribute"
+          },
+          "png256_bottom_silhouette": {
+            "x": 108.39869534327973,
+            "y": 240,
+            "definition": "alpha>=128 lowest five silhouette rows, not anatomical foot identification; impact glow can contribute"
+          },
+          "sha256_png256": "1f7581054569be30d3587d362f28abbe83a521067c9c26d1d22267598988eb91",
+          "crc32_png256": "40ebbbbf"
+        },
+        {
+          "index": 11,
+          "file": "png256/branches/hero_zhaoyun_atk_light3_recover_011.png",
+          "raw_selected": "raw_selected/light3_recover/source_074.png",
+          "source_frame": 74,
+          "source_time_s": 3.0833333333333335,
+          "retained_source_display_s": 0.08333333333333333,
+          "native_remapped_time_s": 0.9166666666666667,
+          "suggested_uniform_time_s": 0.8861111111111111,
+          "impact": false,
+          "spear_tip_source_xy": null,
+          "spear_tip_png256_xy": null,
+          "tip_annotation_status": "not annotated",
+          "source_solid_foreground_at_border": {
+            "top": false,
+            "bottom": false,
+            "left": false,
+            "right": false
+          },
+          "source_bbox": [
+            128,
+            106,
+            612,
+            648
+          ],
+          "png256_bbox": [
+            42,
+            53,
+            213,
+            245
+          ],
+          "source_bottom_silhouette": {
+            "x": 313.7145787158027,
+            "y": 647,
+            "definition": "alpha>=128 lowest five silhouette rows, not anatomical foot identification; impact glow can contribute"
+          },
+          "png256_bottom_silhouette": {
+            "x": 108.65241541827974,
+            "y": 241,
+            "definition": "alpha>=128 lowest five silhouette rows, not anatomical foot identification; impact glow can contribute"
+          },
+          "sha256_png256": "f56a0648d186ed1d97e99daa04b0c760e30b8d6d9bdea20caed146e918a9abc8",
+          "crc32_png256": "60ab6374"
+        },
+        {
+          "index": 12,
+          "file": "png256/branches/hero_zhaoyun_atk_light3_recover_012.png",
+          "raw_selected": "raw_selected/light3_recover/source_076.png",
+          "source_frame": 76,
+          "source_time_s": 3.1666666666666665,
+          "retained_source_display_s": 0.08333333333333333,
+          "native_remapped_time_s": 1.0,
+          "suggested_uniform_time_s": 0.9666666666666667,
+          "impact": false,
+          "spear_tip_source_xy": null,
+          "spear_tip_png256_xy": null,
+          "tip_annotation_status": "not annotated",
+          "source_solid_foreground_at_border": {
+            "top": false,
+            "bottom": false,
+            "left": false,
+            "right": false
+          },
+          "source_bbox": [
+            136,
+            100,
+            584,
+            652
+          ],
+          "png256_bbox": [
+            44,
+            51,
+            203,
+            246
+          ],
+          "source_bottom_silhouette": {
+            "x": 314.6159077392496,
+            "y": 649,
+            "definition": "alpha>=128 lowest five silhouette rows, not anatomical foot identification; impact glow can contribute"
+          },
+          "png256_bottom_silhouette": {
+            "x": 108.72736435410717,
+            "y": 242,
+            "definition": "alpha>=128 lowest five silhouette rows, not anatomical foot identification; impact glow can contribute"
+          },
+          "sha256_png256": "fa3eb79fcbd791f174335441ce028339a20cc6d9f84ab9417b053845e3a8af95",
+          "crc32_png256": "903a5663"
+        },
+        {
+          "index": 13,
+          "file": "png256/branches/hero_zhaoyun_atk_light3_recover_013.png",
+          "raw_selected": "raw_selected/light3_recover/source_078.png",
+          "source_frame": 78,
+          "source_time_s": 3.25,
+          "retained_source_display_s": 0.08333333333333333,
+          "native_remapped_time_s": 1.0833333333333333,
+          "suggested_uniform_time_s": 1.0472222222222223,
+          "impact": false,
+          "spear_tip_source_xy": null,
+          "spear_tip_png256_xy": null,
+          "tip_annotation_status": "not annotated",
+          "source_solid_foreground_at_border": {
+            "top": false,
+            "bottom": false,
+            "left": false,
+            "right": false
+          },
+          "source_bbox": [
+            142,
+            96,
+            580,
+            652
+          ],
+          "png256_bbox": [
+            46,
+            50,
+            202,
+            246
+          ],
+          "source_bottom_silhouette": {
+            "x": 314.8190778006655,
+            "y": 650,
+            "definition": "alpha>=128 lowest five silhouette rows, not anatomical foot identification; impact glow can contribute"
+          },
+          "png256_bottom_silhouette": {
+            "x": 108.82355485859514,
+            "y": 242,
+            "definition": "alpha>=128 lowest five silhouette rows, not anatomical foot identification; impact glow can contribute"
+          },
+          "sha256_png256": "022b5115ce4b5d9c5574d3fab486306877bf815f21a8c96c7aff2a4f2e6e4c2f",
+          "crc32_png256": "78b400aa"
+        },
+        {
+          "index": 14,
+          "file": "png256/branches/hero_zhaoyun_atk_light3_recover_014.png",
+          "raw_selected": "raw_selected/light3_recover/source_080.png",
+          "source_frame": 80,
+          "source_time_s": 3.3333333333333335,
+          "retained_source_display_s": 0.041666666666666664,
+          "native_remapped_time_s": 1.1666666666666665,
+          "suggested_uniform_time_s": 1.1277777777777778,
+          "impact": false,
+          "spear_tip_source_xy": [
+            566,
+            99
+          ],
+          "spear_tip_png256_xy": [
+            194.9556,
+            53.1
+          ],
+          "tip_annotation_status": "visible tip manual ±3 source px",
+          "source_solid_foreground_at_border": {
+            "top": false,
+            "bottom": false,
+            "left": false,
+            "right": false
+          },
+          "source_bbox": [
+            146,
+            98,
+            580,
+            652
+          ],
+          "png256_bbox": [
+            48,
+            50,
+            202,
+            246
+          ],
+          "source_bottom_silhouette": {
+            "x": 314.81265926322084,
+            "y": 650,
+            "definition": "alpha>=128 lowest five silhouette rows, not anatomical foot identification; impact glow can contribute"
+          },
+          "png256_bottom_silhouette": {
+            "x": 108.81920415224913,
+            "y": 242,
+            "definition": "alpha>=128 lowest five silhouette rows, not anatomical foot identification; impact glow can contribute"
+          },
+          "sha256_png256": "68181f8015229665b1c4f5330ee6db8a8a1dda75c0ed877fe1101671c4d4a068",
+          "crc32_png256": "4df4e5d7"
+        }
+      ],
+      "mouth_check": "No mouth, lip line, teeth, talking/open mouth visible in inspected selected frames. Some lower faces partially occluded by forearm/armor during overhead motion. No claim about occluded pixels or unselected source frames. No face edited."
+    }
+  },
+  "join_metrics": [
+    {
+      "join": "A",
+      "from": "png256/mainline/hero_zhaoyun_atk_light1_010.png",
+      "to": "png256/mainline/hero_zhaoyun_atk_light2_000.png",
+      "exact_rgba_pixels_identical": false,
+      "rgba_mae_0_255": 1.3783645629882812,
+      "solid_alpha_iou": 0.9932983682983683,
+      "source_bottom_y_from": 619,
+      "source_bottom_y_to": 619,
+      "status": "NOT SEAMLESS GUARANTEE; no correction applied"
+    },
+    {
+      "join": "B",
+      "from": "png256/mainline/hero_zhaoyun_atk_light2_019.png",
+      "to": "png256/mainline/hero_zhaoyun_atk_light3_000.png",
+      "exact_rgba_pixels_identical": false,
+      "rgba_mae_0_255": 2.6525726318359375,
+      "solid_alpha_iou": 0.9676878191101386,
+      "source_bottom_y_from": 665,
+      "source_bottom_y_to": 665,
+      "status": "NOT SEAMLESS GUARANTEE; no correction applied"
+    },
+    {
+      "join": "A_to_interrupt",
+      "from": "png256/mainline/hero_zhaoyun_atk_light1_010.png",
+      "to": "png256/branches/hero_zhaoyun_atk_light1_recover_000.png",
+      "exact_rgba_pixels_identical": false,
+      "rgba_mae_0_255": 2.5578231811523438,
+      "solid_alpha_iou": 0.9803552011598405,
+      "source_bottom_y_from": 619,
+      "source_bottom_y_to": 619,
+      "status": "NOT SEAMLESS GUARANTEE; no correction applied"
+    },
+    {
+      "join": "B_to_interrupt",
+      "from": "png256/mainline/hero_zhaoyun_atk_light2_019.png",
+      "to": "png256/branches/hero_zhaoyun_atk_light2_recover_000.png",
+      "exact_rgba_pixels_identical": false,
+      "rgba_mae_0_255": 3.0377349853515625,
+      "solid_alpha_iou": 0.9644522144522144,
+      "source_bottom_y_from": 665,
+      "source_bottom_y_to": 665,
+      "status": "NOT SEAMLESS GUARANTEE; no correction applied"
+    },
+    {
+      "join": "slam_to_own_recovery",
+      "from": "png256/mainline/hero_zhaoyun_atk_light3_015.png",
+      "to": "png256/branches/hero_zhaoyun_atk_light3_recover_000.png",
+      "exact_rgba_pixels_identical": false,
+      "rgba_mae_0_255": 6.823848724365234,
+      "solid_alpha_iou": 0.8720164317586231,
+      "source_bottom_y_from": 635,
+      "source_bottom_y_to": 633,
+      "status": "NOT SEAMLESS GUARANTEE; no correction applied"
+    }
+  ],
+  "mouth_check": {
+    "status": "visual inspection completed",
+    "selected_frames_checked": 86,
+    "raw_face_sheets_checked": 6,
+    "png256_face_sheets_checked": 6,
+    "result": "No mouth, lip line, teeth, talking/open mouth visible in inspected selected frames.",
+    "limits": "Some lower faces partially occluded by forearm/armor during overhead motion. No claim about occluded pixels or unselected source frames. No face edited."
+  },
+  "known_limits": [
+    "Original generated source clips already clip spear/graphic at top/right edges in listed frames. Export adds margin but cannot restore missing original pixels; no inpainting or reconstruction performed.",
+    "A/B and interrupt joins differ in encoded pixels; shared reference images did not guarantee identical video endpoints. Visual/engine seamlessness unverified.",
+    "Apparent character pose/body/plume/armor drift is retained. No independent per-video scale normalization. Source and PNG bboxes/bottom coordinates available for diagnostics; not an anatomical body-scale calibration.",
+    "Slam source includes obvious white/purple impact graphic in source 20-26; retained, no cleaned variant created.",
+    "Uniform playback fps targets 0.40/0.46/0.62 seconds are engine retiming proposals, not source action measurements; nonuniform source selection means local phase speeds differ.",
+    "No collision/hitbox groundline or same-right-hand/topology certification; spear-tip annotations are manual visual landmarks, not physics hitboxes.",
+    "Global fit is smaller than prior Idle/Run nominal scale to fit wider/taller spear excursion; actual in-engine cross-action root/scale validation remains."
+  ],
+  "previews": [
+    {
+      "file": "previews/light1_suggested.gif",
+      "requested_frames": 11,
+      "decoded_gif_frames": 11,
+      "total_ms": 400,
+      "durations_ms": [
+        40,
+        30,
+        40,
+        40,
+        30,
+        40,
+        30,
+        40,
+        40,
+        30,
+        40
+      ],
+      "background_rgb": [
+        116,
+        120,
+        124
+      ],
+      "gif_centisecond_quantization": true
+    },
+    {
+      "file": "previews/light1_retained_source_timing.gif",
+      "requested_frames": 11,
+      "decoded_gif_frames": 11,
+      "total_ms": 830,
+      "durations_ms": [
+        80,
+        90,
+        80,
+        80,
+        90,
+        40,
+        80,
+        80,
+        90,
+        80,
+        40
+      ],
+      "background_rgb": [
+        116,
+        120,
+        124
+      ],
+      "gif_centisecond_quantization": true
+    },
+    {
+      "file": "previews/light2_suggested.gif",
+      "requested_frames": 20,
+      "decoded_gif_frames": 20,
+      "total_ms": 460,
+      "durations_ms": [
+        20,
+        30,
+        20,
+        20,
+        30,
+        20,
+        20,
+        20,
+        30,
+        20,
+        20,
+        30,
+        20,
+        20,
+        20,
+        30,
+        20,
+        20,
+        30,
+        20
+      ],
+      "background_rgb": [
+        116,
+        120,
+        124
+      ],
+      "gif_centisecond_quantization": true
+    },
+    {
+      "file": "previews/light2_retained_source_timing.gif",
+      "requested_frames": 20,
+      "decoded_gif_frames": 20,
+      "total_ms": 2000,
+      "durations_ms": [
+        40,
+        130,
+        120,
+        130,
+        120,
+        130,
+        120,
+        40,
+        130,
+        120,
+        130,
+        120,
+        130,
+        120,
+        90,
+        80,
+        80,
+        90,
+        40,
+        40
+      ],
+      "background_rgb": [
+        116,
+        120,
+        124
+      ],
+      "gif_centisecond_quantization": true
+    },
+    {
+      "file": "previews/light3_suggested.gif",
+      "requested_frames": 16,
+      "decoded_gif_frames": 16,
+      "total_ms": 620,
+      "durations_ms": [
+        40,
+        40,
+        40,
+        40,
+        30,
+        40,
+        40,
+        40,
+        40,
+        40,
+        40,
+        30,
+        40,
+        40,
+        40,
+        40
+      ],
+      "background_rgb": [
+        116,
+        120,
+        124
+      ],
+      "gif_centisecond_quantization": true
+    },
+    {
+      "file": "previews/light3_retained_source_timing.gif",
+      "requested_frames": 16,
+      "decoded_gif_frames": 16,
+      "total_ms": 1120,
+      "durations_ms": [
+        80,
+        90,
+        80,
+        80,
+        90,
+        80,
+        80,
+        90,
+        80,
+        40,
+        40,
+        40,
+        50,
+        80,
+        80,
+        40
+      ],
+      "background_rgb": [
+        116,
+        120,
+        124
+      ],
+      "gif_centisecond_quantization": true
+    },
+    {
+      "file": "previews/light1_recover_suggested.gif",
+      "requested_frames": 13,
+      "decoded_gif_frames": 13,
+      "total_ms": 1040,
+      "durations_ms": [
+        80,
+        80,
+        80,
+        80,
+        80,
+        80,
+        80,
+        80,
+        80,
+        80,
+        80,
+        80,
+        80
+      ],
+      "background_rgb": [
+        116,
+        120,
+        124
+      ],
+      "gif_centisecond_quantization": true
+    },
+    {
+      "file": "previews/light1_recover_retained_source_timing.gif",
+      "requested_frames": 13,
+      "decoded_gif_frames": 13,
+      "total_ms": 1040,
+      "durations_ms": [
+        80,
+        90,
+        80,
+        80,
+        90,
+        80,
+        80,
+        90,
+        80,
+        80,
+        90,
+        80,
+        40
+      ],
+      "background_rgb": [
+        116,
+        120,
+        124
+      ],
+      "gif_centisecond_quantization": true
+    },
+    {
+      "file": "previews/light2_recover_suggested.gif",
+      "requested_frames": 11,
+      "decoded_gif_frames": 11,
+      "total_ms": 870,
+      "durations_ms": [
+        80,
+        80,
+        80,
+        80,
+        80,
+        80,
+        80,
+        80,
+        80,
+        80,
+        70
+      ],
+      "background_rgb": [
+        116,
+        120,
+        124
+      ],
+      "gif_centisecond_quantization": true
+    },
+    {
+      "file": "previews/light2_recover_retained_source_timing.gif",
+      "requested_frames": 11,
+      "decoded_gif_frames": 11,
+      "total_ms": 880,
+      "durations_ms": [
+        80,
+        90,
+        80,
+        80,
+        90,
+        80,
+        80,
+        90,
+        80,
+        80,
+        50
+      ],
+      "background_rgb": [
+        116,
+        120,
+        124
+      ],
+      "gif_centisecond_quantization": true
+    },
+    {
+      "file": "previews/light3_recover_suggested.gif",
+      "requested_frames": 15,
+      "decoded_gif_frames": 15,
+      "total_ms": 1210,
+      "durations_ms": [
+        80,
+        80,
+        80,
+        80,
+        80,
+        80,
+        80,
+        80,
+        80,
+        90,
+        80,
+        80,
+        80,
+        80,
+        80
+      ],
+      "background_rgb": [
+        116,
+        120,
+        124
+      ],
+      "gif_centisecond_quantization": true
+    },
+    {
+      "file": "previews/light3_recover_retained_source_timing.gif",
+      "requested_frames": 15,
+      "decoded_gif_frames": 15,
+      "total_ms": 1210,
+      "durations_ms": [
+        80,
+        90,
+        80,
+        80,
+        90,
+        80,
+        80,
+        90,
+        80,
+        80,
+        90,
+        80,
+        80,
+        90,
+        40
+      ],
+      "background_rgb": [
+        116,
+        120,
+        124
+      ],
+      "gif_centisecond_quantization": true
+    },
+    {
+      "file": "previews/full_mainline_chain_target.gif",
+      "requested_frames": 47,
+      "decoded_gif_frames": 47,
+      "total_ms": 1480,
+      "durations_ms": [
+        40,
+        30,
+        40,
+        40,
+        30,
+        40,
+        30,
+        40,
+        40,
+        30,
+        40,
+        20,
+        30,
+        20,
+        20,
+        30,
+        20,
+        20,
+        20,
+        30,
+        20,
+        20,
+        30,
+        20,
+        20,
+        20,
+        30,
+        20,
+        20,
+        30,
+        20,
+        40,
+        40,
+        40,
+        40,
+        30,
+        40,
+        40,
+        40,
+        40,
+        40,
+        40,
+        30,
+        40,
+        40,
+        40,
+        40
+      ],
+      "background_rgb": [
+        116,
+        120,
+        124
+      ],
+      "gif_centisecond_quantization": true
+    },
+    {
+      "file": "previews/full_mainline_chain_retained_source_timing.gif",
+      "requested_frames": 47,
+      "decoded_gif_frames": 47,
+      "total_ms": 3960,
+      "durations_ms": [
+        80,
+        90,
+        80,
+        80,
+        90,
+        40,
+        80,
+        80,
+        90,
+        80,
+        40,
+        50,
+        120,
+        120,
+        130,
+        130,
+        120,
+        120,
+        50,
+        120,
+        130,
+        120,
+        130,
+        120,
+        130,
+        80,
+        80,
+        90,
+        80,
+        40,
+        40,
+        90,
+        80,
+        80,
+        90,
+        80,
+        80,
+        90,
+        80,
+        80,
+        50,
+        40,
+        40,
+        40,
+        80,
+        90,
+        40
+      ],
+      "background_rgb": [
+        116,
+        120,
+        124
+      ],
+      "gif_centisecond_quantization": true
+    },
+    {
+      "file": "previews/chain_plus_final_recovery_suggested.gif",
+      "requested_frames": 62,
+      "decoded_gif_frames": 62,
+      "total_ms": 2690,
+      "durations_ms": [
+        40,
+        30,
+        40,
+        40,
+        30,
+        40,
+        30,
+        40,
+        40,
+        30,
+        40,
+        20,
+        30,
+        20,
+        20,
+        30,
+        20,
+        20,
+        20,
+        30,
+        20,
+        20,
+        30,
+        20,
+        20,
+        20,
+        30,
+        20,
+        20,
+        30,
+        20,
+        40,
+        40,
+        40,
+        40,
+        30,
+        40,
+        40,
+        40,
+        40,
+        40,
+        40,
+        30,
+        40,
+        40,
+        40,
+        40,
+        80,
+        80,
+        80,
+        80,
+        80,
+        80,
+        80,
+        80,
+        90,
+        80,
+        80,
+        80,
+        80,
+        80,
+        80
+      ],
+      "background_rgb": [
+        116,
+        120,
+        124
+      ],
+      "gif_centisecond_quantization": true
+    }
+  ],
+  "approved_references": {},
+  "archived_source_videos": {
+    "light1": {
+      "original_path": "/workspace/sg-art/review/atk_chain_v3/seg1_idle_to_thrust/raw.mp4",
+      "archive_copy": "source_videos/light1.mp4",
+      "sha256": "d2405a060db866610fd2c84de2f88c165dfb62082d5f66bff3fed0a9c4ac2ab2"
+    },
+    "light2": {
+      "original_path": "/workspace/sg-art/review/atk_chain_v3/seg2_thrust_to_upper/raw.mp4",
+      "archive_copy": "source_videos/light2.mp4",
+      "sha256": "c1daf4bf3f102118271fbc7c3691037c4846157d232848825c0bc9d40db26cac"
+    },
+    "light3": {
+      "original_path": "/workspace/sg-art/review/atk_chain_v3/seg3_slam_v1/raw.mp4",
+      "archive_copy": "source_videos/light3.mp4",
+      "sha256": "6e22fa67ac62d7bfd04ddbbc11dc4e22d02e3562102de909d8c012a36a92fbf5"
+    },
+    "light1_recover": {
+      "original_path": "/workspace/sg-art/review/atk_thrust_idle_video_v2/raw.mp4",
+      "archive_copy": "source_videos/light1_recover.mp4",
+      "sha256": "d267b3908f5f27af100592de8c849052d354dacb227cef373458311a9da5a9b2"
+    },
+    "light2_recover": {
+      "original_path": "/workspace/sg-art/review/atk_upper_idle_video_v2/raw.mp4",
+      "archive_copy": "source_videos/light2_recover.mp4",
+      "sha256": "fb2c81d9a1fc5b95fccc47ca3acf18dcf6eb3a14ad628a897c33f8fd06d5060d"
+    }
+  },
+  "registration_diagnostics": {
+    "source_matching_A_bottom_y": {
+      "light1_end": 619,
+      "light2_start": 619,
+      "light1_interrupt_start": 619
+    },
+    "source_matching_B_bottom_y": {
+      "light2_end": 665,
+      "light3_start": 665,
+      "light2_interrupt_start": 665
+    },
+    "conclusion": "One transform only. Matched A/B endpoints similar apparent scale, not pixel-identical. Within-animation foot/body/plume drift and apparent size changes remain uncorrected. Per-frame bbox/bottom coordinates supplied; no anatomical scale calibration claimed.",
+    "per_sequence": {
+      "light1": {
+        "source_union_bbox_xyxy": [
+          44,
+          96,
+          716,
+          652
+        ],
+        "source_bottom_y_range": [
+          619,
+          651
+        ],
+        "png256_bottom_y_range": [
+          232,
+          242
+        ]
+      },
+      "light2": {
+        "source_union_bbox_xyxy": [
+          26,
+          0,
+          710,
+          666
+        ],
+        "source_bottom_y_range": [
+          619,
+          665
+        ],
+        "png256_bottom_y_range": [
+          231,
+          247
+        ]
+      },
+      "light3": {
+        "source_union_bbox_xyxy": [
+          84,
+          0,
+          720,
+          666
+        ],
+        "source_bottom_y_range": [
+          635,
+          665
+        ],
+        "png256_bottom_y_range": [
+          237,
+          247
+        ]
+      },
+      "light1_recover": {
+        "source_union_bbox_xyxy": [
+          66,
+          98,
+          718,
+          652
+        ],
+        "source_bottom_y_range": [
+          619,
+          651
+        ],
+        "png256_bottom_y_range": [
+          232,
+          242
+        ]
+      },
+      "light2_recover": {
+        "source_union_bbox_xyxy": [
+          130,
+          22,
+          624,
+          666
+        ],
+        "source_bottom_y_range": [
+          651,
+          665
+        ],
+        "png256_bottom_y_range": [
+          242,
+          247
+        ]
+      },
+      "light3_recover": {
+        "source_union_bbox_xyxy": [
+          90,
+          96,
+          720,
+          652
+        ],
+        "source_bottom_y_range": [
+          625,
+          650
+        ],
+        "png256_bottom_y_range": [
+          233,
+          242
+        ]
+      }
+    }
+  },
+  "cancel_policy": {
+    "mainline": "light1 010 -> light2 000; light2 019 -> light3 000. Similar real video endpoints, not identical pixels.",
+    "interrupts": "light1 end010 -> light1_recover000; light2 end019 -> light2_recover000. Earlier post-hit cuts may be attempted by engine but are unverified.",
+    "third": "light3 015 -> light3_recover000 -> Idle. Source27-51 removed; low-pose seam differs. Recovery appears once only."
+  }
+}

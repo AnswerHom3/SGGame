@@ -22,3 +22,12 @@ Playback: **8 fps** (125 ms/frame, 1.0 s loop). Do not play Run at 10 fps in gam
 Canvas register / root ≈ (128, 248). Do not reuse the Idle draw offset (−17, −1) for Run.
 Source frames face right, have no mouth, and hold the spear in the right hand.
 Moving uses Run. Idle plays when stopped (Idle remains 12 frames at 10 fps with its own offset).
+
+## atk_light
+Trial integration of light-attack v1. 86 frames under `atk_light/mainline/` and `atk_light/branches/`. Do not regenerate or edit the PNGs.
+Mainline durations: light1 0.40s (11), light2 0.46s (20), light3 0.62s (16, the approved downward slash).
+Recover at source-mean fps: light1_recover 13 @ 12.48, light2_recover 11 @ ~12.57, light3_recover 15 @ ~12.41.
+Chain: light1 → light2 → light3 → light3_recover → Idle. The 1/2 recover clips play only when that swing is not cancelled into the next hit.
+Root (128, 248), draw offset (0, 0). Do not reuse Idle's (−17, −1). Shared fit is about 80% of Idle and 83% of Run; a size step can remain.
+light2 impact frame 016 has no tip (cropped). Do not treat that as (0, 0). Frame 017 is a debug-only backup.
+Timings live in `atk_light/manifest.json` and `atk_light/README.md`.
