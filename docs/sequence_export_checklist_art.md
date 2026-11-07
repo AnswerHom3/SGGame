@@ -36,3 +36,9 @@
 
 ## 参考交付根
 `/workspace/sg-art/deliver/hero_zhaoyun_atk_light_v1/`
+
+## 人物尺度 / 帧数（2026-11-07）
+- [ ] 交付表含 `content_h`（min/avg/max）与相对基准的 scale；赵云基准 ≈190（sole→头，α≥8）
+- [ ] 不靠程序 `renderScale` / 每帧 drawOffset 补尺
+- [ ] 帧数与任务单一致；缩帧须制作人批准并写进 README
+- [ ] 换 Idle 包时写明新 Idle_000 join sole；提醒程序改 plantedSole、recover 可能要重钉

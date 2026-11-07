@@ -1,3 +1,5 @@
+跨职种流程见 [sequence_frame_workflow.md](./sequence_frame_workflow.md)。
+
 # 序列帧自检标准
 
 老板定稿。攻击动作人物会飘时，优先按本标准卡「脚底锚点」和「固定画布」，多数情况不用重画。
