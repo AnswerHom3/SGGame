@@ -1,6 +1,6 @@
 # 代号SG · 序列帧工作流规范（制作人 · 2026-11-07）
 
-老板验收通过后沉淀。本规范管**谁做什么、按什么顺序、卡什么门**；像素细则见 [sequence_frame_self_check_standard.md](./sequence_frame_self_check_standard.md)，美术勾选见 [sequence_export_checklist_art.md](./sequence_export_checklist_art.md)。
+老板验收通过后沉淀。本规范管**谁做什么、按什么顺序、卡什么门**；像素细则见 [sequence_self_check_standard.md](./sequence_self_check_standard.md)，美术勾选见 [sequence_export_checklist_art.md](./sequence_export_checklist_art.md)。
 
 ---
 
@@ -146,7 +146,7 @@ Idle_000 join ≈ **(114.74, 244.54, bottom 247)**（以包内 `FOOT_REGISTRATIO
 | 文档 | 用途 |
 |---|---|
 | **本文件** `sequence_frame_workflow.md` | 跨职种流程与铁律 |
-| `sequence_frame_self_check_standard.md` | 老板签发的像素/锚点自检标准 |
+| `sequence_self_check_standard.md` | 老板签发的像素/锚点自检标准 |
 | `sequence_export_checklist_art.md` | 美术导出勾选 |
 | 包内 `FOOT_REGISTRATION.md` | 该包唯一脚点真相源 |
 
