@@ -14,6 +14,7 @@
 - [ ] 脚底表（每帧支撑脚、`recommended_root_offset`、`source_slide_flag`）
 - [ ] QC 叠图（contact + 各段 inspect）
 - [ ] README：名义 root、实测 planted、目标缩放（相对 Idle）、已知限制
+- [ ] 原片/源帧区间已写进 README
 
 ## 体型 / 连招
 - [ ] Idle / Run / Atk 体型尺度一致；攻击偏小时先标目标缩放（程序只绕 root 放大）
